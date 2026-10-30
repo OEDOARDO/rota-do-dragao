@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Rota do Dragão</title>
 <meta name="description" content="Guia para zerar o Minecraft rápido: roteiro com cronômetro, testador de seeds, mural da comunidade, melhores biomas, itens, farms e missões difíceis.">
-<meta name="theme-color" content="#1F2124">
+<meta name="theme-color" content="#2F5320">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Rota do Dragão">
 <meta property="og:description" content="Guia para zerar o Minecraft rápido: roteiro com cronômetro, testador de seeds, mural da comunidade, melhores biomas, itens, farms e missões difíceis.">
@@ -24,29 +24,33 @@ img { max-width: 100%; }
 
 /* Layout: guia em uma coluna larga; as ferramentas (cronômetro, testador de seed, meta de itens)
    ficam em painéis biselados de inventário; a cor de cada etapa diz a dimensão onde ela acontece.
-   Paleta pedida pelo dono: cinza escuro e verde, num tema escuro único. */
+   Paleta pedida pelo dono: verde em cima e marrom embaixo, como um bloco de grama.
+   A barra e o topo são a grama; o resto da página é a terra. Tema escuro único. */
 :root {
-  --bg: #1F2124;
-  --surface: #292C30;
-  --surface-2: #33373C;
-  --fg: #ECEFEA;
-  --muted: #A6ADA5;
-  --line: #3B4046;
+  --bg: #2A1E15;
+  --surface: #3A2A1D;
+  --surface-2: #463325;
+  --fg: #F2EBDD;
+  --muted: #C4B4A0;
+  --line: #5A4433;
   --accent: #6CC04A;
   --accent-forte: #8FD96B;
   --accent-fundo: #2C4424;
   --on-accent: #0F1A0C;
+  --grama: #3E6B27;
+  --grama-escura: #2F5320;
+  --grama-clara: #D9E8C8;
   --ow: #8FD96B;
   --nether: #E58A78;
   --end: #B8A0E6;
   --gold: #E3C15A;
-  --panel: #2D3135;
-  --bevel-hi: #4A5056;
-  --bevel-lo: #111315;
-  --outline: #0A0B0C;
-  --slot: #1A1C1F;
-  --slot-hi: #3D4248;
-  --slot-lo: #08090A;
+  --panel: #3E2D20;
+  --bevel-hi: #6E5441;
+  --bevel-lo: #1A110A;
+  --outline: #110B06;
+  --slot: #22170F;
+  --slot-hi: #5C4535;
+  --slot-lo: #0D0804;
   color-scheme: dark;
 
   --f-display: "Pixelify Sans", "Courier New", monospace;
@@ -72,7 +76,7 @@ body {
 }
 body::before {
   content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
-  z-index: 10; background: var(--bg);
+  z-index: 10; background: var(--grama-escura);
 }
 .wrap {
   max-width: 1120px; margin: 0 auto;
@@ -93,7 +97,7 @@ code, .mono { font-family: var(--f-mono); font-size: 0.92em; }
 /* ---------- navegação ---------- */
 .topo {
   position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9;
-  background: var(--bg); border-bottom: 1px solid var(--line);
+  background: var(--grama-escura); border-bottom: 1px solid #22401A;
 }
 .topo .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; padding-block: 10px; }
 .marca { font-family: var(--f-display); font-weight: 700; font-size: 1.15rem; color: var(--fg); text-decoration: none; display: flex; align-items: center; gap: 8px; }
@@ -101,7 +105,7 @@ code, .mono { font-family: var(--f-mono); font-size: 0.92em; }
 .links { display: flex; gap: 4px; overflow-x: auto; flex: 1 1 auto; min-width: 0; order: 3; scrollbar-width: none; }
 .links::-webkit-scrollbar { display: none; }
 .links a { color: var(--fg); text-decoration: none; font-size: var(--fs-small); font-weight: 500; padding: 6px 10px; white-space: nowrap; }
-.links a:hover { background: var(--surface); }
+.links a:hover { background: var(--grama); }
 @media (min-width: 860px) { .links { order: 0; flex: 0 1 auto; margin-left: auto; } }
 .edicao { display: inline-flex; border: 2px solid var(--outline); margin-left: auto; }
 @media (min-width: 860px) { .edicao { margin-left: 0; } }
@@ -148,6 +152,17 @@ code, .mono { font-family: var(--f-mono); font-size: 0.92em; }
 .btn-mini { padding: 6px 10px; font-size: var(--fs-cap); }
 
 /* ---------- hero ---------- */
+/* o topo é a grama: fundo verde e uma borda em degraus de pixel caindo sobre a terra */
+.hero { position: relative; background: var(--grama); --muted: var(--grama-clara); }
+.hero::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -12px; height: 12px; pointer-events: none;
+  background:
+    linear-gradient(90deg, var(--grama) 0 18px, transparent 18px 30px, var(--grama) 30px 42px, transparent 42px 48px) 0 0 / 48px 6px repeat-x,
+    linear-gradient(90deg, var(--grama) 0 6px, transparent 6px 30px, var(--grama) 30px 36px, transparent 36px 48px) 0 6px / 48px 6px repeat-x;
+}
+.hero + .secao { border-top: 0; }
+.hero .painel { --muted: #C4B4A0; }
+.hero .btn-forte { background: var(--accent-forte); }
 .hero .wrap { display: grid; gap: 40px; padding-block: 48px 56px; }
 @media (min-width: 900px) { .hero .wrap { grid-template-columns: 1.15fr 0.85fr; align-items: center; } }
 .hero h1 { font-family: var(--f-display); font-weight: 700; font-size: var(--fs-hero); line-height: 0.95; margin-top: 12px; letter-spacing: 0.01em; }
@@ -241,16 +256,12 @@ code, .mono { font-family: var(--f-mono); font-size: 0.92em; }
   padding: 9px 10px; min-width: 0;
 }
 .linha-seed .campo { flex: 1 1 220px; }
-.cmd-row { display: flex; align-items: stretch; gap: 6px; min-width: 0; }
-.cmd-row code {
-  flex: 1 1 auto; min-width: 0; overflow-x: auto; white-space: nowrap;
-  background: var(--surface); border: 1px solid var(--line); padding: 7px 10px; font-size: 0.85rem;
-}
-.cmds { display: grid; gap: 6px; }
-.cmds-rotulo { font-size: var(--fs-cap); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
-.so-bedrock { display: none; }
-html[data-ed="bedrock"] .so-bedrock { display: revert; }
-html[data-ed="bedrock"] .so-java { display: none; }
+.mapa-passos { margin: 0; padding-left: 20px; display: grid; gap: 4px; font-size: var(--fs-small); }
+.calc { display: grid; gap: 8px; padding: 12px; background: var(--surface); border: 1px dashed var(--line); }
+.calc-t { font-size: var(--fs-small); font-weight: 600; }
+.calc-linha { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; }
+.calc-linha label { display: grid; gap: 4px; font-size: var(--fs-cap); font-weight: 600; }
+.calc-linha input { width: 110px; }
 .distancias { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
 .dist { display: grid; gap: 4px; font-size: var(--fs-small); font-weight: 500; }
 .dist .campo { width: 100%; font-variant-numeric: tabular-nums; }
@@ -313,6 +324,10 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .farm dl { margin: 0; display: grid; gap: 8px; font-size: var(--fs-small); }
 .farm dt { font-size: var(--fs-cap); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
 .farm dd { margin: 0; }
+.como { border-top: 1px dashed var(--line); padding-top: 10px; font-size: var(--fs-small); }
+.como summary { cursor: pointer; font-weight: 600; color: var(--accent-forte); }
+.como summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.como ol { margin: 10px 0 0; padding-left: 20px; display: grid; gap: 6px; }
 
 /* depois de zerar: melhores coisas para conseguir */
 .itens { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; counter-reset: item; border-top: 1px solid var(--line); }
@@ -327,11 +342,13 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .missoes-cab { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 20px; }
 .contador { font: 700 1.2rem/1 var(--f-num); color: var(--accent); font-variant-numeric: tabular-nums; }
 .missoes { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+.missao-card { background: var(--surface); border: 1px solid var(--line); display: grid; align-content: start; min-width: 0; }
+.missao-card:hover { border-color: var(--slot-hi); }
 .missao {
   display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 14px; align-items: start;
-  position: relative; background: var(--surface); border: 1px solid var(--line); padding: 14px 16px; cursor: pointer;
+  position: relative; padding: 14px 16px; cursor: pointer;
 }
-.missao:hover { border-color: var(--slot-hi); }
+.missao-card .como { margin: 0 16px 14px; }
 .missao input { position: absolute; opacity: 0; width: 1px; height: 1px; }
 .missao:focus-within { outline: 3px solid var(--accent); outline-offset: 2px; }
 .moldura {
@@ -612,7 +629,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
     <div class="secao-cab">
       <p class="eyebrow">Seeds</p>
       <h2 id="seeds-t">Seeds para treinar</h2>
-      <p class="lede">Uma seed boa para zerar tem vila e portal em ruínas perto do spawn, e bastião e fortaleza perto do portal no Nether. Versão nova pode mudar o mapa, então confira a seed num mundo de teste antes de jogar de verdade. Leva uns 2 minutos.</p>
+      <p class="lede">Uma seed boa para zerar tem vila e portal em ruínas perto do spawn, e bastião e fortaleza perto do portal no Nether. Versão nova pode mudar o mapa, então confira a seed no mapa do Chunkbase antes de jogar. Não precisa de comando nenhum e leva uns 2 minutos.</p>
     </div>
     <div class="seeds-grade">
       <div class="painel testador" id="testador" aria-labelledby="testador-t">
@@ -637,24 +654,15 @@ td:first-child { font-weight: 600; white-space: nowrap; }
         </div>
 
         <div class="passo">
-          <p class="passo-t"><span>2</span>Crie um mundo de teste</p>
-          <p>Modo Criativo, com essa seed e com comandos (cheats) ligados. Depois rode os comandos abaixo e anote a distância que o jogo mostrar.</p>
-          <div class="cmds so-java">
-            <p class="cmds-rotulo">No spawn</p>
-            <div class="cmd-row"><code>/locate structure #minecraft:village</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
-            <div class="cmd-row"><code>/locate structure #minecraft:ruined_portal</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
-            <div class="cmd-row"><code>/locate structure minecraft:stronghold</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
-            <p class="cmds-rotulo">Dentro do Nether, pelo portal que você faria</p>
-            <div class="cmd-row"><code>/locate structure minecraft:bastion_remnant</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
-            <div class="cmd-row"><code>/locate structure minecraft:fortress</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
-          </div>
-          <div class="cmds so-bedrock">
-            <p>Digite <code>/locate structure</code> e um espaço, e escolha na lista que o jogo mostra:</p>
-            <p class="cmds-rotulo">No spawn</p>
-            <p><code>village</code> (vila), <code>ruined_portal</code> (portal em ruínas) e <code>stronghold</code> (fortaleza).</p>
-            <p class="cmds-rotulo">Dentro do Nether, pelo portal que você faria</p>
-            <p><code>bastion_remnant</code> (bastião) e <code>fortress</code> (fortaleza do Nether).</p>
-          </div>
+          <p class="passo-t"><span>2</span>Veja a seed no mapa, sem comandos</p>
+          <ol class="mapa-passos">
+            <li>Copie a seed e abra o <a href="https://www.chunkbase.com/apps/seed-map" target="_blank" rel="noopener">mapa de seeds do Chunkbase</a>.</li>
+            <li>Cole a seed e escolha a mesma edição (Java ou Bedrock) e a versão.</li>
+            <li>No Overworld, ligue só vila, portal em ruínas e fortaleza (stronghold). Ache a mais perto do spawn.</li>
+            <li>Troque a dimensão para o Nether e ligue bastião e fortaleza do Nether. Veja as mais perto do ponto 0, 0, que é onde sai um portal feito perto do spawn.</li>
+            <li>Passe o mouse ou toque na estrutura: o mapa mostra as coordenadas X e Z. Use a calculadora abaixo para virar distância.</li>
+          </ol>
+          <p class="criterio">O Chunkbase pode demorar a receber a versão mais nova. Se a sua versão não aparecer, use a mais recente da lista e confira andando no jogo.</p>
         </div>
 
         <div class="passo">
@@ -665,6 +673,22 @@ td:first-child { font-weight: 600; white-space: nowrap; }
             <label class="dist" for="d-bastiao">Bastião<input class="campo" id="d-bastiao" type="number" min="0" inputmode="numeric" data-chave="bastiao"><span class="nota" id="n-bastiao"></span></label>
             <label class="dist" for="d-fortaleza">Fortaleza do Nether<input class="campo" id="d-fortaleza" type="number" min="0" inputmode="numeric" data-chave="fortaleza"><span class="nota" id="n-fortaleza"></span></label>
             <label class="dist" for="d-stronghold">Fortaleza do End<input class="campo" id="d-stronghold" type="number" min="0" inputmode="numeric" data-chave="stronghold"><span class="nota" id="n-stronghold"></span></label>
+          </div>
+          <div class="calc">
+            <p class="calc-t">Calculadora: coordenadas viram distância</p>
+            <div class="calc-linha">
+              <label>X<input class="campo" id="c-x" type="number" inputmode="numeric" placeholder="-120"></label>
+              <label>Z<input class="campo" id="c-z" type="number" inputmode="numeric" placeholder="85"></label>
+              <label>Estrutura<select class="campo" id="c-alvo">
+                <option value="vila">Vila</option>
+                <option value="portal">Portal em ruínas</option>
+                <option value="bastiao">Bastião</option>
+                <option value="fortaleza">Fortaleza do Nether</option>
+                <option value="stronghold">Fortaleza do End</option>
+              </select></label>
+              <button type="button" class="btn" id="c-usar">Preencher</button>
+            </div>
+            <p class="criterio">Conta a distância em linha reta até o ponto 0, 0. O spawn costuma ficar perto dele.</p>
           </div>
           <p class="criterio">Critério do site: ótimo até 150 blocos e bom até 350 (bastião e fortaleza do Nether: bom até 300). Para a fortaleza do End, ótimo até 1.600 e bom até 2.600.</p>
         </div>
@@ -687,7 +711,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
       <div class="seeds-col">
         <div class="sub">
           <h3>Seeds para começar</h3>
-          <p class="criterio">Vêm de guias publicados, nas versões em que eles testaram. Nenhuma foi conferida na 26.3: passe no testador antes.</p>
+          <p class="criterio">Vêm de guias publicados, nas versões em que eles testaram. Nenhuma foi conferida na 26.3: confira no mapa antes.</p>
           <div class="lista-seeds">
             <article class="card-seed">
               <p class="num">7311929229522424735</p>
@@ -716,7 +740,6 @@ td:first-child { font-weight: 600; white-space: nowrap; }
           <div class="lista-seeds" id="minhas"></div>
         </div>
 
-        <p class="criterio" style="margin-top: 20px;">Para ver o mapa da seed sem abrir o jogo, use o <a href="https://www.chunkbase.com/apps/seed-map" target="_blank" rel="noopener">mapa de seeds do Chunkbase</a>. Ele pode demorar a receber a versão mais nova.</p>
       </div>
     </div>
 
@@ -742,7 +765,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
     <div class="secao-cab">
       <p class="eyebrow">Biomas</p>
       <h2 id="biomas-t">O melhor bioma para cada coisa</h2>
-      <p class="lede">O bioma decide o que aparece por perto. Escolha pelo que você quer fazer ou percorra a lista. Cada bioma traz o comando que encontra o mais próximo no mundo de teste.</p>
+      <p class="lede">O bioma decide o que aparece por perto. Escolha pelo que você quer fazer ou percorra a lista. Para achar um bioma sem comando, abra a seed no <a href="https://www.chunkbase.com/apps/biome-finder" target="_blank" rel="noopener">localizador de biomas do Chunkbase</a>.</p>
     </div>
 
     <div class="tabela-wrap">
@@ -783,14 +806,12 @@ td:first-child { font-weight: 600; white-space: nowrap; }
         <header><h4>Planícies</h4><span class="id">plains</span></header>
         <p><span class="rot">Bom para:</span> vila, cavalos, ovelhas para as camas, base e farms grandes.</p>
         <p>Plano e aberto, dá para ver vila e lava de longe. Um dos melhores spawns para zerar.</p>
-        <div class="cmd-row"><code data-bioma="plains">/locate biome minecraft:plains</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
         <header><h4>Savana</h4><span class="id">savanna</span></header>
         <p><span class="rot">Bom para:</span> vila, cavalos e madeira de acácia.</p>
         <p>Árvores baixas e espaçadas deixam a vista livre, ótimo para achar vila e lava logo no começo.</p>
-        <div class="cmd-row"><code data-bioma="savanna">/locate biome minecraft:savanna</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
@@ -798,21 +819,18 @@ td:first-child { font-weight: 600; white-space: nowrap; }
         <p><span class="rot">Bom para:</span> vila, templo do deserto, cactos e coelhos.</p>
         <p>O templo tem 4 baús e TNT escondida embaixo de uma placa de pressão no meio.</p>
         <p class="cuidado"><span class="rot">Cuidado:</span> quase não tem madeira, e à noite surgem husks, os zumbis do deserto.</p>
-        <div class="cmd-row"><code data-bioma="desert">/locate biome minecraft:desert</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
         <header><h4>Taiga</h4><span class="id">taiga</span></header>
         <p><span class="rot">Bom para:</span> vila, lobos, raposas e frutas doces.</p>
         <p>Comida fácil com as frutas doces e madeira de pinheiro em quantidade.</p>
-        <div class="cmd-row"><code data-bioma="taiga">/locate biome minecraft:taiga</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
         <header><h4>Floresta</h4><span class="id">forest</span></header>
         <p><span class="rot">Bom para:</span> madeira, lobos e maçãs.</p>
         <p>Na 26.3 aparecem acampamentos abandonados nas áreas de floresta. Vale olhar se um surgir no caminho.</p>
-        <div class="cmd-row"><code data-bioma="forest">/locate biome minecraft:forest</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
@@ -820,49 +838,42 @@ td:first-child { font-weight: 600; white-space: nowrap; }
         <p><span class="rot">Bom para:</span> mansão da floresta e o totem da imortalidade, que os evocadores derrubam.</p>
         <p>Também tem cogumelos gigantes e madeira de carvalho escuro.</p>
         <p class="cuidado"><span class="rot">Cuidado:</span> é escura até de dia, então surgem monstros.</p>
-        <div class="cmd-row"><code data-bioma="dark_forest">/locate biome minecraft:dark_forest</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
         <header><h4>Selva</h4><span class="id">jungle</span></header>
         <p><span class="rot">Bom para:</span> templo da selva, bambu, pandas, jaguatiricas, cacau e melancia.</p>
         <p class="cuidado"><span class="rot">Cuidado:</span> mato fechado, difícil de atravessar com pressa.</p>
-        <div class="cmd-row"><code data-bioma="jungle">/locate biome minecraft:jungle</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
         <header><h4>Pântano</h4><span class="id">swamp</span></header>
         <p><span class="rot">Bom para:</span> cabana de bruxa e slimes.</p>
         <p>À noite, os slimes surgem na superfície. Na lua cheia aparecem mais.</p>
-        <div class="cmd-row"><code data-bioma="swamp">/locate biome minecraft:swamp</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
         <header><h4>Manguezal</h4><span class="id">mangrove_swamp</span></header>
         <p><span class="rot">Bom para:</span> lama para tijolos e sapos.</p>
         <p>Um sapo que come um cubo de magma pequeno solta uma luz-sapo, um bloco de iluminação.</p>
-        <div class="cmd-row"><code data-bioma="mangrove_swamp">/locate biome minecraft:mangrove_swamp</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
         <header><h4>Badlands</h4><span class="id">badlands</span></header>
         <p><span class="rot">Bom para:</span> ouro e terracota colorida.</p>
         <p>Tem minério de ouro extra entre as camadas 32 e 256, e minas abandonadas à mostra, com trilhos e baús.</p>
-        <div class="cmd-row"><code data-bioma="badlands">/locate biome minecraft:badlands</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
         <header><h4>Montanhas</h4><span class="id">jagged_peaks e outros</span></header>
         <p><span class="rot">Bom para:</span> esmeralda, ferro e cabras.</p>
         <p>A esmeralda só aparece em biomas de montanha. O ferro fica exposto nas alturas. Também valem stony_peaks, frozen_peaks, snowy_slopes, grove, meadow e windswept_hills.</p>
-        <div class="cmd-row"><code data-bioma="jagged_peaks">/locate biome minecraft:jagged_peaks</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
         <header><h4>Cerejal</h4><span class="id">cherry_grove</span></header>
         <p><span class="rot">Bom para:</span> abelhas, mel, favo e madeira de cerejeira.</p>
         <p>Fica nas montanhas, então também pode ter esmeralda.</p>
-        <div class="cmd-row"><code data-bioma="cherry_grove">/locate biome minecraft:cherry_grove</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
@@ -870,42 +881,36 @@ td:first-child { font-weight: 600; white-space: nowrap; }
         <p><span class="rot">Bom para:</span> base segura, porque monstros não surgem ali naturalmente.</p>
         <p>A vaca-cogumelo dá ensopado de cogumelo sem fim se você usar uma tigela nela.</p>
         <p class="cuidado"><span class="rot">Cuidado:</span> é raro e costuma ficar no meio do oceano.</p>
-        <div class="cmd-row"><code data-bioma="mushroom_fields">/locate biome minecraft:mushroom_fields</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
         <header><h4>Oceano profundo</h4><span class="id">deep_ocean</span></header>
         <p><span class="rot">Bom para:</span> monumento oceânico, com guardiões, prismarinho, esponjas e XP.</p>
         <p class="cuidado"><span class="rot">Cuidado:</span> os guardiões dão fadiga de mineração. Leve leite.</p>
-        <div class="cmd-row"><code data-bioma="deep_ocean">/locate biome minecraft:deep_ocean</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
         <header><h4>Praia</h4><span class="id">beach</span></header>
         <p><span class="rot">Bom para:</span> tesouro enterrado, naufrágios e tartarugas.</p>
         <p>O tesouro enterrado sempre traz o coração do mar, que faz o conduíte, e muitas vezes ferro.</p>
-        <div class="cmd-row"><code data-bioma="beach">/locate biome minecraft:beach</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
 
       <article class="bioma" data-grupo="cavernas" data-dim="ow">
         <div class="faixa"></div>
         <header><h4>Cavernas exuberantes</h4><span class="id">lush_caves</span></header>
         <p><span class="rot">Bom para:</span> axolotes, azaleia, frutas brilhantes e argila.</p>
-        <div class="cmd-row"><code data-bioma="lush_caves">/locate biome minecraft:lush_caves</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
       <article class="bioma" data-grupo="cavernas" data-dim="ow">
         <div class="faixa"></div>
         <header><h4>Cavernas de espeleotemas</h4><span class="id">dripstone_caves</span></header>
         <p><span class="rot">Bom para:</span> cobre em quantidade e espeleotemas.</p>
         <p>Espeleotema pontudo embaixo de lava enche um caldeirão aos poucos: é lava sem fim.</p>
-        <div class="cmd-row"><code data-bioma="dripstone_caves">/locate biome minecraft:dripstone_caves</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
       <article class="bioma" data-grupo="cavernas" data-dim="ow">
         <div class="faixa"></div>
         <header><h4>Escuro profundo</h4><span class="id">deep_dark</span></header>
         <p><span class="rot">Bom para:</span> cidade antiga, com o livro de Furtividade Ágil (Swift Sneak), fragmentos de eco e discos.</p>
         <p class="cuidado"><span class="rot">Cuidado:</span> barulho chama o Warden. Ande agachado e não quebre os sensores.</p>
-        <div class="cmd-row"><code data-bioma="deep_dark">/locate biome minecraft:deep_dark</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
 
       <article class="bioma" data-grupo="nether" data-dim="nether">
@@ -913,35 +918,30 @@ td:first-child { font-weight: 600; white-space: nowrap; }
         <header><h4>Desertos do Nether</h4><span class="id">nether_wastes</span></header>
         <p><span class="rot">Bom para:</span> piglins para o escambo, quartzo, fortalezas e bastiões.</p>
         <p class="cuidado"><span class="rot">Cuidado:</span> ghasts atiram de longe e muito chão é lava.</p>
-        <div class="cmd-row"><code data-bioma="nether_wastes">/locate biome minecraft:nether_wastes</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
       <article class="bioma" data-grupo="nether" data-dim="nether">
         <div class="faixa"></div>
         <header><h4>Floresta carmesim</h4><span class="id">crimson_forest</span></header>
         <p><span class="rot">Bom para:</span> hoglins, que dão comida e couro, e piglins. Bastiões aparecem aqui.</p>
         <p class="cuidado"><span class="rot">Cuidado:</span> hoglins atacam e jogam você longe.</p>
-        <div class="cmd-row"><code data-bioma="crimson_forest">/locate biome minecraft:crimson_forest</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
       <article class="bioma" data-grupo="nether" data-dim="nether">
         <div class="faixa"></div>
         <header><h4>Floresta distorcida</h4><span class="id">warped_forest</span></header>
         <p><span class="rot">Bom para:</span> pérolas do Ender e descanso.</p>
         <p>É o bioma mais calmo do Nether. Fora os endermen, quase nada hostil surge ali.</p>
-        <div class="cmd-row"><code data-bioma="warped_forest">/locate biome minecraft:warped_forest</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
       <article class="bioma" data-grupo="nether" data-dim="nether">
         <div class="faixa"></div>
         <header><h4>Vale das almas</h4><span class="id">soul_sand_valley</span></header>
         <p><span class="rot">Bom para:</span> enxergar fortalezas de longe e pegar areia das almas, que invoca o Wither.</p>
         <p class="cuidado"><span class="rot">Cuidado:</span> esqueletos e ghasts, e a areia das almas deixa você lento.</p>
-        <div class="cmd-row"><code data-bioma="soul_sand_valley">/locate biome minecraft:soul_sand_valley</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
       <article class="bioma" data-grupo="nether" data-dim="nether">
         <div class="faixa"></div>
         <header><h4>Deltas de basalto</h4><span class="id">basalt_deltas</span></header>
         <p><span class="rot">Bom para:</span> cubos de magma e o creme de magma das poções de resistência ao fogo.</p>
         <p class="cuidado"><span class="rot">Cuidado:</span> terreno difícil e nenhum bastião. Evite numa run.</p>
-        <div class="cmd-row"><code data-bioma="basalt_deltas">/locate biome minecraft:basalt_deltas</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
 
       <article class="bioma" data-grupo="end" data-dim="end">
@@ -949,7 +949,6 @@ td:first-child { font-weight: 600; white-space: nowrap; }
         <header><h4>Ilhas externas do End</h4><span class="id">end_highlands</span></header>
         <p><span class="rot">Bom para:</span> cidades e navios do End, com élitros e cabeça de dragão, e shulkers para as caixas.</p>
         <p>Chegue pelo portal de passagem que aparece depois do dragão: jogue uma pérola nele.</p>
-        <div class="cmd-row"><code data-bioma="end_highlands">/locate biome minecraft:end_highlands</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
       </article>
     </div>
   </div>
@@ -1004,7 +1003,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 
     <div class="secao-cab" style="margin-top: 12px;" id="farms">
       <h3>Farms</h3>
-      <p class="lede">Comece pelas fáceis: elas dão o material das maiores. Projetos de redstone mudam de uma versão para outra, então confira se o tutorial que você seguir é da sua versão e edição.</p>
+      <p class="lede">Comece pelas fáceis: elas dão o material das maiores. Abra o passo a passo de cada uma. Projetos de redstone mudam de uma versão para outra, então, quando o passo pedir um tutorial, confira se ele é da sua versão e edição.</p>
     </div>
 
     <div class="filtros" role="group" aria-label="Filtrar farms por dificuldade" data-filtro-alvo="#lista-farms">
@@ -1023,6 +1022,14 @@ td:first-child { font-weight: 600; white-space: nowrap; }
           <div><dt>Como funciona</dt><dd>a cana cresce, um observador vê o bloco novo e aciona um pistão que a quebra. Funis levam tudo para um baú.</dd></div>
           <div><dt>Edição</dt><dd>Java e Bedrock.</dd></div>
         </dl>
+        <details class="como"><summary>Passo a passo</summary><ol>
+          <li>Cave um canal de água de 1 bloco de largura e deixe uma fileira de terra ou areia colada nele.</li>
+          <li>Plante a cana nessa fileira. Ela só cresce encostada na água.</li>
+          <li>Atrás da cana, na altura do 2º bloco dela, coloque uma fileira de pistões virados para a cana.</li>
+          <li>Ligue cada pistão a um observador que vigie o 2º bloco da cana. O observador olha pela face com o “rosto” e manda o sinal pela traseira, onde fica o ponto vermelho. A posição exata muda de projeto para projeto: copie o desenho de um tutorial da sua edição.</li>
+          <li>Do lado oposto, faça uma fileira de funis no chão ou um canal de água que leve a cana quebrada até um baú.</li>
+          <li>Fique por perto: a cana só cresce quando a área está carregada.</li>
+        </ol></details>
       </article>
       <article class="farm" data-grupo="facil">
         <header><h4>Abóbora e melancia</h4><span class="nivel nivel-facil">Fácil</span></header>
@@ -1032,6 +1039,13 @@ td:first-child { font-weight: 600; white-space: nowrap; }
           <div><dt>Como funciona</dt><dd>o mesmo princípio da cana: um observador vê o fruto nascer ao lado do pé e um pistão quebra.</dd></div>
           <div><dt>Edição</dt><dd>Java e Bedrock.</dd></div>
         </dl>
+        <details class="como"><summary>Passo a passo</summary><ol>
+          <li>Faça fileiras de terra arada com água a no máximo 4 blocos de distância.</li>
+          <li>Plante as sementes em fileiras alternadas: ao lado de cada pé fica um bloco livre de terra ou grama, onde o fruto nasce.</li>
+          <li>Versão manual: quebre só o fruto com machado. O pé fica e dá fruto de novo.</li>
+          <li>Versão automática: em cima do bloco onde o fruto nasce, um pistão empurrado por um observador quebra o fruto, como na farm de cana.</li>
+          <li>Funis ou água embaixo levam os frutos a um baú. Venda para o aldeão agricultor por esmeraldas.</li>
+        </ol></details>
       </article>
       <article class="farm" data-grupo="facil">
         <header><h4>Trigo e cenoura com aldeão</h4><span class="nivel nivel-facil">Fácil</span></header>
@@ -1041,6 +1055,13 @@ td:first-child { font-weight: 600; white-space: nowrap; }
           <div><dt>Como funciona</dt><dd>um aldeão agricultor colhe e replanta. Quando junta muito, joga para outro aldeão, e um funil no caminho recolhe.</dd></div>
           <div><dt>Edição</dt><dd>Java e Bedrock, com projetos diferentes.</dd></div>
         </dl>
+        <details class="como"><summary>Passo a passo</summary><ol>
+          <li>Faça um cercado com terra arada e água, e plante trigo, cenoura ou batata.</li>
+          <li>Coloque dentro uma composteira e um aldeão sem profissão: ele vira agricultor. Ou traga um agricultor de uma vila.</li>
+          <li>Ele colhe e replanta sozinho. Quando junta comida, joga para outro aldeão.</li>
+          <li>Prenda um segundo aldeão do lado de fora do cercado e ponha funis entre os dois: a comida jogada cai neles e vai para um baú.</li>
+          <li>Ilumine tudo para não nascer monstro dentro.</li>
+        </ol></details>
       </article>
       <article class="farm" data-grupo="facil">
         <header><h4>Frango assado automático</h4><span class="nivel nivel-facil">Fácil</span></header>
@@ -1050,6 +1071,13 @@ td:first-child { font-weight: 600; white-space: nowrap; }
           <div><dt>Como funciona</dt><dd>galinhas presas botam ovos num funil. Um ejetor choca pintinhos. Quando crescem, ficam altos o bastante para encostar numa lâmina de lava e cair como frango assado.</dd></div>
           <div><dt>Edição</dt><dd>Java e Bedrock.</dd></div>
         </dl>
+        <details class="como"><summary>Passo a passo</summary><ol>
+          <li>Prenda algumas galinhas em cima de um funil, num espaço cercado de vidro.</li>
+          <li>O funil leva os ovos até um ejetor. Ligue o ejetor a um relógio de redstone (ou a um botão) para ele atirar os ovos.</li>
+          <li>Os pintinhos nascem numa câmara fechada logo à frente.</li>
+          <li>Coloque lava presa no teto da câmara na altura certa: o pintinho é baixo e não encosta, mas o adulto encosta e vira frango assado. A altura exata depende do piso, então siga um tutorial.</li>
+          <li>Funis no piso levam o frango e as penas para um baú.</li>
+        </ol></details>
       </article>
       <article class="farm" data-grupo="media">
         <header><h4>Ferro</h4><span class="nivel nivel-media">Média</span></header>
@@ -1059,6 +1087,14 @@ td:first-child { font-weight: 600; white-space: nowrap; }
           <div><dt>Como funciona</dt><dd><span class="tag tag-java">Java</span>3 aldeões com camas veem um zumbi preso, ficam com medo e chamam um golem de ferro. O golem cai num ponto onde morre, e o ferro vai para o funil.</dd></div>
           <div><dt>Edição</dt><dd>No Bedrock as regras são outras (depende de vila com muitos aldeões e camas). Siga um projeto feito para Bedrock.</dd></div>
         </dl>
+        <details class="como"><summary>Passo a passo</summary><ol>
+          <li>Escolha um lugar longe de vilas, para os golens nascerem só na farm.</li>
+          <li>Faça uma cabine com 3 camas e prenda 3 aldeões, cada um perto de uma cama.</li>
+          <li>Prenda um zumbi onde os aldeões vejam mas ele não alcance, coberto do sol. Dê nome a ele com uma etiqueta para não sumir.</li>
+          <li>Em volta da cabine, deixe um piso onde o golem possa nascer e água que empurre ele para um buraco no meio.</li>
+          <li>No buraco, lava presa por uma placa encosta na cabeça do golem e mata. Um funil embaixo leva o ferro e as papoulas a um baú.</li>
+          <li>No Bedrock as regras são outras: use um projeto feito para Bedrock.</li>
+        </ol></details>
       </article>
       <article class="farm" data-grupo="media">
         <header><h4>Mobs (sala escura)</h4><span class="nivel nivel-media">Média</span></header>
@@ -1068,6 +1104,14 @@ td:first-child { font-weight: 600; white-space: nowrap; }
           <div><dt>Como funciona</dt><dd>andares totalmente escuros. A água empurra os monstros para um poço. Uma queda de uns 22 blocos deixa quase todos com um golpe de vida, e você dá esse golpe e fica com a XP.</dd></div>
           <div><dt>Edição</dt><dd>Java e Bedrock.</dd></div>
         </dl>
+        <details class="como"><summary>Passo a passo</summary><ol>
+          <li>Construa bem alto sobre o oceano, longe de cavernas. Assim os monstros só nascem na farm.</li>
+          <li>Faça 2 ou 3 andares de piso cercado, com canais de água que levem até um buraco no centro.</li>
+          <li>Cubra tudo: lá dentro precisa ficar totalmente escuro.</li>
+          <li>Do buraco, faça um poço de queda de uns 22 blocos até uma sala de coleta. Os monstros chegam quase sem vida.</li>
+          <li>Fique de espera (AFK) na sala de coleta: no Java, a mais de 24 e a menos de 128 blocos dos andares. No Bedrock os monstros só nascem até uns 44 blocos de você, então a farm fica bem mais perto.</li>
+          <li>Dê o último golpe para ganhar a XP. Funis embaixo pegam ossos, flechas, pólvora e linha.</li>
+        </ol></details>
       </article>
       <article class="farm" data-grupo="media">
         <header><h4>Salão de troca</h4><span class="nivel nivel-media">Média</span></header>
@@ -1077,6 +1121,13 @@ td:first-child { font-weight: 600; white-space: nowrap; }
           <div><dt>Como funciona</dt><dd>cada aldeão fica num cubículo com a estação de trabalho dele. Troque a estação do bibliotecário até ele oferecer o livro que você quer. Isso só funciona antes da primeira troca. Curar um aldeão zumbi com poção de fraqueza e maçã dourada dá desconto.</dd></div>
           <div><dt>Edição</dt><dd>Java e Bedrock. Os livros oferecidos podem variar por versão e pelo bioma da vila.</dd></div>
         </dl>
+        <details class="como"><summary>Passo a passo</summary><ol>
+          <li>Traga aldeões de uma vila de barco ou vagoneta, ou cure aldeões zumbis.</li>
+          <li>Faça cubículos de 1 bloco, cada um com a estação de trabalho do aldeão na frente (um atril para o bibliotecário).</li>
+          <li>Olhe as trocas do bibliotecário. Se não for o livro que você quer, quebre o atril e coloque de novo: as trocas mudam.</li>
+          <li>Achou o livro? Faça uma troca para travar a oferta. Depois da primeira troca, ele não muda mais.</li>
+          <li>Para desconto, deixe um zumbi transformar o aldeão e cure com poção de fraqueza arremessável e maçã dourada. No Difícil a chance de ele virar zumbi é maior.</li>
+        </ol></details>
       </article>
       <article class="farm" data-grupo="media">
         <header><h4>Slime</h4><span class="nivel nivel-media">Média</span></header>
@@ -1086,6 +1137,13 @@ td:first-child { font-weight: 600; white-space: nowrap; }
           <div><dt>Como funciona</dt><dd>ilumine tudo em volta, abra uma área plana dentro do chunk e leve os slimes até um ponto de abate.</dd></div>
           <div><dt>Edição</dt><dd>Java e Bedrock, com slime chunks em lugares diferentes.</dd></div>
         </dl>
+        <details class="como"><summary>Passo a passo</summary><ol>
+          <li>Ache um slime chunk no localizador do Chunkbase. Um chunk é um quadrado de 16 por 16 blocos.</li>
+          <li>Desça dentro do chunk até abaixo da camada 40 e escave uma área plana do tamanho do chunk, com 3 blocos de altura. Pode fazer vários andares.</li>
+          <li>Ilumine as cavernas em volta: os slimes nascem no escuro ou no claro, os outros monstros só no escuro.</li>
+          <li>Fique a mais de 24 blocos da área e espere. Leve os slimes para um ponto de abate, ou deixe um golem de ferro ali: ele ataca slimes.</li>
+          <li>Funis no chão do abate levam as bolas de slime a um baú.</li>
+        </ol></details>
       </article>
       <article class="farm" data-grupo="avancada">
         <header><h4>XP de enderman</h4><span class="nivel nivel-avancada">Avançada</span></header>
@@ -1095,6 +1153,14 @@ td:first-child { font-weight: 600; white-space: nowrap; }
           <div><dt>Como funciona</dt><dd>os endermen surgem numa plataforma e são levados até você, que só dá o último golpe. <span class="tag tag-java">Java</span>Um endermite preso atrai os endermen.</dd></div>
           <div><dt>Edição</dt><dd>Java e Bedrock, com projetos bem diferentes.</dd></div>
         </dl>
+        <details class="como"><summary>Passo a passo</summary><ol>
+          <li>Derrote o dragão e volte ao End.</li>
+          <li>Longe das ilhas, no vazio, construa uma plataforma grande: os endermen vão nascer nela.</li>
+          <li>Faça uma beirada que leve os endermen a cair num poço, até uma sala abaixo onde você espera.</li>
+          <li>No Java, um endermite com nome, preso numa vagoneta perto da beirada, atrai os endermen.</li>
+          <li>Fique num espaço de 2 blocos de altura: o enderman tem 3 e não entra. Dê o último golpe para ganhar a XP.</li>
+          <li>No Bedrock o projeto é bem diferente: siga um tutorial feito para Bedrock.</li>
+        </ol></details>
       </article>
       <article class="farm" data-grupo="avancada">
         <header><h4>Ouro</h4><span class="nivel nivel-avancada">Avançada</span></header>
@@ -1104,6 +1170,13 @@ td:first-child { font-weight: 600; white-space: nowrap; }
           <div><dt>Como funciona</dt><dd>piglins zumbificados surgem em grandes plataformas e caem até um ponto de abate. É um projeto grande: siga um tutorial da sua versão.</dd></div>
           <div><dt>Edição</dt><dd>Java e Bedrock, com projetos diferentes.</dd></div>
         </dl>
+        <details class="como"><summary>Passo a passo</summary><ol>
+          <li>No Nether, construa sobre um mar de lava, longe do chão, para os mobs nascerem só na farm.</li>
+          <li>Faça plataformas grandes de blocos de magma: piglins zumbificados nascem nelas e quase nenhum outro mob nasce.</li>
+          <li>Leve os piglins para a beirada (no Java, um ovo de tartaruga atrai eles) e faça eles caírem até uma sala de abate.</li>
+          <li>Dê o último golpe para cair XP e barras de ouro. Cuidado: bater em um deixa os outros bravos.</li>
+          <li>É um projeto grande: siga um tutorial da sua versão e edição.</li>
+        </ol></details>
       </article>
       <article class="farm" data-grupo="avancada">
         <header><h4>Guardião</h4><span class="nivel nivel-avancada">Avançada</span></header>
@@ -1113,6 +1186,13 @@ td:first-child { font-weight: 600; white-space: nowrap; }
           <div><dt>Como funciona</dt><dd>você drena parte do monumento e monta uma área onde os guardiões surgem e são levados ao abate. Antes, derrote os 3 guardiões anciões.</dd></div>
           <div><dt>Edição</dt><dd>Java e Bedrock.</dd></div>
         </dl>
+        <details class="como"><summary>Passo a passo</summary><ol>
+          <li>Ache um monumento no oceano profundo. Leve poções de respiração aquática e de visão noturna, e leite para tirar a fadiga.</li>
+          <li>Derrote os 3 guardiões anciões: enquanto eles vivem, a fadiga de mineração não para.</li>
+          <li>Escolha uma parte do monumento e tire a água com esponjas ou areia.</li>
+          <li>Monte andares cheios de água onde os guardiões nascem e uma queda que leve eles para fora da água, até onde você espera.</li>
+          <li>Dê o último golpe para a XP. Funis pegam prismarinho e peixe.</li>
+        </ol></details>
       </article>
     </div>
   </div>
@@ -1126,16 +1206,49 @@ td:first-child { font-weight: 600; white-space: nowrap; }
         <h2 id="missoes-t">Missões difíceis</h2>
         <p class="contador"><span id="m-feitas">0</span> de <span id="m-total">0</span></p>
       </div>
-      <p class="lede">Para quando zerar ficar fácil. As primeiras são desafios de run; as outras são as conquistas mais difíceis do jogo. Toque numa missão para marcar como cumprida.</p>
+      <p class="lede">Para quando zerar ficar fácil. As primeiras são desafios de run; as outras são as conquistas mais difíceis do jogo. Toque numa missão para marcar como cumprida e abra “Como fazer” para ver o caminho.</p>
     </div>
 
     <div class="grupo-missoes">
       <h3>Desafios de run</h3>
       <div class="missoes">
-        <label class="missao" data-tipo="run"><input type="checkbox" class="chk-m" id="m-1h"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Zerar em menos de 1 hora</span><span class="d">Do spawn aos créditos com o cronômetro do roteiro rodando.</span></span></label>
-        <label class="missao" data-tipo="run"><input type="checkbox" class="chk-m" id="m-hardcore"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Zerar no Hardcore</span><span class="d">Uma vida só. Se morrer, o mundo acaba.</span></span></label>
-        <label class="missao" data-tipo="run"><input type="checkbox" class="chk-m" id="m-sem-escambo"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Zerar sem escambo</span><span class="d">Nenhuma troca com piglins. As pérolas vêm só dos endermen.</span></span></label>
-        <label class="missao" data-tipo="run"><input type="checkbox" class="chk-m" id="m-sem-armadura"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Dragão sem armadura</span><span class="d">Entrar no End e derrotar o dragão sem nenhuma peça de armadura.</span></span></label>
+        <div class="missao-card">
+          <label class="missao" data-tipo="run"><input type="checkbox" class="chk-m" id="m-1h"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Zerar em menos de 1 hora</span><span class="d">Do spawn aos créditos com o cronômetro do roteiro rodando.</span></span></label>
+          <details class="como"><summary>Como fazer</summary><ol>
+            <li>Use o testador para achar uma seed com vila, portal e bastião perto.</li>
+            <li>Siga o roteiro e use o cronômetro para ver em qual etapa você perde mais tempo.</li>
+            <li>Treine as partes difíceis em separado: escambo no bastião, achar a fortaleza com 2 olhos, e camas no dragão.</li>
+            <li>Não pare para minerar diamante: ferro e ouro bastam.</li>
+          </ol></details>
+        </div>
+        <div class="missao-card">
+          <label class="missao" data-tipo="run"><input type="checkbox" class="chk-m" id="m-hardcore"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Zerar no Hardcore</span><span class="d">Uma vida só. Se morrer, o mundo acaba.</span></span></label>
+          <details class="como"><summary>Como fazer</summary><ol>
+            <li>Escolha o modo Hardcore na hora de criar o mundo. Ele não pode ser ligado depois.</li>
+            <li>Antes do Nether, faça armadura de ferro e um escudo, e leve balde de água.</li>
+            <li>Guarde poção de resistência ao fogo para a fortaleza e para o bastião.</li>
+            <li>Se conseguir um totem da imortalidade, segure na mão secundária.</li>
+            <li>Na dúvida, recue: um portal ou um buraco tapado salvam a run.</li>
+          </ol></details>
+        </div>
+        <div class="missao-card">
+          <label class="missao" data-tipo="run"><input type="checkbox" class="chk-m" id="m-sem-escambo"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Zerar sem escambo</span><span class="d">Nenhuma troca com piglins. As pérolas vêm só dos endermen.</span></span></label>
+          <details class="como"><summary>Como fazer</summary><ol>
+            <li>Vá à floresta distorcida do Nether: é onde mais nascem endermen.</li>
+            <li>Use espada com Pilhagem, que aumenta a chance de pérola.</li>
+            <li>Faça um abrigo de 2 blocos de altura: o enderman tem 3 e não entra. Olhe para ele, recue para o abrigo e ataque as pernas.</li>
+            <li>Junte 12 a 14 pérolas e siga o roteiro normal.</li>
+          </ol></details>
+        </div>
+        <div class="missao-card">
+          <label class="missao" data-tipo="run"><input type="checkbox" class="chk-m" id="m-sem-armadura"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Dragão sem armadura</span><span class="d">Entrar no End e derrotar o dragão sem nenhuma peça de armadura.</span></span></label>
+          <details class="como"><summary>Como fazer</summary><ol>
+            <li>Leve arco, muitas flechas, blocos, balde de água e comida. Escudo não é armadura e pode ir.</li>
+            <li>Derrube todos os cristais antes de enfrentar o dragão.</li>
+            <li>Ataque com camas quando ele pousar no portal: elas explodem no End. Fique atrás de um bloco.</li>
+            <li>Poções de cura ou regeneração ajudam muito.</li>
+          </ol></details>
+        </div>
       </div>
     </div>
 
@@ -1143,22 +1256,145 @@ td:first-child { font-weight: 600; white-space: nowrap; }
       <h3>Conquistas difíceis</h3>
       <p class="criterio">Os nomes em inglês são os das conquistas do Java. No Bedrock a lista de conquistas é outra, mas os desafios valem do mesmo jeito.</p>
       <div class="missoes">
-        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-efeitos"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Todos os efeitos</span><span class="d">Ficar com todos os efeitos da lista da conquista ao mesmo tempo. É a mais difícil do jogo, e a lista muda de uma versão para outra.</span><span class="d nome-jogo">How Did We Get Here?</span></span></label>
-        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-biomas"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Visitar todos os biomas</span><span class="d">Passar por todos os biomas do Overworld que a conquista pede.</span><span class="d nome-jogo">Adventuring Time</span></span></label>
-        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-monstros"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Caçar todos os monstros</span><span class="d">Derrotar pelo menos um de cada monstro hostil do jogo.</span><span class="d nome-jogo">Monsters Hunted</span></span></label>
-        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-animais"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Criar todos os animais</span><span class="d">Fazer filhote de cada animal que procria.</span><span class="d nome-jogo">Two by Two</span></span></label>
-        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-comidas"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Comer de tudo</span><span class="d">Comer cada comida do jogo, inclusive carne podre e batata venenosa.</span><span class="d nome-jogo">A Balanced Diet</span></span></label>
-        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-sinalizador"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Sinalizador completo</span><span class="d">Pirâmide de 4 andares: 164 blocos de ferro, ouro, diamante, esmeralda ou netherite.</span><span class="d nome-jogo">Beaconator</span></span></label>
-        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-netherite"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Armadura toda de netherite</span><span class="d">Vestir as 4 peças de netherite ao mesmo tempo.</span><span class="d nome-jogo">Cover Me in Debris</span></span></label>
-        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-enxada"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Enxada de netherite</span><span class="d">Gastar uma barra de netherite inteira numa enxada.</span><span class="d nome-jogo">Serious Dedication</span></span></label>
-        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-sniper"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Franco-atirador</span><span class="d">Matar um esqueleto com flecha a 50 blocos de distância ou mais.</span><span class="d nome-jogo">Sniper Duel</span></span></label>
-        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-ghast"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Devolver a bola de fogo</span><span class="d">Matar um ghast rebatendo a própria bola de fogo dele.</span><span class="d nome-jogo">Return to Sender</span></span></label>
-        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-alianca"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Ghast no Overworld</span><span class="d">Trazer um ghast vivo do Nether pelo portal e derrotá-lo no Overworld.</span><span class="d nome-jogo">Uneasy Alliance</span></span></label>
-        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-heroi"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Herói da vila</span><span class="d">Vencer todas as ondas de um ataque de saqueadores a uma vila.</span><span class="d nome-jogo">Hero of the Village</span></span></label>
-        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-raio"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Raio no aldeão</span><span class="d">Acertar um aldeão com um raio, usando tridente com Canalização numa tempestade.</span><span class="d nome-jogo">Very Very Frightening</span></span></label>
-        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-besta"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Cinco de uma vez</span><span class="d">Matar 5 mobs de tipos diferentes com um único disparo de besta. Perfuração ajuda.</span><span class="d nome-jogo">Arbalistic</span></span></label>
-        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-maca"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Golpe de maça</span><span class="d">Causar 50 corações de dano num golpe só com a maça.</span><span class="d nome-jogo">Over-Overkill</span></span></label>
-        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-dragao2"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">O dragão de novo</span><span class="d">Reviver o dragão com 4 cristais do End em volta do portal de saída.</span><span class="d nome-jogo">The End... Again...</span></span></label>
+        <div class="missao-card">
+          <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-efeitos"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Todos os efeitos</span><span class="d">Ficar com todos os efeitos da lista da conquista ao mesmo tempo. É a mais difícil do jogo, e a lista muda de uma versão para outra.</span><span class="d nome-jogo">How Did We Get Here?</span></span></label>
+          <details class="como"><summary>Como fazer</summary><ol>
+            <li>Abra a conquista e veja a lista de efeitos da sua versão.</li>
+            <li>Prepare antes as poções de duração longa (velocidade, força, invisibilidade, respiração, resistência ao fogo e outras).</li>
+            <li>Junte efeitos de comida e de mobs: veneno do baiacu, levitação do shulker, wither do esqueleto wither, fadiga do guardião ancião.</li>
+            <li>Deixe os efeitos curtos por último e tome tudo no mesmo lugar, um logo depois do outro.</li>
+          </ol></details>
+        </div>
+        <div class="missao-card">
+          <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-biomas"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Visitar todos os biomas</span><span class="d">Passar por todos os biomas do Overworld que a conquista pede.</span><span class="d nome-jogo">Adventuring Time</span></span></label>
+          <details class="como"><summary>Como fazer</summary><ol>
+            <li>Faça um mapa grande ou consiga élitros com foguetes para voar longe.</li>
+            <li>No Java, o F3 mostra o nome do bioma onde você está.</li>
+            <li>Use o localizador de biomas do Chunkbase com a sua seed para planejar a rota, sem comando.</li>
+            <li>A tela de conquistas mostra quantos biomas faltam.</li>
+          </ol></details>
+        </div>
+        <div class="missao-card">
+          <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-monstros"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Caçar todos os monstros</span><span class="d">Derrotar pelo menos um de cada monstro hostil do jogo.</span><span class="d nome-jogo">Monsters Hunted</span></span></label>
+          <details class="como"><summary>Como fazer</summary><ol>
+            <li>Muitos monstros aparecem sozinhos à noite e nas cavernas. Os raros pedem um lugar certo, como nos passos abaixo.</li>
+            <li>Ataque de saqueadores dá devastador, evocador e vex. Monumento dá guardião e guardião ancião.</li>
+            <li>Bastião dá piglin bruto, cidade do End dá shulker e as Trial Chambers dão breeze e bogged.</li>
+            <li>Também contam o dragão, o Wither e o Warden. Para o Warden, prepare-se bem ou fuja depois.</li>
+          </ol></details>
+        </div>
+        <div class="missao-card">
+          <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-animais"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Criar todos os animais</span><span class="d">Fazer filhote de cada animal que procria.</span><span class="d nome-jogo">Two by Two</span></span></label>
+          <details class="como"><summary>Como fazer</summary><ol>
+            <li>Cada animal tem uma comida: trigo para vaca, ovelha e cabra; cenoura para porco e coelho; sementes para galinha.</li>
+            <li>Os difíceis: tartaruga com grama marinha, panda com bambu, raposa com frutas doces, sapo com bola de slime, axolote com balde de peixe tropical.</li>
+            <li>Camelo com cacto, tatu com olho de aranha, abelha com flores. No Nether: hoglin com fungo carmesim e lavagante com fungo distorcido.</li>
+            <li>O farejador nasce de ovo achado em areia suspeita nas ruínas do oceano quente. Mula vem de cavalo com burro.</li>
+          </ol></details>
+        </div>
+        <div class="missao-card">
+          <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-comidas"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Comer de tudo</span><span class="d">Comer cada comida do jogo, inclusive carne podre e batata venenosa.</span><span class="d nome-jogo">A Balanced Diet</span></span></label>
+          <details class="como"><summary>Como fazer</summary><ol>
+            <li>Faça uma lista e marque o que já comeu.</li>
+            <li>As raras: fruta do coro (ilhas do End), maçã dourada encantada (só em baús), baiacu e ensopado suspeito.</li>
+            <li>Coma também as ruins: carne podre, olho de aranha e batata venenosa. Leite tira o veneno.</li>
+            <li>Mel em garrafa vem da colmeia: use a garrafa na colmeia cheia, com uma fogueira embaixo para as abelhas não atacarem.</li>
+          </ol></details>
+        </div>
+        <div class="missao-card">
+          <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-sinalizador"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Sinalizador completo</span><span class="d">Pirâmide de 4 andares: 164 blocos de ferro, ouro, diamante, esmeralda ou netherite.</span><span class="d nome-jogo">Beaconator</span></span></label>
+          <details class="como"><summary>Como fazer</summary><ol>
+            <li>Derrote o Wither para conseguir a estrela do Nether. Crânios de esqueleto wither vêm da fortaleza do Nether.</li>
+            <li>Invoque o Wither num túnel fechado embaixo da terra, com espada de Julgamento, poção de força e maçãs douradas.</li>
+            <li>Junte 164 blocos de ferro, ouro, esmeralda, diamante ou netherite (ferro e ouro são os mais fáceis) e monte a pirâmide de 9 + 25 + 49 + 81.</li>
+            <li>Coloque o sinalizador no topo.</li>
+          </ol></details>
+        </div>
+        <div class="missao-card">
+          <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-netherite"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Armadura toda de netherite</span><span class="d">Vestir as 4 peças de netherite ao mesmo tempo.</span><span class="d nome-jogo">Cover Me in Debris</span></span></label>
+          <details class="como"><summary>Como fazer</summary><ol>
+            <li>Cada peça precisa de 1 barra de netherite e 1 molde de melhoria. São 4 barras e 4 moldes.</li>
+            <li>Cada barra são 4 fragmentos e 4 barras de ouro. Cada fragmento vem de 1 detrito antigo derretido: 16 detritos ao todo.</li>
+            <li>Procure os detritos perto da camada 15 do Nether. Camas e TNT explodem a pedra e revelam muitos de uma vez.</li>
+            <li>O molde vem nos baús do bastião. Copie com 7 diamantes e 1 netherrack.</li>
+          </ol></details>
+        </div>
+        <div class="missao-card">
+          <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-enxada"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Enxada de netherite</span><span class="d">Gastar uma barra de netherite inteira numa enxada.</span><span class="d nome-jogo">Serious Dedication</span></span></label>
+          <details class="como"><summary>Como fazer</summary><ol>
+            <li>Faça uma enxada de diamante.</li>
+            <li>Consiga 1 barra de netherite (4 fragmentos e 4 barras de ouro) e 1 molde de melhoria.</li>
+            <li>Junte os três na mesa de ferraria.</li>
+          </ol></details>
+        </div>
+        <div class="missao-card">
+          <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-sniper"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Franco-atirador</span><span class="d">Matar um esqueleto com flecha a 50 blocos de distância ou mais.</span><span class="d nome-jogo">Sniper Duel</span></span></label>
+          <details class="como"><summary>Como fazer</summary><ol>
+            <li>Use arco com Força e procure um lugar aberto, como um deserto ou uma planície à noite.</li>
+            <li>Afaste-se do esqueleto e conte os blocos: precisa ser pelo menos 50.</li>
+            <li>Mire um pouco acima dele: a flecha cai no caminho.</li>
+            <li>Esteja com a vida cheia, porque ele também atira.</li>
+          </ol></details>
+        </div>
+        <div class="missao-card">
+          <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-ghast"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Devolver a bola de fogo</span><span class="d">Matar um ghast rebatendo a própria bola de fogo dele.</span><span class="d nome-jogo">Return to Sender</span></span></label>
+          <details class="como"><summary>Como fazer</summary><ol>
+            <li>Fique num lugar aberto do Nether, com blocos para se proteger.</li>
+            <li>Quando a bola de fogo vier, bata nela com a espada ou a mão na hora em que ela chegar.</li>
+            <li>Ela volta na direção que você está olhando: mire no ghast.</li>
+          </ol></details>
+        </div>
+        <div class="missao-card">
+          <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-alianca"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Ghast no Overworld</span><span class="d">Trazer um ghast vivo do Nether pelo portal e derrotá-lo no Overworld.</span><span class="d nome-jogo">Uneasy Alliance</span></span></label>
+          <details class="como"><summary>Como fazer</summary><ol>
+            <li>Faça um portal grande perto de onde um ghast voa.</li>
+            <li>Puxe o ghast até o portal com uma vara de pesca, sem matar.</li>
+            <li>Do outro lado, no Overworld, mate o ghast. Ele precisa morrer no Overworld para valer.</li>
+            <li>Proteja o portal do lado do Overworld: as bolas de fogo do ghast podem apagar o portal.</li>
+          </ol></details>
+        </div>
+        <div class="missao-card">
+          <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-heroi"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Herói da vila</span><span class="d">Vencer todas as ondas de um ataque de saqueadores a uma vila.</span><span class="d nome-jogo">Hero of the Village</span></span></label>
+          <details class="como"><summary>Como fazer</summary><ol>
+            <li>Ache um posto de saqueadores e derrote o capitão, o que carrega o estandarte.</li>
+            <li>Ele deixa uma garrafa sinistra. Beba e entre numa vila: o ataque começa.</li>
+            <li>Prepare a vila antes: muros, golens de ferro, besta, escudo e armadura boa.</li>
+            <li>Vença todas as ondas sem que os aldeões morram todos.</li>
+          </ol></details>
+        </div>
+        <div class="missao-card">
+          <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-raio"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Raio no aldeão</span><span class="d">Acertar um aldeão com um raio, usando tridente com Canalização numa tempestade.</span><span class="d nome-jogo">Very Very Frightening</span></span></label>
+          <details class="como"><summary>Como fazer</summary><ol>
+            <li>Consiga um tridente: os afogados com tridente às vezes deixam cair um.</li>
+            <li>Encante com Canalização (livro de bibliotecário ou da pesca).</li>
+            <li>Espere uma tempestade com raios, fique a céu aberto e jogue o tridente num aldeão.</li>
+            <li>O aldeão vira bruxa.</li>
+          </ol></details>
+        </div>
+        <div class="missao-card">
+          <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-besta"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Cinco de uma vez</span><span class="d">Matar 5 mobs de tipos diferentes com um único disparo de besta. Perfuração ajuda.</span><span class="d nome-jogo">Arbalistic</span></span></label>
+          <details class="como"><summary>Como fazer</summary><ol>
+            <li>Encante uma besta com Perfuração IV: a flecha atravessa vários mobs.</li>
+            <li>Junte 5 mobs de tipos diferentes em fila, por exemplo em barcos ou vagonetas lado a lado.</li>
+            <li>Atire de frente para a fila, de modo que a flecha passe por todos.</li>
+          </ol></details>
+        </div>
+        <div class="missao-card">
+          <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-maca"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Golpe de maça</span><span class="d">Causar 50 corações de dano num golpe só com a maça.</span><span class="d nome-jogo">Over-Overkill</span></span></label>
+          <details class="como"><summary>Como fazer</summary><ol>
+            <li>Encante a maça com Densidade, que aumenta o dano conforme a queda.</li>
+            <li>Suba muito alto com élitros ou cargas de vento e caia direto no alvo.</li>
+            <li>Tome poção de força antes e escolha um mob com bastante vida, como um golem de ferro.</li>
+          </ol></details>
+        </div>
+        <div class="missao-card">
+          <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-dragao2"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">O dragão de novo</span><span class="d">Reviver o dragão com 4 cristais do End em volta do portal de saída.</span><span class="d nome-jogo">The End... Again...</span></span></label>
+          <details class="como"><summary>Como fazer</summary><ol>
+            <li>Faça 4 cristais do End: cada um leva 7 vidros, 1 olho do Ender e 1 lágrima de ghast.</li>
+            <li>Coloque um cristal em cada lado do portal de saída, no centro da ilha do End.</li>
+            <li>O dragão volta. Derrote de novo como no roteiro.</li>
+          </ol></details>
+        </div>
       </div>
     </div>
   </div>
@@ -1244,23 +1480,11 @@ td:first-child { font-weight: 600; white-space: nowrap; }
     document.querySelectorAll(".edicao button").forEach(function (b) {
       b.setAttribute("aria-pressed", String(b.getAttribute("data-ed") === ed));
     });
-    document.querySelectorAll("code[data-bioma]").forEach(function (c) {
-      var id = c.getAttribute("data-bioma");
-      c.textContent = ed === "java" ? "/locate biome minecraft:" + id : "/locate biome " + id;
-    });
   }
   document.querySelectorAll(".edicao button").forEach(function (b) {
     b.addEventListener("click", function () { ed = b.getAttribute("data-ed"); LS.set("rd-ed", ed); aplicarEdicao(); });
   });
   aplicarEdicao();
-
-  // botões "Copiar" ao lado de comandos
-  document.addEventListener("click", function (e) {
-    var b = e.target.closest(".copiar");
-    if (!b) return;
-    var code = b.closest(".cmd-row").querySelector("code");
-    copiar(code.textContent, code);
-  });
 
   // ---------- etapas feitas ----------
   var feitas = LS.get("rd-feitas", []);
@@ -1434,6 +1658,16 @@ td:first-child { font-weight: 600; white-space: nowrap; }
     var s = elSeed.value.trim();
     if (!s) { avisar("Escreva ou sorteie uma seed primeiro"); return; }
     copiar(s, null);
+  });
+  document.getElementById("c-usar").addEventListener("click", function () {
+    var x = Number(document.getElementById("c-x").value), z = Number(document.getElementById("c-z").value);
+    if (document.getElementById("c-x").value.trim() === "" || document.getElementById("c-z").value.trim() === "" || !isFinite(x) || !isFinite(z)) {
+      avisar("Digite o X e o Z da estrutura"); return;
+    }
+    var k = document.getElementById("c-alvo").value, dist = Math.round(Math.sqrt(x * x + z * z));
+    document.getElementById("d-" + k).value = dist;
+    avaliar();
+    avisar(NOMES[k].charAt(0).toUpperCase() + NOMES[k].slice(1) + ": " + dist + " blocos");
   });
   document.querySelectorAll("[data-testar]").forEach(function (b) {
     b.addEventListener("click", function () {
