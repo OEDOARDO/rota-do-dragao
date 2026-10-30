@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Rota do Dragão</title>
-<meta name="description" content="Guia para zerar o Minecraft rápido: roteiro com cronômetro, seeds, mural da comunidade, melhores biomas, itens, farms e missões difíceis.">
+<meta name="description" content="Guia para zerar o Minecraft rápido: roteiro com cronômetro, top global, seeds, mural da comunidade, biomas, farms, construções, mods e missões difíceis.">
 <meta name="theme-color" content="#2F5320">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Rota do Dragão">
@@ -99,12 +99,13 @@ code, .mono { font-family: var(--f-mono); font-size: 0.92em; }
   position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9;
   background: var(--grama-escura); border-bottom: 1px solid #22401A;
 }
-.topo .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; padding-block: 10px; }
+.topo .wrap { max-width: 1280px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; padding-block: 10px; }
 .marca { font-family: var(--f-display); font-weight: 700; font-size: 1.15rem; color: var(--fg); text-decoration: none; display: flex; align-items: center; gap: 8px; }
 .marca .px { width: 22px; height: 22px; }
+@media (max-width: 419px) { .marca-t { display: none; } }
 .links { display: flex; gap: 4px; overflow-x: auto; flex: 1 1 auto; min-width: 0; order: 3; scrollbar-width: none; }
 .links::-webkit-scrollbar { display: none; }
-.links a { color: var(--fg); text-decoration: none; font-size: var(--fs-small); font-weight: 500; padding: 6px 10px; white-space: nowrap; }
+.links a { color: var(--fg); text-decoration: none; font-size: var(--fs-small); font-weight: 500; padding: 6px 8px; white-space: nowrap; }
 .links a:hover { background: var(--grama); }
 @media (min-width: 860px) { .links { order: 0; flex: 0 1 auto; margin-left: auto; } }
 .edicao { display: inline-flex; border: 2px solid var(--outline); margin-left: auto; }
@@ -363,6 +364,47 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .rodape ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
 .rodape .aviso { color: var(--muted); grid-column: 1 / -1; }
 
+/* conta, perfil e top global */
+.conta-btn { display: inline-flex; align-items: center; gap: 8px; max-width: 220px; }
+.conta-btn .av { --tam: 22px; }
+.conta-btn span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.conta { width: min(440px, calc(100% - 32px)); max-height: calc(100dvh - 32px); overflow: auto; color: var(--fg); position: relative; }
+.conta::backdrop { background: rgba(10, 6, 3, 0.7); }
+.conta-x { position: absolute; top: 12px; right: 12px; }
+.conta-txt { font-size: var(--fs-small); margin-bottom: 14px; }
+.conta-form { display: grid; gap: 12px; }
+.conta-form .campo { width: 100%; }
+.perfil-topo { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.perfil-topo .av { --tam: 48px; }
+.perfil-topo b { display: block; }
+.avatares { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.avatares legend { font-size: var(--fs-small); font-weight: 500; margin-bottom: 4px; padding: 0; }
+.avatares label { cursor: pointer; }
+.avatares input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.avatares .px { width: 44px; height: 44px; padding: 6px; background: var(--slot); border: 3px solid var(--slot-hi); }
+.avatares input:checked + .px { border-color: var(--accent); }
+.avatares input:focus-visible + .px { outline: 3px solid var(--accent); outline-offset: 2px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.av { display: inline-grid; place-items: center; width: var(--tam, 32px); height: var(--tam, 32px); flex: none; background: var(--slot); }
+.av img, .av .px { width: 100%; height: 100%; image-rendering: pixelated; display: block; }
+.av .px { padding: 12%; }
+.t-top { margin-top: 8px; }
+.top-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; counter-reset: pos; }
+.top-lista > li:not(.vazio) {
+  counter-increment: pos; display: grid; grid-template-columns: 2.6em 40px minmax(0, 1fr) auto; gap: 12px; align-items: center;
+  background: var(--surface); border: 1px solid var(--line); padding: 8px 14px;
+}
+.top-lista > li:not(.vazio)::before { content: counter(pos) "º"; font: 700 1.1rem/1 var(--f-num); color: var(--muted); }
+.top-lista > li:nth-child(1)::before { color: var(--gold); }
+.top-lista > li.eu { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.top-lista .av { --tam: 40px; }
+.top-nome { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.top-nome small { display: block; font-weight: 400; font-size: var(--fs-cap); color: var(--muted); }
+.top-tempo { font: 700 1.05rem/1 var(--f-num); font-variant-numeric: tabular-nums; }
+.dicas { margin: 0; padding-left: 20px; display: grid; gap: 8px; font-size: var(--fs-small); }
+.mod p { font-size: var(--fs-small); }
+.mod .btn { justify-self: start; text-decoration: none; }
+
 .toast {
   position: fixed; left: 50%; transform: translateX(-50%);
   bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
@@ -381,13 +423,16 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 <body>
 <nav class="topo" aria-label="Seções">
   <div class="wrap">
-    <a class="marca" href="#inicio"><span class="px" data-px="eye" aria-hidden="true"></span>Rota do Dragão</a>
+    <a class="marca" href="#inicio" aria-label="Rota do Dragão, início"><span class="px" data-px="eye" aria-hidden="true"></span><span class="marca-t">Rota do Dragão</span></a>
     <div class="links">
       <a href="#roteiro">Roteiro</a>
+      <a href="#top">Top</a>
       <a href="#seeds">Seeds</a>
       <a href="#biomas">Biomas</a>
-      <a href="#depois">Depois de zerar</a>
+      <a href="#depois">Itens</a>
       <a href="#farms">Farms</a>
+      <a href="#construcoes">Construções</a>
+      <a href="#mods">Mods</a>
       <a href="#missoes">Missões</a>
       <a href="#versao">Versão</a>
     </div>
@@ -395,8 +440,44 @@ td:first-child { font-weight: 600; white-space: nowrap; }
       <button type="button" id="ed-java" data-ed="java" aria-pressed="true">Java</button>
       <button type="button" id="ed-bedrock" data-ed="bedrock" aria-pressed="false">Bedrock</button>
     </div>
+    <button type="button" class="btn btn-mini conta-btn" id="conta-btn" hidden>Entrar</button>
   </div>
 </nav>
+
+<dialog class="painel conta" id="conta" aria-labelledby="conta-t">
+  <button type="button" class="btn btn-mini conta-x" id="conta-x" aria-label="Fechar">✕</button>
+  <div id="conta-entrar">
+    <p class="painel-titulo" id="conta-t">Entrar</p>
+    <p class="conta-txt">Digite seu e-mail e toque em “Enviar link”. Abra o e-mail que chegar e toque no link: você entra no site, sem senha.</p>
+    <form class="conta-form" id="entrar-form" novalidate>
+      <label class="pub-campo">E-mail<input class="campo" id="entrar-email" type="email" autocomplete="email" required placeholder="voce@email.com"></label>
+      <button type="submit" class="btn btn-forte" id="entrar-enviar">Enviar link</button>
+    </form>
+    <p class="criterio" id="entrar-msg" aria-live="polite"></p>
+  </div>
+  <div id="conta-perfil" hidden>
+    <p class="painel-titulo">Seu perfil</p>
+    <div class="perfil-topo"><span id="perfil-av"></span><div><b id="perfil-nome">Novo jogador</b><span class="criterio" id="perfil-tempo">Sem tempo no top global ainda.</span></div></div>
+    <form class="conta-form" id="perfil-form" novalidate>
+      <label class="pub-campo">Apelido no top global<input class="campo" id="perfil-apelido" type="text" maxlength="20" autocomplete="nickname" placeholder="3 a 20 letras ou números"></label>
+      <label class="pub-campo">Edição que você joga<select class="campo" id="perfil-edicao"><option value="java">Java</option><option value="bedrock">Bedrock</option></select></label>
+      <label class="pub-campo" id="perfil-nick-l">Nick do Minecraft Java<input class="campo" id="perfil-nick" type="text" maxlength="16" autocomplete="off" spellcheck="false" placeholder="Seu nick no Java"><span class="criterio">A cabeça da sua skin aparece no perfil e no top global.</span></label>
+      <fieldset class="avatares">
+        <legend id="avatares-l">Avatar</legend>
+        <label><input type="radio" name="avatar" value="olho" checked><span class="px" data-px="eye" aria-hidden="true"></span><span class="sr">Olho do Ender</span></label>
+        <label><input type="radio" name="avatar" value="perola"><span class="px" data-px="pearl" aria-hidden="true"></span><span class="sr">Pérola do Ender</span></label>
+        <label><input type="radio" name="avatar" value="vara"><span class="px" data-px="rod" aria-hidden="true"></span><span class="sr">Vara de blaze</span></label>
+        <label><input type="radio" name="avatar" value="balde"><span class="px" data-px="bucket" aria-hidden="true"></span><span class="sr">Balde</span></label>
+      </fieldset>
+      <div class="pub-acoes">
+        <button type="submit" class="btn btn-forte" id="perfil-salvar">Salvar perfil</button>
+        <button type="button" class="btn" id="sair">Sair</button>
+      </div>
+    </form>
+    <p class="criterio" id="perfil-msg" aria-live="polite"></p>
+    <p class="criterio">Seu e-mail não aparece no site. No top global vão só o apelido, o avatar e o tempo.</p>
+  </div>
+</dialog>
 
 <header class="hero" id="inicio">
   <div class="wrap">
@@ -606,8 +687,23 @@ td:first-child { font-weight: 600; white-space: nowrap; }
         </div>
         <ol class="splits" id="t-splits" aria-label="Tempo por etapa"></ol>
         <p class="recorde">Seu recorde: <b id="t-recorde">nenhum ainda</b></p>
+        <p class="criterio t-top" id="t-top">Entre na sua conta para o seu recorde ir para o <a href="#top">top global</a>.</p>
       </aside>
     </div>
+  </div>
+</section>
+
+<section class="secao" id="top" aria-labelledby="top-t">
+  <div class="wrap">
+    <div class="secao-cab">
+      <p class="eyebrow">Top global</p>
+      <div class="missoes-cab">
+        <h2 id="top-t">Quem zerou mais rápido</h2>
+        <button type="button" class="btn btn-forte" id="top-entrar" hidden>Entrar para participar</button>
+      </div>
+      <p class="lede">Os melhores tempos do cronômetro do roteiro, de quem entrou com uma conta. Ao zerar, o seu recorde vai para cá sozinho. O site não confere a run: cada tempo vale a palavra de quem jogou.</p>
+    </div>
+    <ol class="top-lista" id="top-lista"><li class="vazio">Carregando o top global…</li></ol>
   </div>
 </section>
 
@@ -1129,6 +1225,170 @@ td:first-child { font-weight: 600; white-space: nowrap; }
   </div>
 </section>
 
+<section class="secao" id="construcoes" aria-labelledby="construcoes-t">
+  <div class="wrap">
+    <div class="secao-cab">
+      <p class="eyebrow">Construções</p>
+      <h2 id="construcoes-t">Tutoriais de construção</h2>
+      <p class="lede">Do abrigo da primeira noite ao castelo. Tudo no modo Sobrevivência, sem comando. Abra o passo a passo de cada uma.</p>
+    </div>
+    <div class="grade-cards">
+      <article class="farm">
+        <header><h4>Abrigo da primeira noite</h4><span class="nivel nivel-facil">Fácil</span></header>
+        <dl>
+          <div><dt>Serve para</dt><dd>passar a primeira noite em segurança, sem gastar tempo.</dd></div>
+          <div><dt>Material</dt><dd>o que você tiver: terra, pedra ou madeira, e uma porta ou blocos para tapar a entrada.</dd></div>
+        </dl>
+        <details class="como"><summary>Passo a passo</summary><ol>
+          <li>Ache a encosta de um morro e cave para dentro um espaço de 3 de largura, 3 de fundo e 2 de altura.</li>
+          <li>Tape a entrada com uma porta ou com um bloco. Monstros não quebram blocos, mas zumbis quebram porta de madeira no Difícil.</li>
+          <li>Coloque tochas lá dentro: luz baixa deixa monstros nascerem.</li>
+          <li>Ponha mesa de trabalho, fornalha e baú. Se tiver lã, faça uma cama e durma para pular a noite.</li>
+          <li>De manhã, este abrigo vira o depósito da sua casa de verdade.</li>
+        </ol></details>
+      </article>
+      <article class="farm">
+        <header><h4>Casa de madeira</h4><span class="nivel nivel-facil">Fácil</span></header>
+        <dl>
+          <div><dt>Serve para</dt><dd>a primeira base de verdade, bonita e rápida.</dd></div>
+          <div><dt>Material</dt><dd>troncos, tábuas, escadas de madeira, lajes, vidro, porta e tochas ou lanternas.</dd></div>
+        </dl>
+        <details class="como"><summary>Passo a passo</summary><ol>
+          <li>Marque no chão um retângulo de 7 por 9 blocos num terreno plano.</li>
+          <li>Nos 4 cantos, suba colunas de tronco com 4 blocos de altura. Elas dão o contorno da casa.</li>
+          <li>Entre as colunas, faça as paredes com tábuas de outra cor. Duas madeiras diferentes já deixam a casa mais bonita.</li>
+          <li>Deixe janelas de 2 blocos de largura nas paredes compridas e coloque vidro ou painéis de vidro.</li>
+          <li>Telhado: comece na beirada com escadas de madeira viradas para fora, sobrando 1 bloco além da parede. Suba uma fileira por andar, chegando para dentro, até fechar no meio com lajes.</li>
+          <li>Feche os dois lados triangulares do telhado com tábuas.</li>
+          <li>Coloque a porta, ilumine por dentro e por fora, e mobilie: cama, baús, fornalha e mesa de trabalho.</li>
+        </ol></details>
+      </article>
+      <article class="farm">
+        <header><h4>Casa de pedra e madeira</h4><span class="nivel nivel-media">Média</span></header>
+        <dl>
+          <div><dt>Serve para</dt><dd>uma base maior, com mais cara de casa de vila medieval.</dd></div>
+          <div><dt>Material</dt><dd>pedregulho ou tijolos de pedra, troncos, tábuas, escadas, lajes, vidro e lanternas.</dd></div>
+        </dl>
+        <details class="como"><summary>Passo a passo</summary><ol>
+          <li>Faça a base (o primeiro andar) com pedregulho ou tijolos de pedra, num retângulo de 9 por 11.</li>
+          <li>Suba o segundo andar 1 bloco para fora da parede de baixo, apoiado em escadas de madeira de cabeça para baixo. Esse degrau dá sombra e profundidade.</li>
+          <li>Faça o segundo andar com troncos nos cantos e a cada 3 ou 4 blocos, e tábuas entre eles.</li>
+          <li>Recue as janelas 1 bloco para dentro da parede: a parede ganha volume.</li>
+          <li>Faça um telhado alto e inclinado com escadas escuras, e uma chaminé de pedra com uma fogueira em cima (a fumaça sobe).</li>
+          <li>Detalhes: alçapões como persianas, vasos de flor nas janelas, cercas e lanternas penduradas.</li>
+        </ol></details>
+      </article>
+      <article class="farm">
+        <header><h4>Castelo</h4><span class="nivel nivel-avancada">Avançada</span></header>
+        <dl>
+          <div><dt>Serve para</dt><dd>um projeto grande para depois de zerar, com muralha, torres e pátio.</dd></div>
+          <div><dt>Material</dt><dd>muitos tijolos de pedra (inclusive com musgo e rachados), pedregulho, lajes, escadas, grades de ferro, estandartes e lanternas. Comece juntando uns 20 baús de pedra.</dd></div>
+        </dl>
+        <details class="como"><summary>Passo a passo</summary><ol>
+          <li>Escolha um morro ou uma área plana grande. Marque um quadrado de uns 40 por 40 blocos.</li>
+          <li>Nos 4 cantos, faça torres redondas ou quadradas de 7 a 9 blocos de largura e uns 20 de altura.</li>
+          <li>Ligue as torres com a muralha: 2 blocos de espessura e uns 12 de altura, com um caminho em cima para andar.</li>
+          <li>No topo da muralha e das torres, faça as ameias: alterne bloco e espaço vazio na beirada.</li>
+          <li>No meio de um lado, faça o portão: uma abertura de 5 de largura com grades de ferro em cima, como uma porta levadiça.</li>
+          <li>Misture tijolos de pedra com tijolos com musgo e rachados: o castelo fica com cara de antigo.</li>
+          <li>No pátio, construa a torre principal (torre de menagem), mais alta que todas, com o salão, o quarto e os baús.</li>
+          <li>Em volta da muralha, cave um fosso de 3 blocos e encha de água. Uma ponte de madeira leva ao portão.</li>
+          <li>Finalize com estandartes nas torres, lanternas nas paredes e escadas de cabeça para baixo embaixo das ameias.</li>
+        </ol></details>
+      </article>
+      <article class="farm">
+        <header><h4>Dicas que valem para toda construção</h4><span class="nivel nivel-facil">Para todas</span></header>
+        <ul class="dicas">
+          <li><span class="rot">Paleta:</span> escolha 3 ou 4 blocos que combinam (por exemplo pedra, carvalho escuro e abeto) e use só eles.</li>
+          <li><span class="rot">Profundidade:</span> nada de parede chapada. Recue janelas, adiante colunas e use escadas e lajes nas bordas.</li>
+          <li><span class="rot">Contorno:</span> marque o formato no chão antes de subir as paredes. Retângulo é melhor que quadrado.</li>
+          <li><span class="rot">Telhado:</span> sempre sobrando 1 bloco além da parede. Escadas para a inclinação e lajes para o topo.</li>
+          <li><span class="rot">Luz:</span> lanternas e tochas por dentro e por fora, para monstros não nascerem na sua base.</li>
+          <li><span class="rot">Guia de projeção:</span> no Java, o mod Litematica mostra um projeto “fantasma” para você seguir bloco por bloco (veja em Mods).</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="secao" id="mods" aria-labelledby="mods-t">
+  <div class="wrap">
+    <div class="secao-cab">
+      <p class="eyebrow">Mods</p>
+      <h2 id="mods-t">Mods para deixar o jogo mais legal</h2>
+      <p class="lede">Mods são do Minecraft Java. Antes de baixar, confira na página do mod se ele já tem versão para a sua versão do jogo: quando sai versão nova, os mods levam um tempo para atualizar.</p>
+    </div>
+    <div class="grade-cards">
+      <article class="farm">
+        <header><h4>Como instalar no Java</h4><span class="nivel nivel-facil">Comece aqui</span></header>
+        <ol class="dicas">
+          <li>O jeito mais fácil é o <a href="https://modrinth.com/app" target="_blank" rel="noopener">Modrinth App</a>: ele cria uma instalação separada, baixa o carregador de mods e os mods certos para a sua versão.</li>
+          <li>Sem o app: instale o carregador <a href="https://fabricmc.net/use/installer/" target="_blank" rel="noopener">Fabric</a> para a sua versão do jogo e abra o jogo uma vez com o perfil do Fabric.</li>
+          <li>Baixe cada mod na mesma versão do jogo e no mesmo carregador (Fabric ou NeoForge). Muitos mods de Fabric também pedem o Fabric API.</li>
+          <li>Coloque os arquivos .jar na pasta <code>mods</code> da pasta do Minecraft e abra o jogo pelo perfil do carregador.</li>
+          <li>Baixe só do Modrinth ou do CurseForge. Arquivo de site desconhecido pode trazer vírus.</li>
+          <li>Faça uma cópia do seu mundo antes de testar mods novos.</li>
+        </ol>
+      </article>
+      <article class="farm">
+        <header><h4>E no Bedrock?</h4><span class="nivel nivel-facil">Bedrock</span></header>
+        <ol class="dicas">
+          <li>Mods de Java não funcionam no Bedrock. No Bedrock existem os complementos (add-ons).</li>
+          <li>O caminho mais seguro é o Marketplace, dentro do próprio jogo.</li>
+          <li>Arquivos .mcaddon e .mcpack de fora só de criadores conhecidos. Ao abrir o arquivo, o jogo importa sozinho; depois ative o pacote nas configurações do mundo.</li>
+          <li>Alguns complementos desligam as conquistas do mundo. O jogo avisa antes de ativar.</li>
+        </ol>
+      </article>
+      <article class="farm mod">
+        <header><h4>Sodium</h4><span class="nivel nivel-media">Desempenho</span></header>
+        <p>Deixa o jogo bem mais leve e com mais FPS, sem mudar o visual. Um dos primeiros mods para instalar.</p>
+        <a class="btn btn-mini" href="https://modrinth.com/mod/sodium" target="_blank" rel="noopener">Ver e baixar no Modrinth</a>
+      </article>
+      <article class="farm mod">
+        <header><h4>Iris Shaders</h4><span class="nivel nivel-media">Visual</span></header>
+        <p>Permite usar shaders (luz, sombra e água mais bonitas). Funciona junto com o Sodium.</p>
+        <a class="btn btn-mini" href="https://modrinth.com/mod/iris" target="_blank" rel="noopener">Ver e baixar no Modrinth</a>
+      </article>
+      <article class="farm mod">
+        <header><h4>Xaero's Minimap</h4><span class="nivel nivel-media">Mapa</span></header>
+        <p>Minimapa no canto da tela, com pontos marcados (waypoints) para não se perder.</p>
+        <a class="btn btn-mini" href="https://modrinth.com/mod/xaeros-minimap" target="_blank" rel="noopener">Ver e baixar no Modrinth</a>
+      </article>
+      <article class="farm mod">
+        <header><h4>JourneyMap</h4><span class="nivel nivel-media">Mapa</span></header>
+        <p>Mapa completo do mundo que vai sendo desenhado enquanto você anda, com minimapa e waypoints.</p>
+        <a class="btn btn-mini" href="https://modrinth.com/mod/journeymap" target="_blank" rel="noopener">Ver e baixar no Modrinth</a>
+      </article>
+      <article class="farm mod">
+        <header><h4>Just Enough Items (JEI)</h4><span class="nivel nivel-media">Receitas</span></header>
+        <p>Mostra a receita de qualquer item do jogo, inclusive dos outros mods.</p>
+        <a class="btn btn-mini" href="https://modrinth.com/mod/jei" target="_blank" rel="noopener">Ver e baixar no Modrinth</a>
+      </article>
+      <article class="farm mod">
+        <header><h4>AppleSkin</h4><span class="nivel nivel-media">Interface</span></header>
+        <p>Mostra quanto cada comida enche e a saturação na barra de fome.</p>
+        <a class="btn btn-mini" href="https://modrinth.com/mod/appleskin" target="_blank" rel="noopener">Ver e baixar no Modrinth</a>
+      </article>
+      <article class="farm mod">
+        <header><h4>Mod Menu</h4><span class="nivel nivel-media">Interface</span></header>
+        <p>Lista os mods instalados e abre as configurações de cada um. É para Fabric.</p>
+        <a class="btn btn-mini" href="https://modrinth.com/mod/modmenu" target="_blank" rel="noopener">Ver e baixar no Modrinth</a>
+      </article>
+      <article class="farm mod">
+        <header><h4>Litematica</h4><span class="nivel nivel-media">Construção</span></header>
+        <p>Mostra a projeção de uma construção para você seguir bloco por bloco. Ótimo para os tutoriais acima.</p>
+        <a class="btn btn-mini" href="https://modrinth.com/mod/litematica" target="_blank" rel="noopener">Ver e baixar no Modrinth</a>
+      </article>
+      <article class="farm mod">
+        <header><h4>Create</h4><span class="nivel nivel-media">Gameplay</span></header>
+        <p>Engrenagens, esteiras e máquinas. Muda bastante o jogo e é um projeto grande para depois de zerar.</p>
+        <a class="btn btn-mini" href="https://modrinth.com/mod/create" target="_blank" rel="noopener">Ver e baixar no Modrinth</a>
+      </article>
+    </div>
+    <p class="criterio">Os links levam à página oficial de cada mod no Modrinth. O Rota do Dragão não tem ligação com esses mods.</p>
+  </div>
+</section>
+
 <section class="secao" id="missoes" aria-labelledby="missoes-t">
   <div class="wrap">
     <div class="secao-cab">
@@ -1498,7 +1758,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
     if (t.splits.length >= ETAPAS.length) {
       t.fim = agora;
       var total = t.fim - t.inicio;
-      if (!recorde || total < recorde) { recorde = total; LS.set("rd-recorde", recorde); avisar("Recorde novo: " + fmt(total)); }
+      if (!recorde || total < recorde) { recorde = total; LS.set("rd-recorde", recorde); avisar("Recorde novo: " + fmt(total)); enviarTempo(total); }
     }
     LS.set("rd-timer", t); renderCron(); ligarTick();
   });
@@ -1670,6 +1930,205 @@ td:first-child { font-weight: 600; white-space: nowrap; }
     renderMural();
   });
   document.addEventListener("visibilitychange", function () { if (!document.hidden && mural.carregou) carregarMural(); });
+  // ---------- conta e top global (Supabase Auth, login por link no e-mail) ----------
+  var SB_URL = "https://nkiclkilgwooypuclxfa.supabase.co";
+  var SB_LIB = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.0/dist/umd/supabase.js";
+  var SB_LIB_SRI = "sha384-xPW3QHswsICVC2mW6BFNwMbhpLkbZ133fKOhxNx3QGGgAOJfL3O9t8r2aWn1aez6";
+  var AVATAR_PX = { olho: "eye", perola: "pearl", vara: "rod", balde: "bucket" };
+  var NICK_OK = /^[A-Za-z0-9_]{3,16}$/, APELIDO_OK = /^[A-Za-z0-9_À-ÿ ]{3,20}$/;
+  var sb = null, sessao = null, perfil = null, topItens = [];
+  var elContaBtn = document.getElementById("conta-btn"), dlg = document.getElementById("conta");
+  var elEntrar = document.getElementById("conta-entrar"), elPerfil = document.getElementById("conta-perfil");
+  var elTopLista = document.getElementById("top-lista"), bTopEntrar = document.getElementById("top-entrar"), elTTop = document.getElementById("t-top");
+  var fPerfil = document.getElementById("perfil-form"), inApelido = document.getElementById("perfil-apelido");
+  var inEdicao = document.getElementById("perfil-edicao"), inNick = document.getElementById("perfil-nick"), elNickL = document.getElementById("perfil-nick-l");
+
+  function avatarHTML(pf) {
+    var px = '<span class="px" data-px="' + (AVATAR_PX[pf && pf.avatar] || "eye") + '" aria-hidden="true"></span>';
+    if (pf && pf.edicao === "java" && NICK_OK.test(pf.nick_java || "")) {
+      return '<span class="av"><img class="av-img" src="https://mc-heads.net/avatar/' + pf.nick_java + '/64" alt="" loading="lazy" referrerpolicy="no-referrer" data-avatar="' + esc(AVATAR_PX[pf.avatar] || "eye") + '"></span>';
+    }
+    return '<span class="av">' + px + "</span>";
+  }
+  function desenharEm(raiz) { raiz.querySelectorAll(".px[data-px]").forEach(desenhar); }
+  // se a cabeça da skin não carregar (nick errado ou serviço fora), mostra o avatar em pixel
+  document.addEventListener("error", function (e) {
+    var img = e.target;
+    if (!img || !img.classList || !img.classList.contains("av-img")) return;
+    var sp = document.createElement("span");
+    sp.className = "px"; sp.setAttribute("data-px", img.getAttribute("data-avatar") || "eye"); sp.setAttribute("aria-hidden", "true");
+    img.replaceWith(sp); desenhar(sp);
+  }, true);
+
+  function renderTop() {
+    if (!topItens.length) {
+      elTopLista.innerHTML = '<li class="vazio">Ninguém no top ainda. Entre na sua conta, zere com o cronômetro rodando e seja o primeiro.</li>';
+      return;
+    }
+    var meu = perfil && perfil.apelido;
+    elTopLista.innerHTML = topItens.map(function (x) {
+      return '<li' + (meu && x.apelido === meu ? ' class="eu"' : "") + ">" + avatarHTML(x) +
+        '<span class="top-nome">' + esc(x.apelido) + "<small>" + (x.edicao === "bedrock" ? "Bedrock" : "Java") + (x.tempo_em ? " · " + esc(dataBR(Date.parse(x.tempo_em))) : "") + "</small></span>" +
+        '<span class="top-tempo">' + fmt(x.tempo_ms) + "</span></li>";
+    }).join("");
+    desenharEm(elTopLista);
+  }
+  function carregarTop() {
+    var url = SB_URL + "/rest/v1/perfis?select=apelido,edicao,nick_java,avatar,tempo_ms,tempo_em&tempo_ms=not.is.null&order=tempo_ms.asc,tempo_em.asc&limit=50";
+    return fetch(url, { headers: { apikey: MURAL_CHAVE } }).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    }).then(function (linhas) {
+      topItens = (Array.isArray(linhas) ? linhas : []).filter(function (x) {
+        return x && typeof x.apelido === "string" && typeof x.tempo_ms === "number";
+      });
+      renderTop();
+    }).catch(function () {
+      if (!topItens.length) elTopLista.innerHTML = '<li class="vazio">O top global está fora do ar agora. O resto do guia funciona normalmente.</li>';
+    });
+  }
+
+  function renderConta() {
+    var logado = !!sessao;
+    elContaBtn.innerHTML = logado && perfil ? avatarHTML(perfil) + "<span>" + esc(perfil.apelido) + "</span>" : "<span>" + (logado ? "Meu perfil" : "Entrar") + "</span>";
+    desenharEm(elContaBtn);
+    bTopEntrar.hidden = logado || !sb;
+    elEntrar.hidden = logado;
+    elPerfil.hidden = !logado;
+    if (!sb) elTTop.textContent = "O login está fora do ar agora. O cronômetro funciona normalmente.";
+    else if (!logado) elTTop.innerHTML = 'Entre na sua conta para o seu recorde ir para o <a href="#top">top global</a>.';
+    else if (!perfil) elTTop.textContent = "Escolha um apelido no seu perfil para entrar no top global.";
+    else elTTop.textContent = perfil.tempo_ms ? "No top global com " + fmt(perfil.tempo_ms) + ". Bata o recorde para subir." : "Zere com o cronômetro rodando para entrar no top global.";
+    if (logado) {
+      document.getElementById("perfil-av").innerHTML = avatarHTML(perfil || { avatar: lerAvatar(), edicao: "java" });
+      desenharEm(document.getElementById("perfil-av"));
+      document.getElementById("perfil-nome").textContent = perfil ? perfil.apelido : "Novo jogador";
+      document.getElementById("perfil-tempo").textContent = perfil && perfil.tempo_ms ? "Recorde no top global: " + fmt(perfil.tempo_ms) : "Sem tempo no top global ainda.";
+    }
+    renderTop();
+  }
+  function lerAvatar() { var r = fPerfil.querySelector('input[name="avatar"]:checked'); return r ? r.value : "olho"; }
+  function preencherPerfil() {
+    var pf = perfil || { apelido: "", edicao: ed, nick_java: "", avatar: "olho" };
+    inApelido.value = pf.apelido || "";
+    inEdicao.value = pf.edicao === "bedrock" ? "bedrock" : "java";
+    inNick.value = pf.nick_java || "";
+    var r = fPerfil.querySelector('input[name="avatar"][value="' + (AVATAR_PX[pf.avatar] ? pf.avatar : "olho") + '"]');
+    if (r) r.checked = true;
+    ajustarNick();
+  }
+  function ajustarNick() {
+    var java = inEdicao.value === "java";
+    elNickL.hidden = !java;
+    document.getElementById("avatares-l").textContent = java ? "Avatar (aparece se o nick ficar vazio ou não tiver skin)" : "Avatar";
+  }
+  inEdicao.addEventListener("change", ajustarNick);
+
+  function abrirConta() {
+    if (!sb) return;
+    document.getElementById("entrar-msg").textContent = "";
+    document.getElementById("perfil-msg").textContent = "";
+    if (sessao) preencherPerfil();
+    renderConta();
+    if (typeof dlg.showModal === "function") dlg.showModal(); else dlg.setAttribute("open", "");
+    var foco = sessao ? inApelido : document.getElementById("entrar-email");
+    setTimeout(function () { foco.focus(); }, 0);
+  }
+  function fecharConta() { if (typeof dlg.close === "function") dlg.close(); else dlg.removeAttribute("open"); }
+  elContaBtn.addEventListener("click", abrirConta);
+  bTopEntrar.addEventListener("click", abrirConta);
+  document.getElementById("conta-x").addEventListener("click", fecharConta);
+  dlg.addEventListener("click", function (e) { if (e.target === dlg) fecharConta(); });
+
+  document.getElementById("entrar-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var email = document.getElementById("entrar-email").value.trim(), msg = document.getElementById("entrar-msg"), b = document.getElementById("entrar-enviar");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = "Confira o e-mail digitado."; return; }
+    b.disabled = true; msg.textContent = "Enviando…";
+    sb.auth.signInWithOtp({ email: email, options: { emailRedirectTo: location.origin + location.pathname } }).then(function (r) {
+      if (r.error) {
+        msg.textContent = r.error.status === 429 ? "Muitos pedidos de link agora. Tente de novo daqui a pouco." : "Não deu para mandar o link. Confira o e-mail e tente de novo.";
+      } else {
+        msg.textContent = "Pronto! Abra o e-mail que mandamos para " + email + " e toque no link. Olhe também o spam.";
+      }
+    }).catch(function () { msg.textContent = "Não deu para mandar o link agora. Tente de novo."; })
+      .then(function () { b.disabled = false; });
+  });
+
+  fPerfil.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (!sessao) return;
+    var msg = document.getElementById("perfil-msg"), b = document.getElementById("perfil-salvar");
+    var apelido = inApelido.value.trim().replace(/\s+/g, " "), edicao = inEdicao.value === "bedrock" ? "bedrock" : "java";
+    var nick = edicao === "java" ? inNick.value.trim() : "";
+    if (!APELIDO_OK.test(apelido)) { msg.textContent = "O apelido precisa ter de 3 a 20 letras, números, espaço ou _."; return; }
+    if (nick && !NICK_OK.test(nick)) { msg.textContent = "O nick do Java tem de 3 a 16 letras, números ou _."; return; }
+    var dados = { id: sessao.user.id, apelido: apelido, edicao: edicao, nick_java: nick || null, avatar: lerAvatar() };
+    if (!perfil && recorde && recorde >= 60000) dados.tempo_ms = Math.round(recorde);
+    b.disabled = true; msg.textContent = "Salvando…";
+    sb.from("perfis").upsert(dados).select().single().then(function (r) {
+      if (r.error) {
+        msg.textContent = r.error.code === "23505" ? "Esse apelido já está em uso. Escolha outro." : "Não deu para salvar. Confira os campos e tente de novo.";
+        return;
+      }
+      perfil = r.data; msg.textContent = "Perfil salvo.";
+      if (recorde) enviarTempo(recorde);
+      renderConta(); carregarTop();
+    }).catch(function () { msg.textContent = "Não deu para salvar agora. Tente de novo."; })
+      .then(function () { b.disabled = false; });
+  });
+
+  document.getElementById("sair").addEventListener("click", function () {
+    if (!sb) return;
+    sb.auth.signOut().then(function () { perfil = null; fecharConta(); avisar("Você saiu da conta"); });
+  });
+
+  // manda o tempo para o top global; o banco só aceita se for melhor que o anterior
+  function enviarTempo(ms) {
+    if (!sb || !sessao || !perfil || !ms) return;
+    if (ms < 60000) { avisar("Tempos abaixo de 1 minuto não entram no top global"); return; }
+    if (perfil.tempo_ms && ms >= perfil.tempo_ms) return;
+    sb.from("perfis").update({ tempo_ms: Math.round(ms) }).eq("id", sessao.user.id).select().single().then(function (r) {
+      if (r.error || !r.data) return;
+      var subiu = r.data.tempo_ms !== (perfil && perfil.tempo_ms);
+      perfil = r.data;
+      if (subiu) avisar("Tempo enviado ao top global: " + fmt(perfil.tempo_ms));
+      renderConta(); carregarTop();
+    });
+  }
+
+  function carregarPerfil() {
+    if (!sessao) { perfil = null; renderConta(); return; }
+    sb.from("perfis").select("*").eq("id", sessao.user.id).maybeSingle().then(function (r) {
+      perfil = r.data || null;
+      renderConta();
+      if (!perfil) { abrirConta(); document.getElementById("perfil-msg").textContent = "Bem-vindo! Escolha um apelido para aparecer no top global."; }
+      else if (recorde) enviarTempo(recorde);
+    });
+  }
+
+  function iniciarConta() {
+    if (!window.supabase || typeof window.supabase.createClient !== "function") { renderConta(); return; }
+    sb = window.supabase.createClient(SB_URL, MURAL_CHAVE, {
+      auth: { flowType: "implicit", detectSessionInUrl: true, persistSession: true, autoRefreshToken: true }
+    });
+    elContaBtn.hidden = false;
+    // não chamar o banco dentro do aviso de login: a biblioteca pede que seja fora dele
+    sb.auth.onAuthStateChange(function (evento, s) {
+      var entrou = !sessao && s && evento === "SIGNED_IN";
+      sessao = s || null;
+      setTimeout(function () { carregarPerfil(); if (entrou) avisar("Você entrou na sua conta"); }, 0);
+    });
+  }
+  (function carregarLib() {
+    var sc = document.createElement("script");
+    sc.src = SB_LIB; sc.integrity = SB_LIB_SRI; sc.crossOrigin = "anonymous";
+    sc.onload = iniciarConta;
+    sc.onerror = function () { renderConta(); };
+    document.head.appendChild(sc);
+  })();
+  carregarTop();
+
   avaliar();
   carregarMural();
 
