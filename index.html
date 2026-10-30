@@ -1,0 +1,1671 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rota do Dragão</title>
+<meta name="description" content="Guia para zerar o Minecraft rápido: roteiro com cronômetro, testador de seeds, mural da comunidade, melhores biomas, itens, farms e missões difíceis.">
+<meta name="theme-color" content="#1F2124">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Rota do Dragão">
+<meta property="og:description" content="Guia para zerar o Minecraft rápido: roteiro com cronômetro, testador de seeds, mural da comunidade, melhores biomas, itens, farms e missões difíceis.">
+<meta property="og:url" content="https://oedoardo.github.io/rota-do-dragao/">
+<meta property="og:image" content="https://oedoardo.github.io/rota-do-dragao/og.png">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="icone.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@500;700&display=swap">
+<style>
+html, body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+
+/* Layout: guia em uma coluna larga; as ferramentas (cronômetro, testador de seed, meta de itens)
+   ficam em painéis biselados de inventário; a cor de cada etapa diz a dimensão onde ela acontece.
+   Paleta pedida pelo dono: cinza escuro e verde, num tema escuro único. */
+:root {
+  --bg: #1F2124;
+  --surface: #292C30;
+  --surface-2: #33373C;
+  --fg: #ECEFEA;
+  --muted: #A6ADA5;
+  --line: #3B4046;
+  --accent: #6CC04A;
+  --accent-forte: #8FD96B;
+  --accent-fundo: #2C4424;
+  --on-accent: #0F1A0C;
+  --ow: #8FD96B;
+  --nether: #E58A78;
+  --end: #B8A0E6;
+  --gold: #E3C15A;
+  --panel: #2D3135;
+  --bevel-hi: #4A5056;
+  --bevel-lo: #111315;
+  --outline: #0A0B0C;
+  --slot: #1A1C1F;
+  --slot-hi: #3D4248;
+  --slot-lo: #08090A;
+  color-scheme: dark;
+
+  --f-display: "Pixelify Sans", "Courier New", monospace;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+
+  --f-num: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; /* números: os dígitos da fonte pixel confundem 5 com S */
+
+  --fs-hero: clamp(2.7rem, 8vw, 4.6rem);
+  --fs-h2: clamp(1.8rem, 4.4vw, 2.5rem);
+  --fs-h3: 1.2rem;
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-cap: 0.78rem;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 110px); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--f-body); font-size: var(--fs-body); line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 10; background: var(--bg);
+}
+.wrap {
+  max-width: 1120px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+h1, h2, h3, h4 { text-wrap: balance; margin: 0; }
+h2 { font-family: var(--f-display); font-weight: 700; font-size: var(--fs-h2); line-height: 1.1; letter-spacing: 0.01em; }
+h3 { font-size: var(--fs-h3); font-weight: 600; line-height: 1.3; }
+h4 { font-size: 1.05rem; font-weight: 600; line-height: 1.3; }
+p { margin: 0; }
+a { color: var(--accent); text-underline-offset: 3px; }
+code, .mono { font-family: var(--f-mono); font-size: 0.92em; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.eyebrow { font-size: var(--fs-cap); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.lede { color: var(--muted); max-width: 65ch; font-size: 1.05rem; }
+
+/* ---------- navegação ---------- */
+.topo {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9;
+  background: var(--bg); border-bottom: 1px solid var(--line);
+}
+.topo .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; padding-block: 10px; }
+.marca { font-family: var(--f-display); font-weight: 700; font-size: 1.15rem; color: var(--fg); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+.marca .px { width: 22px; height: 22px; }
+.links { display: flex; gap: 4px; overflow-x: auto; flex: 1 1 auto; min-width: 0; order: 3; scrollbar-width: none; }
+.links::-webkit-scrollbar { display: none; }
+.links a { color: var(--fg); text-decoration: none; font-size: var(--fs-small); font-weight: 500; padding: 6px 10px; white-space: nowrap; }
+.links a:hover { background: var(--surface); }
+@media (min-width: 860px) { .links { order: 0; flex: 0 1 auto; margin-left: auto; } }
+.edicao { display: inline-flex; border: 2px solid var(--outline); margin-left: auto; }
+@media (min-width: 860px) { .edicao { margin-left: 0; } }
+.edicao button {
+  font: 600 var(--fs-cap)/1 var(--f-body); letter-spacing: 0.06em; text-transform: uppercase;
+  background: var(--surface); color: var(--fg); border: 0; padding: 8px 12px; cursor: pointer;
+}
+.edicao button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
+.marca .px { filter: drop-shadow(0 0 6px rgba(108, 192, 74, 0.35)); }
+
+/* ---------- painel de inventário ---------- */
+.painel {
+  background: var(--panel); color: var(--fg);
+  border: 3px solid; border-color: var(--bevel-hi) var(--bevel-lo) var(--bevel-lo) var(--bevel-hi);
+  box-shadow: 0 0 0 2px var(--outline);
+  padding: 18px;
+}
+.painel-titulo { font-family: var(--f-display); font-weight: 700; font-size: 1.25rem; margin-bottom: 12px; }
+.slot {
+  position: relative; display: grid; place-items: center;
+  width: 64px; height: 64px; background: var(--slot);
+  border: 3px solid; border-color: var(--slot-lo) var(--slot-hi) var(--slot-hi) var(--slot-lo);
+}
+.slot .px { width: 40px; height: 40px; }
+.qtd {
+  position: absolute; right: 3px; bottom: 0;
+  font: 700 1rem/1 var(--f-num); color: #FFFFFF; text-shadow: 2px 2px 0 #2A2A2A;
+  font-variant-numeric: tabular-nums;
+}
+.px { display: inline-block; image-rendering: pixelated; }
+.px svg { width: 100%; height: 100%; display: block; shape-rendering: crispEdges; }
+
+/* ---------- botões ---------- */
+.btn {
+  font: 600 var(--fs-small)/1.2 var(--f-body); cursor: pointer;
+  padding: 10px 14px; border: 2px solid var(--outline);
+  background: var(--surface); color: var(--fg);
+  box-shadow: inset -3px -3px 0 rgba(0,0,0,0.18), inset 3px 3px 0 rgba(255,255,255,0.25);
+}
+.btn:hover { filter: brightness(1.06); }
+.btn:active { box-shadow: inset 3px 3px 0 rgba(0,0,0,0.2); }
+.btn[disabled] { opacity: 0.45; cursor: not-allowed; filter: none; }
+.btn-forte { background: var(--accent); color: var(--on-accent); }
+.btn-mini { padding: 6px 10px; font-size: var(--fs-cap); }
+
+/* ---------- hero ---------- */
+.hero .wrap { display: grid; gap: 40px; padding-block: 48px 56px; }
+@media (min-width: 900px) { .hero .wrap { grid-template-columns: 1.15fr 0.85fr; align-items: center; } }
+.hero h1 { font-family: var(--f-display); font-weight: 700; font-size: var(--fs-hero); line-height: 0.95; margin-top: 12px; letter-spacing: 0.01em; }
+.hero .lede { margin-top: 18px; font-size: 1.12rem; }
+.hero-acoes { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+.hero-acoes a { text-decoration: none; }
+.selo { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-top: 22px; font-size: var(--fs-small); color: var(--muted); }
+.selo b { font-family: var(--f-mono); font-weight: 500; color: var(--fg); background: var(--surface); border: 1px solid var(--line); padding: 2px 8px; }
+.inv { display: grid; gap: 14px; }
+.slots { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.slots li { display: grid; justify-items: center; gap: 6px; width: 68px; }
+.slot-nome { font-size: var(--fs-cap); text-align: center; line-height: 1.25; }
+.inv-nota { font-size: var(--fs-small); color: var(--muted); }
+.rota { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 6px; }
+@media (min-width: 520px) { .rota { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; } }
+.rota li { border-top: 6px solid var(--dim); padding-top: 8px; min-width: 0; }
+.rota .rota-dim { display: block; font-size: var(--fs-cap); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); }
+.rota .rota-n { display: block; font: 700 1.05rem/1.3 var(--f-num); }
+.rota .rota-o { display: block; font-size: var(--fs-cap); color: var(--muted); line-height: 1.3; }
+[data-dim="ow"] { --dim: var(--ow); }
+[data-dim="nether"] { --dim: var(--nether); }
+[data-dim="end"] { --dim: var(--end); }
+.progresso { font-size: var(--fs-small); color: var(--muted); }
+.progresso b { color: var(--fg); font-variant-numeric: tabular-nums; }
+
+/* ---------- seções ---------- */
+.secao { border-top: 1px solid var(--line); }
+.secao > .wrap { padding-block: 56px; display: grid; gap: 28px; }
+.secao-cab { display: grid; gap: 10px; }
+
+/* versão */
+.versao-grade { display: grid; gap: 24px; }
+@media (min-width: 860px) { .versao-grade { grid-template-columns: 0.8fr 1.2fr; } }
+.versao-num { font: 700 clamp(1.5rem, 3.6vw, 2rem)/1.25 var(--f-num); }
+.versao-lista { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
+.versao-lista li { display: grid; gap: 2px; padding-left: 14px; border-left: 2px solid var(--line); }
+.versao-lista strong { font-weight: 600; }
+
+/* roteiro */
+.roteiro-grade { display: grid; gap: 28px; }
+@media (min-width: 960px) {
+  .roteiro-grade { grid-template-columns: minmax(0, 1fr) 330px; align-items: start; }
+  .cronometro { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 76px); }
+}
+.etapas { display: grid; gap: 14px; }
+.etapa { background: var(--surface); border: 1px solid var(--line); padding: 18px 20px; display: grid; gap: 12px; }
+.etapa.is-atual { border-color: var(--dim); box-shadow: 0 0 0 2px var(--dim); }
+.etapa-cab { display: flex; gap: 14px; align-items: flex-start; }
+.etapa-num {
+  flex: none; width: 40px; height: 40px; display: grid; place-items: center;
+  background: var(--dim); color: var(--bg); font: 700 1.25rem/1 var(--f-num);
+}
+.etapa-titulos { flex: 1 1 auto; min-width: 0; }
+.etapa-dim { font-size: var(--fs-cap); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); }
+.feito { display: inline-flex; align-items: center; gap: 6px; font-size: var(--fs-small); font-weight: 500; cursor: pointer; white-space: nowrap; }
+.feito input { width: 18px; height: 18px; accent-color: var(--accent); }
+.etapa ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 68ch; }
+.etapa.feita .etapa-titulos h3 { text-decoration: line-through; text-decoration-thickness: 2px; color: var(--muted); }
+.saia { font-size: var(--fs-small); padding-top: 10px; border-top: 1px dashed var(--line); }
+.saia strong { font-weight: 600; }
+.tag {
+  display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 1px 6px; margin-right: 4px; border: 1px solid currentColor; vertical-align: 1px; line-height: 1.5;
+}
+.tag-java { color: var(--nether); }
+.tag-bedrock { color: var(--end); }
+
+.cronometro .tempo { font: 700 2.4rem/1 var(--f-num); font-variant-numeric: tabular-nums; }
+.cronometro .atual { font-size: var(--fs-small); margin-top: 6px; min-height: 1.6em; }
+.cron-botoes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.splits { list-style: none; margin: 16px 0 0; padding: 0; font-size: var(--fs-small); display: grid; gap: 2px; }
+.splits li { display: grid; grid-template-columns: 1.6em minmax(0, 1fr) auto auto; gap: 8px; padding: 4px 6px; font-variant-numeric: tabular-nums; }
+.splits li.atual-split { background: var(--slot); color: #FFFFFF; }
+.splits .seg, .splits .acum { font-family: var(--f-mono); font-size: 0.82rem; }
+.splits .acum { color: var(--muted); min-width: 4.6em; text-align: right; }
+.splits li.atual-split .acum { color: #FFFFFF; }
+.recorde { margin-top: 12px; font-size: var(--fs-small); }
+.recorde b { font-family: var(--f-mono); font-weight: 500; }
+
+/* seeds */
+.seeds-grade { display: grid; gap: 28px; }
+@media (min-width: 960px) { .seeds-grade { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); align-items: start; } }
+.testador { display: grid; gap: 18px; }
+.passo { display: grid; gap: 8px; }
+.passo-t { font-weight: 600; }
+.passo-t span { font-family: var(--f-num); font-weight: 700; color: var(--accent); margin-right: 8px; }
+.linha-seed { display: flex; flex-wrap: wrap; gap: 8px; }
+.campo {
+  font: 500 1rem/1.2 var(--f-mono); color: var(--fg); background: var(--surface);
+  border: 2px solid; border-color: var(--slot-lo) var(--bevel-hi) var(--bevel-hi) var(--slot-lo);
+  padding: 9px 10px; min-width: 0;
+}
+.linha-seed .campo { flex: 1 1 220px; }
+.cmd-row { display: flex; align-items: stretch; gap: 6px; min-width: 0; }
+.cmd-row code {
+  flex: 1 1 auto; min-width: 0; overflow-x: auto; white-space: nowrap;
+  background: var(--surface); border: 1px solid var(--line); padding: 7px 10px; font-size: 0.85rem;
+}
+.cmds { display: grid; gap: 6px; }
+.cmds-rotulo { font-size: var(--fs-cap); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.so-bedrock { display: none; }
+html[data-ed="bedrock"] .so-bedrock { display: revert; }
+html[data-ed="bedrock"] .so-java { display: none; }
+.distancias { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+.dist { display: grid; gap: 4px; font-size: var(--fs-small); font-weight: 500; }
+.dist .campo { width: 100%; font-variant-numeric: tabular-nums; }
+.dist .nota { font-size: var(--fs-cap); font-weight: 600; min-height: 1.3em; }
+.nota-2 { color: var(--ow); }
+.nota-1 { color: var(--gold); }
+.nota-0 { color: var(--nether); }
+.veredito { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 12px; background: var(--surface); border: 1px solid var(--line); }
+.veredito-t { font: 700 1.2rem/1.2 var(--f-display); }
+.criterio { font-size: var(--fs-cap); color: var(--muted); }
+.lista-seeds { display: grid; gap: 12px; }
+.card-seed { background: var(--surface); border: 1px solid var(--line); padding: 16px; display: grid; gap: 8px; min-width: 0; }
+.card-seed .num { font-family: var(--f-mono); font-size: 0.95rem; overflow-wrap: anywhere; }
+.card-seed .meta { display: flex; flex-wrap: wrap; gap: 6px 10px; font-size: var(--fs-cap); color: var(--muted); align-items: center; }
+.card-seed .acoes { display: flex; flex-wrap: wrap; gap: 6px; }
+.card-seed p { font-size: var(--fs-small); }
+.vazio { font-size: var(--fs-small); color: var(--muted); padding: 16px; border: 1px dashed var(--line); }
+.linha-versao { display: grid; gap: 4px; font-size: var(--fs-small); font-weight: 500; max-width: 300px; }
+.veredito { justify-content: space-between; }
+.veredito-acoes { display: flex; flex-wrap: wrap; gap: 8px; }
+.mural { display: grid; gap: 16px; padding-top: 28px; border-top: 1px solid var(--line); }
+.mural-cab { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px 20px; }
+.mural-cab .secao-cab { gap: 6px; max-width: 70ch; }
+.mural-cab h3 { font-family: var(--f-display); font-weight: 700; font-size: 1.6rem; }
+.lista-mural { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); }
+.lista-mural .vazio { grid-column: 1 / -1; }
+.colar { display: grid; gap: 8px; background: var(--surface); border: 1px solid var(--line); padding: 16px; }
+.colar textarea { width: 100%; resize: vertical; font-size: 0.9rem; line-height: 1.4; }
+.sub { display: grid; gap: 12px; }
+
+/* tabela de objetivos */
+.tabela-wrap { overflow-x: auto; border: 1px solid var(--line); background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: var(--fs-small); }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: var(--fs-cap); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+tbody tr:last-child td { border-bottom: 0; }
+td:first-child { font-weight: 600; white-space: nowrap; }
+
+/* filtros */
+.filtros { display: flex; flex-wrap: wrap; gap: 6px; }
+.filtros button {
+  font: 600 var(--fs-small)/1 var(--f-body); padding: 8px 12px; cursor: pointer;
+  background: transparent; color: var(--fg); border: 1px solid var(--line);
+}
+.filtros button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+
+/* biomas e farms */
+.grade-cards { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.bioma, .farm { background: var(--surface); border: 1px solid var(--line); padding: 16px 18px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.bioma > header, .farm > header { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.bioma .id { font-family: var(--f-mono); font-size: var(--fs-cap); color: var(--muted); }
+.bioma .faixa { height: 4px; background: var(--dim); margin: -16px -18px 0; }
+.bioma p { font-size: var(--fs-small); }
+.rot { font-weight: 600; }
+.cuidado .rot { color: var(--nether); }
+.nivel { font-size: var(--fs-cap); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.nivel-facil { color: var(--ow); }
+.nivel-media { color: var(--gold); }
+.nivel-avancada { color: var(--nether); }
+.farm dl { margin: 0; display: grid; gap: 8px; font-size: var(--fs-small); }
+.farm dt { font-size: var(--fs-cap); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.farm dd { margin: 0; }
+
+/* depois de zerar: melhores coisas para conseguir */
+.itens { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; counter-reset: item; border-top: 1px solid var(--line); }
+@media (min-width: 860px) { .itens { grid-template-columns: 1fr 1fr; column-gap: 40px; } }
+.itens li { counter-increment: item; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.itens li::before { content: counter(item); font: 700 1.5rem/1 var(--f-num); color: var(--accent); }
+.itens h4 { font-size: 1.08rem; }
+.itens p { font-size: var(--fs-small); margin-top: 4px; max-width: 62ch; }
+.itens p .rot { color: var(--accent-forte); }
+
+/* missões */
+.missoes-cab { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 20px; }
+.contador { font: 700 1.2rem/1 var(--f-num); color: var(--accent); font-variant-numeric: tabular-nums; }
+.missoes { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+.missao {
+  display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 14px; align-items: start;
+  position: relative; background: var(--surface); border: 1px solid var(--line); padding: 14px 16px; cursor: pointer;
+}
+.missao:hover { border-color: var(--slot-hi); }
+.missao input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.missao:focus-within { outline: 3px solid var(--accent); outline-offset: 2px; }
+.moldura {
+  width: 48px; height: 48px; display: grid; place-items: center; background: var(--surface-2);
+  border: 2px solid var(--slot-hi); color: var(--muted); font: 700 1.2rem/1 var(--f-display);
+}
+.missao[data-tipo="desafio"] .moldura {
+  border: 0; clip-path: polygon(50% 0, 62% 14%, 82% 8%, 84% 28%, 100% 38%, 90% 54%, 100% 70%, 82% 76%, 78% 96%, 60% 88%, 50% 100%, 40% 88%, 22% 96%, 18% 76%, 0 70%, 10% 54%, 0 38%, 16% 28%, 18% 8%, 38% 14%);
+  background: var(--slot-hi);
+}
+.missao.feita .moldura { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.missao-t { display: block; font-weight: 600; line-height: 1.3; }
+.missao.feita .missao-t { color: var(--accent-forte); }
+.missao[data-tipo="desafio"] .missao-t::after { content: "Desafio"; margin-left: 8px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--end); vertical-align: 2px; }
+.missao .d { display: block; font-size: var(--fs-small); color: var(--muted); margin-top: 4px; }
+.missao .nome-jogo { font-family: var(--f-mono); font-size: var(--fs-cap); margin-top: 6px; color: var(--muted); }
+.grupo-missoes { display: grid; gap: 12px; }
+.grupo-missoes h3 { font-size: 1.05rem; }
+
+/* rodapé */
+.rodape { border-top: 1px solid var(--line); }
+.rodape .wrap { padding-block: 44px 64px; display: grid; gap: 22px; font-size: var(--fs-small); }
+@media (min-width: 860px) { .rodape .wrap { grid-template-columns: 1fr 1fr; } }
+.rodape h3 { font-family: var(--f-display); font-weight: 700; font-size: 1.2rem; margin-bottom: 8px; }
+.rodape ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+.rodape .aviso { color: var(--muted); grid-column: 1 / -1; }
+
+.toast {
+  position: fixed; left: 50%; transform: translateX(-50%);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
+  background: var(--fg); color: var(--bg); padding: 10px 16px; font-size: var(--fs-small); font-weight: 600;
+  z-index: 20; max-width: calc(100% - 32px);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero .slot .px { animation: flutua 3.2s ease-in-out infinite; }
+  .hero .slots li:nth-child(2) .px { animation-delay: -0.8s; }
+  .hero .slots li:nth-child(3) .px { animation-delay: -1.6s; }
+  .hero .slots li:nth-child(4) .px { animation-delay: -2.4s; }
+  @keyframes flutua { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+}
+</style>
+</head>
+<body>
+<nav class="topo" aria-label="Seções">
+  <div class="wrap">
+    <a class="marca" href="#inicio"><span class="px" data-px="eye" aria-hidden="true"></span>Rota do Dragão</a>
+    <div class="links">
+      <a href="#roteiro">Roteiro</a>
+      <a href="#seeds">Seeds</a>
+      <a href="#biomas">Biomas</a>
+      <a href="#depois">Depois de zerar</a>
+      <a href="#farms">Farms</a>
+      <a href="#missoes">Missões</a>
+      <a href="#versao">Versão</a>
+    </div>
+    <div class="edicao" role="group" aria-label="Edição do jogo">
+      <button type="button" id="ed-java" data-ed="java" aria-pressed="true">Java</button>
+      <button type="button" id="ed-bedrock" data-ed="bedrock" aria-pressed="false">Bedrock</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Guia de fã para zerar o Minecraft</p>
+      <h1>Rota do Dragão</h1>
+      <p class="lede">O caminho mais curto do spawn até os créditos: o que pegar em cada dimensão, seeds para treinar, o bioma certo para cada tarefa e as farms para depois do dragão.</p>
+      <div class="hero-acoes">
+        <a class="btn btn-forte" href="#roteiro">Ver o roteiro</a>
+        <a class="btn" href="#seeds">Testar uma seed</a>
+      </div>
+      <p class="selo">Versão coberta <b>Java 26.3</b> <b>Bedrock 26.50</b> conferido em 29/10/2026</p>
+    </div>
+    <div class="painel inv">
+      <p class="painel-titulo">Meta de itens</p>
+      <ul class="slots">
+        <li><span class="slot"><span class="px" data-px="bucket" aria-hidden="true"></span><b class="qtd">1</b></span><span class="slot-nome">Balde</span></li>
+        <li><span class="slot"><span class="px" data-px="pearl" aria-hidden="true"></span><b class="qtd">14</b></span><span class="slot-nome">Pérolas do Ender</span></li>
+        <li><span class="slot"><span class="px" data-px="rod" aria-hidden="true"></span><b class="qtd">7</b></span><span class="slot-nome">Varas de blaze</span></li>
+        <li><span class="slot"><span class="px" data-px="eye" aria-hidden="true"></span><b class="qtd">14</b></span><span class="slot-nome">Olhos do Ender</span></li>
+      </ul>
+      <p class="inv-nota">12 olhos enchem o portal do End se nenhuma moldura vier pronta. Os outros 2 são para jogar e achar a fortaleza.</p>
+      <ol class="rota" aria-label="Ordem das dimensões">
+        <li data-dim="ow"><span class="rota-dim">Overworld</span><span class="rota-n">1–3</span><span class="rota-o">ferro, balde, portal</span></li>
+        <li data-dim="nether"><span class="rota-dim">Nether</span><span class="rota-n">4–5</span><span class="rota-o">pérolas e blazes</span></li>
+        <li data-dim="ow"><span class="rota-dim">Overworld</span><span class="rota-n">6–7</span><span class="rota-o">olhos e fortaleza</span></li>
+        <li data-dim="end"><span class="rota-dim">End</span><span class="rota-n">8–9</span><span class="rota-o">dragão</span></li>
+      </ol>
+      <p class="progresso"><b id="prog-hero">0</b> de 9 etapas marcadas como feitas</p>
+    </div>
+  </div>
+</header>
+
+<section class="secao" id="versao" aria-labelledby="versao-t">
+  <div class="wrap">
+    <div class="versao-grade">
+      <div class="secao-cab">
+        <p class="eyebrow">Versão coberta</p>
+        <h2 id="versao-t">O que mudou na versão nova</h2>
+        <p class="versao-num">Java 26.3<br>Bedrock 26.50</p>
+        <p class="lede">Game drop Wilderness Bound, lançado em 15/09/2026 nas duas edições.</p>
+      </div>
+      <ul class="versao-lista">
+        <li><strong>O que chegou</strong><span>Um bioma de floresta novo (dappled forest) com álamos, acampamentos abandonados nas áreas de floresta, camas de palha, almofadas e escadas e lajes de lã e concreto nas 16 cores.</span></li>
+        <li><strong>Versão anterior</strong><span>A 26.2 (Chaos Cubed) trouxe as cavernas de enxofre e o mob cubo de enxofre.</span></li>
+        <li><strong>Para zerar</strong><span>As notas que encontramos não citam mudança no Nether, no End, no escambo com piglins nem no dragão. O roteiro abaixo segue igual.</span></li>
+        <li><strong>Atualização automática</strong><span>O guia é revisado toda semana. Quando sair versão nova, esta seção, as seeds e o que mais mudar são atualizados.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="secao" id="roteiro" aria-labelledby="roteiro-t">
+  <div class="wrap">
+    <div class="secao-cab">
+      <p class="eyebrow">Roteiro</p>
+      <h2 id="roteiro-t">Do spawn aos créditos em 9 etapas</h2>
+      <p class="lede">As etapas estão na ordem em que acontecem. Marque o que já sabe fazer. Para treinar, use o cronômetro: ele marca quanto tempo você leva em cada etapa e guarda o seu recorde.</p>
+    </div>
+    <div class="roteiro-grade">
+      <div class="etapas">
+
+        <article class="etapa" data-dim="ow" id="e1">
+          <div class="etapa-cab">
+            <span class="etapa-num">1</span>
+            <div class="etapa-titulos"><p class="etapa-dim">Overworld</p><h3>Madeira e pedra</h3></div>
+            <label class="feito"><input type="checkbox" class="chk" id="chk-1"> Feito</label>
+          </div>
+          <ul>
+            <li>Quebre 5 ou 6 troncos. Faça a mesa de trabalho, uma picareta e um machado de madeira.</li>
+            <li>Com 3 pedregulhos, troque para picareta e machado de pedra. <span class="tag tag-java">Java</span>O machado de pedra bate mais forte que a espada e serve de arma no começo.</li>
+            <li>Se tiver cascalho perto, quebre até sair sílex. Ele faz o isqueiro.</li>
+            <li>Antes de sair andando, olhe em volta. Vila, naufrágio, portal em ruínas ou lago de lava decidem o resto da rota.</li>
+          </ul>
+          <p class="saia"><strong>Saia com:</strong> ferramentas de pedra e madeira sobrando.</p>
+        </article>
+
+        <article class="etapa" data-dim="ow" id="e2">
+          <div class="etapa-cab">
+            <span class="etapa-num">2</span>
+            <div class="etapa-titulos"><p class="etapa-dim">Overworld</p><h3>Ferro, balde e comida</h3></div>
+            <label class="feito"><input type="checkbox" class="chk" id="chk-2"> Feito</label>
+          </div>
+          <ul>
+            <li>Você precisa de pelo menos 4 barras de ferro: 3 para o balde e 1 para o isqueiro.</li>
+            <li>Atalhos para o ferro: o baú do ferreiro da vila, o baú de tesouro do naufrágio e o tesouro enterrado na praia (o mapa dele vem no naufrágio). Nas montanhas, o minério de ferro aparece exposto lá no alto.</li>
+            <li>Na vila, pegue camas, fardos de feno e comida. Um fardo vira 9 trigos, e 3 trigos fazem 1 pão.</li>
+            <li>Encha o balde de água antes de seguir.</li>
+          </ul>
+          <p class="saia"><strong>Saia com:</strong> balde de água, isqueiro (ou carga de fogo), comida e 1 ou 2 camas.</p>
+        </article>
+
+        <article class="etapa" data-dim="ow" id="e3">
+          <div class="etapa-cab">
+            <span class="etapa-num">3</span>
+            <div class="etapa-titulos"><p class="etapa-dim">Overworld</p><h3>Portal do Nether</h3></div>
+            <label class="feito"><input type="checkbox" class="chk" id="chk-3"> Feito</label>
+          </div>
+          <ul>
+            <li>Achou um portal em ruínas? Complete a moldura. O baú dele pode ter obsidiana, isqueiro, carga de fogo e itens de ouro.</li>
+            <li>Sem portal pronto: num lago de lava, use o balde de água para transformar a lava parada em obsidiana no formato da moldura. São 10 blocos, uma moldura de 4 × 5 sem os cantos.</li>
+            <li>Acenda com o isqueiro ou com uma carga de fogo.</li>
+            <li>Antes de entrar, anote as coordenadas do portal. <span class="tag tag-java">Java</span>Aperte F3. <span class="tag tag-bedrock">Bedrock</span>Ligue “Mostrar coordenadas” nas opções do mundo.</li>
+          </ul>
+          <p class="saia"><strong>Saia com:</strong> as coordenadas do portal anotadas.</p>
+        </article>
+
+        <article class="etapa" data-dim="nether" id="e4">
+          <div class="etapa-cab">
+            <span class="etapa-num">4</span>
+            <div class="etapa-titulos"><p class="etapa-dim">Nether</p><h3>Bastião: ouro vira pérola</h3></div>
+            <label class="feito"><input type="checkbox" class="chk" id="chk-4"> Feito</label>
+          </div>
+          <ul>
+            <li>Vista pelo menos uma peça de armadura de ouro. Botas bastam. Sem ouro no corpo, os piglins atacam.</li>
+            <li>Jogue barras de ouro perto de um piglin. Ele examina e devolve um item sorteado, e a pérola do Ender é um dos itens possíveis. Quanto mais ouro, mais pérolas.</li>
+            <li>Um bloco de ouro vira 9 barras na mesa de trabalho. Os baús do bastião costumam ter ouro.</li>
+            <li>Abrir baú ou quebrar minério e bloco de ouro deixa bravos os piglins que estiverem vendo.</li>
+            <li>A troca também pode dar poção de resistência ao fogo. Guarde para a fortaleza.</li>
+          </ul>
+          <p class="saia"><strong>Saia com:</strong> 14 pérolas do Ender, ou o máximo que conseguir.</p>
+        </article>
+
+        <article class="etapa" data-dim="nether" id="e5">
+          <div class="etapa-cab">
+            <span class="etapa-num">5</span>
+            <div class="etapa-titulos"><p class="etapa-dim">Nether</p><h3>Fortaleza do Nether: varas de blaze</h3></div>
+            <label class="feito"><input type="checkbox" class="chk" id="chk-5"> Feito</label>
+          </div>
+          <ul>
+            <li>Procure pontes e torres de tijolo escuro. No vale das almas o terreno é aberto e dá para ver longe.</li>
+            <li>Os blazes saem de um gerador dentro da fortaleza. Fique atrás de um bloco, perto do gerador, e ataque quando eles se aproximarem.</li>
+            <li>Cada blaze derruba 0 ou 1 vara. Cada vara vira 2 pós de blaze.</li>
+            <li>Cuidado com os esqueletos wither, porque o efeito wither drena vida, e com as quedas na lava.</li>
+          </ul>
+          <p class="saia"><strong>Saia com:</strong> 7 varas de blaze.</p>
+        </article>
+
+        <article class="etapa" data-dim="ow" id="e6">
+          <div class="etapa-cab">
+            <span class="etapa-num">6</span>
+            <div class="etapa-titulos"><p class="etapa-dim">Overworld</p><h3>Olhos do Ender e a volta</h3></div>
+            <label class="feito"><input type="checkbox" class="chk" id="chk-6"> Feito</label>
+          </div>
+          <ul>
+            <li>1 pó de blaze e 1 pérola fazem 1 olho do Ender. Com 7 varas e 14 pérolas saem 14 olhos.</li>
+            <li>Volte pelo portal de entrada ou faça um portal novo no Nether. Cada bloco andado no Nether vale 8 no Overworld.</li>
+            <li><span class="tag tag-java">Java</span>Atalho: as 3 fortalezas mais perto do centro ficam entre 1.280 e 2.816 blocos do ponto 0, 0 no Overworld. Ande uns 220 blocos no Nether a partir do 0, 0 e faça um portal ali: você sai perto desse anel.</li>
+          </ul>
+          <p class="saia"><strong>Saia com:</strong> 14 olhos do Ender.</p>
+        </article>
+
+        <article class="etapa" data-dim="ow" id="e7">
+          <div class="etapa-cab">
+            <span class="etapa-num">7</span>
+            <div class="etapa-titulos"><p class="etapa-dim">Overworld</p><h3>Achar a fortaleza</h3></div>
+            <label class="feito"><input type="checkbox" class="chk" id="chk-7"> Feito</label>
+          </div>
+          <ul>
+            <li>Jogue um olho. Ele voa na direção da fortaleza e cai. Pegue de volta e siga. Às vezes o olho quebra.</li>
+            <li>Quando o olho voar para baixo ou para trás de você, a fortaleza está embaixo. Cave em escada, nunca reto para baixo.</li>
+            <li>Para gastar menos olhos, jogue em dois pontos bem separados, anote a direção de cada um e veja onde as linhas se cruzam.</li>
+            <li>Lá dentro, procure a sala do portal. Ela tem uma escada sobre lava e um gerador de traças. Quebre ou tape o gerador.</li>
+            <li>Coloque os olhos nas 12 molduras. Algumas já vêm com olho.</li>
+          </ul>
+          <p class="saia"><strong>Leve para o End:</strong> arco e 32 flechas ou mais, 64 blocos, balde de água, comida, espada ou machado e, se souber usar, camas.</p>
+        </article>
+
+        <article class="etapa" data-dim="end" id="e8">
+          <div class="etapa-cab">
+            <span class="etapa-num">8</span>
+            <div class="etapa-titulos"><p class="etapa-dim">End</p><h3>Cristais e dragão</h3></div>
+            <label class="feito"><input type="checkbox" class="chk" id="chk-8"> Feito</label>
+          </div>
+          <ul>
+            <li>Você chega numa plataforma de obsidiana. Faça uma ponte de blocos até a ilha se precisar.</li>
+            <li>Não encare os endermen. Uma abóbora esculpida na cabeça evita os ataques, mas atrapalha a visão.</li>
+            <li>Derrube com flechas os cristais do End no alto das torres. Os que ficam dentro de grade de ferro exigem subir com blocos.</li>
+            <li>Quando o dragão pousar no portal do meio, ataque. Camas explodem no End e dão muito dano, por isso quem pratica usa camas nessa hora. A explosão machuca você também: fique atrás de um bloco.</li>
+            <li>Se cair do alto, o balde de água na hora certa salva.</li>
+          </ul>
+          <p class="saia"><strong>Saia com:</strong> o dragão derrotado.</p>
+        </article>
+
+        <article class="etapa" data-dim="end" id="e9">
+          <div class="etapa-cab">
+            <span class="etapa-num">9</span>
+            <div class="etapa-titulos"><p class="etapa-dim">End</p><h3>Créditos</h3></div>
+            <label class="feito"><input type="checkbox" class="chk" id="chk-9"> Feito</label>
+          </div>
+          <ul>
+            <li>Quando o dragão morre, o portal de saída abre no centro e o ovo do dragão aparece em cima.</li>
+            <li>Pule no portal. Vem o poema do End e depois os créditos. Zerou.</li>
+          </ul>
+        </article>
+
+      </div>
+
+      <aside class="painel cronometro" aria-labelledby="cron-t">
+        <p class="painel-titulo" id="cron-t">Cronômetro da run</p>
+        <p class="tempo" id="t-tempo" aria-live="off">0:00.0</p>
+        <p class="atual" id="t-atual">Toque em Começar quando entrar no mundo.</p>
+        <div class="cron-botoes">
+          <button type="button" class="btn btn-forte" id="t-comecar">Começar</button>
+          <button type="button" class="btn" id="t-proxima" disabled>Próxima etapa</button>
+          <button type="button" class="btn" id="t-zerar">Zerar</button>
+        </div>
+        <ol class="splits" id="t-splits" aria-label="Tempo por etapa"></ol>
+        <p class="recorde">Seu recorde: <b id="t-recorde">nenhum ainda</b></p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="secao" id="seeds" aria-labelledby="seeds-t">
+  <div class="wrap">
+    <div class="secao-cab">
+      <p class="eyebrow">Seeds</p>
+      <h2 id="seeds-t">Seeds para treinar</h2>
+      <p class="lede">Uma seed boa para zerar tem vila e portal em ruínas perto do spawn, e bastião e fortaleza perto do portal no Nether. Versão nova pode mudar o mapa, então confira a seed num mundo de teste antes de jogar de verdade. Leva uns 2 minutos.</p>
+    </div>
+    <div class="seeds-grade">
+      <div class="painel testador" id="testador" aria-labelledby="testador-t">
+        <p class="painel-titulo" id="testador-t">Testador de seed</p>
+
+        <div class="passo">
+          <label class="passo-t" for="seed"><span>1</span>Escolha a seed</label>
+          <div class="linha-seed">
+            <input class="campo" id="seed" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="Cole o número da seed ou sorteie">
+            <button type="button" class="btn" id="sortear">Sortear</button>
+            <button type="button" class="btn" id="copiar-seed">Copiar</button>
+          </div>
+          <label class="linha-versao" for="versao-teste">Versão em que você está testando
+            <select class="campo" id="versao-teste">
+              <option value="26.3">26.3 (Bedrock 26.50)</option>
+              <option value="26.2">26.2 (Bedrock 26.30)</option>
+              <option value="26.1">26.1</option>
+              <option value="1.21">1.21</option>
+              <option value="outra">Outra</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="passo">
+          <p class="passo-t"><span>2</span>Crie um mundo de teste</p>
+          <p>Modo Criativo, com essa seed e com comandos (cheats) ligados. Depois rode os comandos abaixo e anote a distância que o jogo mostrar.</p>
+          <div class="cmds so-java">
+            <p class="cmds-rotulo">No spawn</p>
+            <div class="cmd-row"><code>/locate structure #minecraft:village</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+            <div class="cmd-row"><code>/locate structure #minecraft:ruined_portal</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+            <div class="cmd-row"><code>/locate structure minecraft:stronghold</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+            <p class="cmds-rotulo">Dentro do Nether, pelo portal que você faria</p>
+            <div class="cmd-row"><code>/locate structure minecraft:bastion_remnant</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+            <div class="cmd-row"><code>/locate structure minecraft:fortress</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+          </div>
+          <div class="cmds so-bedrock">
+            <p>Digite <code>/locate structure</code> e um espaço, e escolha na lista que o jogo mostra:</p>
+            <p class="cmds-rotulo">No spawn</p>
+            <p><code>village</code> (vila), <code>ruined_portal</code> (portal em ruínas) e <code>stronghold</code> (fortaleza).</p>
+            <p class="cmds-rotulo">Dentro do Nether, pelo portal que você faria</p>
+            <p><code>bastion_remnant</code> (bastião) e <code>fortress</code> (fortaleza do Nether).</p>
+          </div>
+        </div>
+
+        <div class="passo">
+          <p class="passo-t"><span>3</span>Anote as distâncias em blocos</p>
+          <div class="distancias">
+            <label class="dist" for="d-vila">Vila<input class="campo" id="d-vila" type="number" min="0" inputmode="numeric" data-chave="vila"><span class="nota" id="n-vila"></span></label>
+            <label class="dist" for="d-portal">Portal em ruínas<input class="campo" id="d-portal" type="number" min="0" inputmode="numeric" data-chave="portal"><span class="nota" id="n-portal"></span></label>
+            <label class="dist" for="d-bastiao">Bastião<input class="campo" id="d-bastiao" type="number" min="0" inputmode="numeric" data-chave="bastiao"><span class="nota" id="n-bastiao"></span></label>
+            <label class="dist" for="d-fortaleza">Fortaleza do Nether<input class="campo" id="d-fortaleza" type="number" min="0" inputmode="numeric" data-chave="fortaleza"><span class="nota" id="n-fortaleza"></span></label>
+            <label class="dist" for="d-stronghold">Fortaleza do End<input class="campo" id="d-stronghold" type="number" min="0" inputmode="numeric" data-chave="stronghold"><span class="nota" id="n-stronghold"></span></label>
+          </div>
+          <p class="criterio">Critério do site: ótimo até 150 blocos e bom até 350 (bastião e fortaleza do Nether: bom até 300). Para a fortaleza do End, ótimo até 1.600 e bom até 2.600.</p>
+        </div>
+
+        <div class="veredito">
+          <span class="veredito-t" id="veredito" aria-live="polite">Preencha pelo menos 3 distâncias</span>
+          <div class="veredito-acoes">
+            <button type="button" class="btn btn-forte" id="publicar" hidden disabled>Publicar no mural</button>
+            <button type="button" class="btn" id="salvar" disabled>Salvar em Minhas seeds</button>
+            <button type="button" class="btn" id="copiar-resumo" disabled>Copiar resumo</button>
+          </div>
+        </div>
+
+        <div class="passo">
+          <p class="passo-t"><span>4</span>Gostou? Jogue de verdade</p>
+          <p>Crie um mundo novo no modo Sobrevivência com a mesma seed e comece o cronômetro.</p>
+        </div>
+      </div>
+
+      <div class="seeds-col">
+        <div class="sub">
+          <h3>Seeds para começar</h3>
+          <p class="criterio">Vêm de guias publicados, nas versões em que eles testaram. Nenhuma foi conferida na 26.3: passe no testador antes.</p>
+          <div class="lista-seeds">
+            <article class="card-seed">
+              <p class="num">7311929229522424735</p>
+              <div class="meta"><span class="tag tag-java">Java</span><span>Testada pela fonte na 1.21</span></div>
+              <p>Spawn em taiga, com vila a 58 blocos. Um portal feito no spawn sai a 132 blocos de uma fortaleza do Nether e a 163 de um bastião.</p>
+              <div class="acoes">
+                <button type="button" class="btn btn-mini" data-testar="7311929229522424735" data-ed="java">Testar esta seed</button>
+                <a class="btn btn-mini" href="https://www.minecraft-guides.com/seeds/1-21/speedrun/" target="_blank" rel="noopener">Fonte</a>
+              </div>
+            </article>
+            <article class="card-seed">
+              <p class="num">-5301248458077658742</p>
+              <div class="meta"><span class="tag tag-bedrock">Bedrock</span><span>Testada pela fonte na 26.2</span></div>
+              <p>Vila com três ferreiros e um portal em ruínas dentro dela, com posto de saqueadores e templo do deserto perto. No Nether, a fonte mostra fortaleza e bastião, mas não diz a distância.</p>
+              <div class="acoes">
+                <button type="button" class="btn btn-mini" data-testar="-5301248458077658742" data-ed="bedrock">Testar esta seed</button>
+                <a class="btn btn-mini" href="https://www.craftmc.net/minecraft-seeds/26.2/three-blacksmith-village-ruined-portal-bedrock-26-30" target="_blank" rel="noopener">Fonte</a>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="sub" style="margin-top: 28px;">
+          <h3>Minhas seeds</h3>
+          <p class="criterio">Ficam guardadas só neste navegador. Use “Copiar resumo” para mandar para os amigos.</p>
+          <div class="lista-seeds" id="minhas"></div>
+        </div>
+
+        <p class="criterio" style="margin-top: 20px;">Para ver o mapa da seed sem abrir o jogo, use o <a href="https://www.chunkbase.com/apps/seed-map" target="_blank" rel="noopener">mapa de seeds do Chunkbase</a>. Ele pode demorar a receber a versão mais nova.</p>
+      </div>
+    </div>
+
+    <div class="mural" id="mural" aria-labelledby="mural-t">
+      <div class="mural-cab">
+        <div class="secao-cab">
+          <h3 id="mural-t">Mural de seeds</h3>
+          <p class="criterio" id="mural-status">Carregando o mural…</p>
+        </div>
+        <div class="filtros" role="group" aria-label="Filtrar o mural" id="mural-filtros">
+          <button type="button" data-mural="todas" aria-pressed="true">Todas</button>
+          <button type="button" data-mural="java" aria-pressed="false">Java</button>
+          <button type="button" data-mural="bedrock" aria-pressed="false">Bedrock</button>
+        </div>
+      </div>
+      <div class="lista-mural" id="mural-lista"><p class="vazio">Carregando o mural…</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="secao" id="biomas" aria-labelledby="biomas-t">
+  <div class="wrap">
+    <div class="secao-cab">
+      <p class="eyebrow">Biomas</p>
+      <h2 id="biomas-t">O melhor bioma para cada coisa</h2>
+      <p class="lede">O bioma decide o que aparece por perto. Escolha pelo que você quer fazer ou percorra a lista. Cada bioma traz o comando que encontra o mais próximo no mundo de teste.</p>
+    </div>
+
+    <div class="tabela-wrap">
+      <table>
+        <thead><tr><th scope="col">Quero</th><th scope="col">Vá para</th><th scope="col">Por quê</th></tr></thead>
+        <tbody>
+          <tr><td>Zerar rápido</td><td>Planícies, savana ou praia</td><td>Terreno aberto para enxergar longe. Vila e naufrágio dão ferro, camas e comida.</td></tr>
+          <tr><td>Ferro sem descer</td><td>Montanhas ou vila</td><td>O minério de ferro aparece em grande quantidade nas alturas, e o ferreiro guarda barras no baú.</td></tr>
+          <tr><td>Ouro</td><td>Badlands</td><td>Tem minério de ouro extra e minas abandonadas na superfície.</td></tr>
+          <tr><td>Esmeralda</td><td>Montanhas</td><td>O minério de esmeralda só aparece em biomas de montanha.</td></tr>
+          <tr><td>Diamante</td><td>Qualquer bioma, camadas −50 a −60</td><td>O diamante fica mais comum perto do fundo do mundo.</td></tr>
+          <tr><td>Pérolas do Ender</td><td>Bastião ou floresta distorcida</td><td>Escambo com os piglins, ou endermen, que surgem muito na floresta distorcida.</td></tr>
+          <tr><td>Varas de blaze</td><td>Fortaleza do Nether</td><td>O vale das almas é aberto e ajuda a enxergar a fortaleza.</td></tr>
+          <tr><td>Netherite</td><td>Nether, perto da camada 15</td><td>Os detritos antigos são mais comuns entre as camadas 8 e 22.</td></tr>
+          <tr><td>Élitros</td><td>Ilhas externas do End</td><td>As cidades do End com navio guardam os élitros.</td></tr>
+          <tr><td>Lã e camas</td><td>Planícies</td><td>É onde há mais ovelhas.</td></tr>
+          <tr><td>Cobre</td><td>Cavernas de espeleotemas</td><td>O minério de cobre aparece em grande quantidade.</td></tr>
+          <tr><td>Slime</td><td>Pântano ou slime chunk</td><td>Slimes surgem no pântano à noite e nos slime chunks abaixo da camada 40.</td></tr>
+          <tr><td>XP</td><td>Oceano profundo ou End</td><td>Os guardiões do monumento e os endermen dão muita experiência.</td></tr>
+          <tr><td>Base sem monstros</td><td>Campos de cogumelos</td><td>Monstros não surgem ali naturalmente.</td></tr>
+          <tr><td>Totem da imortalidade</td><td>Floresta escura</td><td>Os evocadores da mansão derrubam o totem.</td></tr>
+          <tr><td>Mel e favo</td><td>Cerejal, prado ou planície com flores</td><td>Tem colmeias e abelhas.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="filtros" role="group" aria-label="Filtrar biomas" data-filtro-alvo="#lista-biomas">
+      <button type="button" data-filtro="todos" aria-pressed="true">Todos</button>
+      <button type="button" data-filtro="overworld" aria-pressed="false">Overworld</button>
+      <button type="button" data-filtro="cavernas" aria-pressed="false">Cavernas</button>
+      <button type="button" data-filtro="nether" aria-pressed="false">Nether</button>
+      <button type="button" data-filtro="end" aria-pressed="false">End</button>
+    </div>
+
+    <div class="grade-cards" id="lista-biomas">
+      <article class="bioma" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h4>Planícies</h4><span class="id">plains</span></header>
+        <p><span class="rot">Bom para:</span> vila, cavalos, ovelhas para as camas, base e farms grandes.</p>
+        <p>Plano e aberto, dá para ver vila e lava de longe. Um dos melhores spawns para zerar.</p>
+        <div class="cmd-row"><code data-bioma="plains">/locate biome minecraft:plains</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+      <article class="bioma" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h4>Savana</h4><span class="id">savanna</span></header>
+        <p><span class="rot">Bom para:</span> vila, cavalos e madeira de acácia.</p>
+        <p>Árvores baixas e espaçadas deixam a vista livre, ótimo para achar vila e lava logo no começo.</p>
+        <div class="cmd-row"><code data-bioma="savanna">/locate biome minecraft:savanna</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+      <article class="bioma" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h4>Deserto</h4><span class="id">desert</span></header>
+        <p><span class="rot">Bom para:</span> vila, templo do deserto, cactos e coelhos.</p>
+        <p>O templo tem 4 baús e TNT escondida embaixo de uma placa de pressão no meio.</p>
+        <p class="cuidado"><span class="rot">Cuidado:</span> quase não tem madeira, e à noite surgem husks, os zumbis do deserto.</p>
+        <div class="cmd-row"><code data-bioma="desert">/locate biome minecraft:desert</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+      <article class="bioma" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h4>Taiga</h4><span class="id">taiga</span></header>
+        <p><span class="rot">Bom para:</span> vila, lobos, raposas e frutas doces.</p>
+        <p>Comida fácil com as frutas doces e madeira de pinheiro em quantidade.</p>
+        <div class="cmd-row"><code data-bioma="taiga">/locate biome minecraft:taiga</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+      <article class="bioma" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h4>Floresta</h4><span class="id">forest</span></header>
+        <p><span class="rot">Bom para:</span> madeira, lobos e maçãs.</p>
+        <p>Na 26.3 aparecem acampamentos abandonados nas áreas de floresta. Vale olhar se um surgir no caminho.</p>
+        <div class="cmd-row"><code data-bioma="forest">/locate biome minecraft:forest</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+      <article class="bioma" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h4>Floresta escura</h4><span class="id">dark_forest</span></header>
+        <p><span class="rot">Bom para:</span> mansão da floresta e o totem da imortalidade, que os evocadores derrubam.</p>
+        <p>Também tem cogumelos gigantes e madeira de carvalho escuro.</p>
+        <p class="cuidado"><span class="rot">Cuidado:</span> é escura até de dia, então surgem monstros.</p>
+        <div class="cmd-row"><code data-bioma="dark_forest">/locate biome minecraft:dark_forest</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+      <article class="bioma" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h4>Selva</h4><span class="id">jungle</span></header>
+        <p><span class="rot">Bom para:</span> templo da selva, bambu, pandas, jaguatiricas, cacau e melancia.</p>
+        <p class="cuidado"><span class="rot">Cuidado:</span> mato fechado, difícil de atravessar com pressa.</p>
+        <div class="cmd-row"><code data-bioma="jungle">/locate biome minecraft:jungle</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+      <article class="bioma" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h4>Pântano</h4><span class="id">swamp</span></header>
+        <p><span class="rot">Bom para:</span> cabana de bruxa e slimes.</p>
+        <p>À noite, os slimes surgem na superfície. Na lua cheia aparecem mais.</p>
+        <div class="cmd-row"><code data-bioma="swamp">/locate biome minecraft:swamp</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+      <article class="bioma" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h4>Manguezal</h4><span class="id">mangrove_swamp</span></header>
+        <p><span class="rot">Bom para:</span> lama para tijolos e sapos.</p>
+        <p>Um sapo que come um cubo de magma pequeno solta uma luz-sapo, um bloco de iluminação.</p>
+        <div class="cmd-row"><code data-bioma="mangrove_swamp">/locate biome minecraft:mangrove_swamp</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+      <article class="bioma" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h4>Badlands</h4><span class="id">badlands</span></header>
+        <p><span class="rot">Bom para:</span> ouro e terracota colorida.</p>
+        <p>Tem minério de ouro extra entre as camadas 32 e 256, e minas abandonadas à mostra, com trilhos e baús.</p>
+        <div class="cmd-row"><code data-bioma="badlands">/locate biome minecraft:badlands</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+      <article class="bioma" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h4>Montanhas</h4><span class="id">jagged_peaks e outros</span></header>
+        <p><span class="rot">Bom para:</span> esmeralda, ferro e cabras.</p>
+        <p>A esmeralda só aparece em biomas de montanha. O ferro fica exposto nas alturas. Também valem stony_peaks, frozen_peaks, snowy_slopes, grove, meadow e windswept_hills.</p>
+        <div class="cmd-row"><code data-bioma="jagged_peaks">/locate biome minecraft:jagged_peaks</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+      <article class="bioma" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h4>Cerejal</h4><span class="id">cherry_grove</span></header>
+        <p><span class="rot">Bom para:</span> abelhas, mel, favo e madeira de cerejeira.</p>
+        <p>Fica nas montanhas, então também pode ter esmeralda.</p>
+        <div class="cmd-row"><code data-bioma="cherry_grove">/locate biome minecraft:cherry_grove</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+      <article class="bioma" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h4>Campos de cogumelos</h4><span class="id">mushroom_fields</span></header>
+        <p><span class="rot">Bom para:</span> base segura, porque monstros não surgem ali naturalmente.</p>
+        <p>A vaca-cogumelo dá ensopado de cogumelo sem fim se você usar uma tigela nela.</p>
+        <p class="cuidado"><span class="rot">Cuidado:</span> é raro e costuma ficar no meio do oceano.</p>
+        <div class="cmd-row"><code data-bioma="mushroom_fields">/locate biome minecraft:mushroom_fields</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+      <article class="bioma" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h4>Oceano profundo</h4><span class="id">deep_ocean</span></header>
+        <p><span class="rot">Bom para:</span> monumento oceânico, com guardiões, prismarinho, esponjas e XP.</p>
+        <p class="cuidado"><span class="rot">Cuidado:</span> os guardiões dão fadiga de mineração. Leve leite.</p>
+        <div class="cmd-row"><code data-bioma="deep_ocean">/locate biome minecraft:deep_ocean</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+      <article class="bioma" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h4>Praia</h4><span class="id">beach</span></header>
+        <p><span class="rot">Bom para:</span> tesouro enterrado, naufrágios e tartarugas.</p>
+        <p>O tesouro enterrado sempre traz o coração do mar, que faz o conduíte, e muitas vezes ferro.</p>
+        <div class="cmd-row"><code data-bioma="beach">/locate biome minecraft:beach</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+
+      <article class="bioma" data-grupo="cavernas" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h4>Cavernas exuberantes</h4><span class="id">lush_caves</span></header>
+        <p><span class="rot">Bom para:</span> axolotes, azaleia, frutas brilhantes e argila.</p>
+        <div class="cmd-row"><code data-bioma="lush_caves">/locate biome minecraft:lush_caves</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+      <article class="bioma" data-grupo="cavernas" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h4>Cavernas de espeleotemas</h4><span class="id">dripstone_caves</span></header>
+        <p><span class="rot">Bom para:</span> cobre em quantidade e espeleotemas.</p>
+        <p>Espeleotema pontudo embaixo de lava enche um caldeirão aos poucos: é lava sem fim.</p>
+        <div class="cmd-row"><code data-bioma="dripstone_caves">/locate biome minecraft:dripstone_caves</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+      <article class="bioma" data-grupo="cavernas" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h4>Escuro profundo</h4><span class="id">deep_dark</span></header>
+        <p><span class="rot">Bom para:</span> cidade antiga, com o livro de Furtividade Ágil (Swift Sneak), fragmentos de eco e discos.</p>
+        <p class="cuidado"><span class="rot">Cuidado:</span> barulho chama o Warden. Ande agachado e não quebre os sensores.</p>
+        <div class="cmd-row"><code data-bioma="deep_dark">/locate biome minecraft:deep_dark</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+
+      <article class="bioma" data-grupo="nether" data-dim="nether">
+        <div class="faixa"></div>
+        <header><h4>Desertos do Nether</h4><span class="id">nether_wastes</span></header>
+        <p><span class="rot">Bom para:</span> piglins para o escambo, quartzo, fortalezas e bastiões.</p>
+        <p class="cuidado"><span class="rot">Cuidado:</span> ghasts atiram de longe e muito chão é lava.</p>
+        <div class="cmd-row"><code data-bioma="nether_wastes">/locate biome minecraft:nether_wastes</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+      <article class="bioma" data-grupo="nether" data-dim="nether">
+        <div class="faixa"></div>
+        <header><h4>Floresta carmesim</h4><span class="id">crimson_forest</span></header>
+        <p><span class="rot">Bom para:</span> hoglins, que dão comida e couro, e piglins. Bastiões aparecem aqui.</p>
+        <p class="cuidado"><span class="rot">Cuidado:</span> hoglins atacam e jogam você longe.</p>
+        <div class="cmd-row"><code data-bioma="crimson_forest">/locate biome minecraft:crimson_forest</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+      <article class="bioma" data-grupo="nether" data-dim="nether">
+        <div class="faixa"></div>
+        <header><h4>Floresta distorcida</h4><span class="id">warped_forest</span></header>
+        <p><span class="rot">Bom para:</span> pérolas do Ender e descanso.</p>
+        <p>É o bioma mais calmo do Nether. Fora os endermen, quase nada hostil surge ali.</p>
+        <div class="cmd-row"><code data-bioma="warped_forest">/locate biome minecraft:warped_forest</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+      <article class="bioma" data-grupo="nether" data-dim="nether">
+        <div class="faixa"></div>
+        <header><h4>Vale das almas</h4><span class="id">soul_sand_valley</span></header>
+        <p><span class="rot">Bom para:</span> enxergar fortalezas de longe e pegar areia das almas, que invoca o Wither.</p>
+        <p class="cuidado"><span class="rot">Cuidado:</span> esqueletos e ghasts, e a areia das almas deixa você lento.</p>
+        <div class="cmd-row"><code data-bioma="soul_sand_valley">/locate biome minecraft:soul_sand_valley</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+      <article class="bioma" data-grupo="nether" data-dim="nether">
+        <div class="faixa"></div>
+        <header><h4>Deltas de basalto</h4><span class="id">basalt_deltas</span></header>
+        <p><span class="rot">Bom para:</span> cubos de magma e o creme de magma das poções de resistência ao fogo.</p>
+        <p class="cuidado"><span class="rot">Cuidado:</span> terreno difícil e nenhum bastião. Evite numa run.</p>
+        <div class="cmd-row"><code data-bioma="basalt_deltas">/locate biome minecraft:basalt_deltas</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+
+      <article class="bioma" data-grupo="end" data-dim="end">
+        <div class="faixa"></div>
+        <header><h4>Ilhas externas do End</h4><span class="id">end_highlands</span></header>
+        <p><span class="rot">Bom para:</span> cidades e navios do End, com élitros e cabeça de dragão, e shulkers para as caixas.</p>
+        <p>Chegue pelo portal de passagem que aparece depois do dragão: jogue uma pérola nele.</p>
+        <div class="cmd-row"><code data-bioma="end_highlands">/locate biome minecraft:end_highlands</code><button type="button" class="btn btn-mini copiar">Copiar</button></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="secao" id="depois" aria-labelledby="depois-t">
+  <div class="wrap">
+    <div class="secao-cab">
+      <p class="eyebrow">Depois de zerar</p>
+      <h2 id="depois-t">As melhores coisas para conseguir</h2>
+      <p class="lede">Com o dragão derrotado, o resto do jogo abre. Esta é uma ordem que funciona bem, porque cada item ajuda a pegar o seguinte. Troque o que quiser.</p>
+    </div>
+
+    <ol class="itens">
+      <li><div><h4>Élitros</h4>
+        <p><span class="rot">Por que vale:</span> você voa pelo mapa inteiro. Com foguetes (papel e pólvora), ganha velocidade no ar.</p>
+        <p><span class="rot">Como conseguir:</span> depois do dragão, um portal de passagem aparece na borda da ilha central. Jogue uma pérola nele, vá às ilhas externas e procure uma cidade do End com navio.</p></div></li>
+      <li><div><h4>Caixas de shulker</h4>
+        <p><span class="rot">Por que vale:</span> inventário extra. A caixa guarda os itens mesmo quando você a quebra e carrega.</p>
+        <p><span class="rot">Como conseguir:</span> mate os shulkers das cidades do End. 2 cascas e 1 baú fazem uma caixa.</p></div></li>
+      <li><div><h4>Remendo</h4>
+        <p><span class="rot">Por que vale:</span> ferramenta e armadura com Remendo se consertam com a XP que você pega e duram para sempre.</p>
+        <p><span class="rot">Como conseguir:</span> livro do bibliotecário, da pesca ou de baús. Aplique na bigorna.</p></div></li>
+      <li><div><h4>Os melhores encantamentos</h4>
+        <p><span class="rot">Armadura:</span> Proteção IV, Inquebrável III e Remendo. Nas botas, Peso-Pena IV.</p>
+        <p><span class="rot">Picareta:</span> Eficiência V, Inquebrável III, Remendo e Fortuna III ou Toque Suave. <span class="rot">Espada:</span> Afiação V e Pilhagem III.</p></div></li>
+      <li><div><h4>Equipamento de netherite</h4>
+        <p><span class="rot">Por que vale:</span> é o material mais forte do jogo, resiste mais que diamante e o item não queima na lava.</p>
+        <p><span class="rot">Como conseguir:</span> detritos antigos perto da camada 15 do Nether. 4 fragmentos e 4 barras de ouro fazem 1 barra. O molde de melhoria vem nos baús do bastião e se copia com 7 diamantes e 1 netherrack.</p></div></li>
+      <li><div><h4>Totem da imortalidade</h4>
+        <p><span class="rot">Por que vale:</span> segurado na mão, evita uma morte.</p>
+        <p><span class="rot">Como conseguir:</span> os evocadores derrubam o totem. Eles ficam na mansão da floresta escura e aparecem nos ataques de saqueadores às vilas.</p></div></li>
+      <li><div><h4>Tridente</h4>
+        <p><span class="rot">Por que vale:</span> arma de arremesso. Com Lealdade ele volta, com Correnteza você voa na chuva e com Canalização chama raios.</p>
+        <p><span class="rot">Como conseguir:</span> os afogados que surgem com tridente às vezes deixam cair um. Procure em rios e oceanos.</p></div></li>
+      <li><div><h4>Maça</h4>
+        <p><span class="rot">Por que vale:</span> quanto maior a queda, mais forte o golpe. Combina com élitros e cargas de vento.</p>
+        <p><span class="rot">Como conseguir:</span> um núcleo pesado e uma vara de brisa. O núcleo sai dos cofres sinistros (ominous vaults) das Trial Chambers, as câmaras de cobre e tufo debaixo da terra.</p></div></li>
+      <li><div><h4>Sinalizador</h4>
+        <p><span class="rot">Por que vale:</span> dá Pressa para minerar rápido, Velocidade, Resistência, Força ou Regeneração em volta da base.</p>
+        <p><span class="rot">Como conseguir:</span> 3 crânios de esqueleto wither e 4 blocos de areia das almas invocam o Wither. Ele deixa a estrela do Nether, que vai em cima de uma pirâmide de blocos de ferro, ouro, diamante, esmeralda ou netherite.</p></div></li>
+      <li><div><h4>Conduíte</h4>
+        <p><span class="rot">Por que vale:</span> perto dele você respira, enxerga e minera rápido embaixo d’água.</p>
+        <p><span class="rot">Como conseguir:</span> o coração do mar do tesouro enterrado e 8 conchas de náutilo, que vêm de afogados, da pesca e do vendedor ambulante.</p></div></li>
+      <li><div><h4>Bússola de recuperação</h4>
+        <p><span class="rot">Por que vale:</span> aponta para o lugar onde você morreu pela última vez.</p>
+        <p><span class="rot">Como conseguir:</span> 8 fragmentos de eco, dos baús da cidade antiga, e 1 bússola.</p></div></li>
+      <li><div><h4>Maçã dourada encantada</h4>
+        <p><span class="rot">Por que vale:</span> dá absorção e regeneração fortes de uma vez.</p>
+        <p><span class="rot">Como conseguir:</span> não tem receita. Só aparece em baús, como os de bastiões, cidades antigas, minas abandonadas, templos e portais em ruínas.</p></div></li>
+    </ol>
+
+    <div class="secao-cab" style="margin-top: 12px;" id="farms">
+      <h3>Farms</h3>
+      <p class="lede">Comece pelas fáceis: elas dão o material das maiores. Projetos de redstone mudam de uma versão para outra, então confira se o tutorial que você seguir é da sua versão e edição.</p>
+    </div>
+
+    <div class="filtros" role="group" aria-label="Filtrar farms por dificuldade" data-filtro-alvo="#lista-farms">
+      <button type="button" data-filtro="todos" aria-pressed="true">Todas</button>
+      <button type="button" data-filtro="facil" aria-pressed="false">Fáceis</button>
+      <button type="button" data-filtro="media" aria-pressed="false">Médias</button>
+      <button type="button" data-filtro="avancada" aria-pressed="false">Avançadas</button>
+    </div>
+
+    <div class="grade-cards" id="lista-farms">
+      <article class="farm" data-grupo="facil">
+        <header><h4>Cana-de-açúcar automática</h4><span class="nivel nivel-facil">Fácil</span></header>
+        <dl>
+          <div><dt>Serve para</dt><dd>papel para livros, mapas e foguetes.</dd></div>
+          <div><dt>Onde</dt><dd>perto da base, em qualquer bioma, com água ao lado da terra.</dd></div>
+          <div><dt>Como funciona</dt><dd>a cana cresce, um observador vê o bloco novo e aciona um pistão que a quebra. Funis levam tudo para um baú.</dd></div>
+          <div><dt>Edição</dt><dd>Java e Bedrock.</dd></div>
+        </dl>
+      </article>
+      <article class="farm" data-grupo="facil">
+        <header><h4>Abóbora e melancia</h4><span class="nivel nivel-facil">Fácil</span></header>
+        <dl>
+          <div><dt>Serve para</dt><dd>comida e esmeraldas, porque o aldeão agricultor compra as duas.</dd></div>
+          <div><dt>Onde</dt><dd>perto da base, em qualquer bioma.</dd></div>
+          <div><dt>Como funciona</dt><dd>o mesmo princípio da cana: um observador vê o fruto nascer ao lado do pé e um pistão quebra.</dd></div>
+          <div><dt>Edição</dt><dd>Java e Bedrock.</dd></div>
+        </dl>
+      </article>
+      <article class="farm" data-grupo="facil">
+        <header><h4>Trigo e cenoura com aldeão</h4><span class="nivel nivel-facil">Fácil</span></header>
+        <dl>
+          <div><dt>Serve para</dt><dd>comida e itens para trocar.</dd></div>
+          <div><dt>Onde</dt><dd>num cercado com terra arada e uma composteira.</dd></div>
+          <div><dt>Como funciona</dt><dd>um aldeão agricultor colhe e replanta. Quando junta muito, joga para outro aldeão, e um funil no caminho recolhe.</dd></div>
+          <div><dt>Edição</dt><dd>Java e Bedrock, com projetos diferentes.</dd></div>
+        </dl>
+      </article>
+      <article class="farm" data-grupo="facil">
+        <header><h4>Frango assado automático</h4><span class="nivel nivel-facil">Fácil</span></header>
+        <dl>
+          <div><dt>Serve para</dt><dd>comida pronta e penas para flechas.</dd></div>
+          <div><dt>Onde</dt><dd>qualquer lugar perto da base.</dd></div>
+          <div><dt>Como funciona</dt><dd>galinhas presas botam ovos num funil. Um ejetor choca pintinhos. Quando crescem, ficam altos o bastante para encostar numa lâmina de lava e cair como frango assado.</dd></div>
+          <div><dt>Edição</dt><dd>Java e Bedrock.</dd></div>
+        </dl>
+      </article>
+      <article class="farm" data-grupo="media">
+        <header><h4>Ferro</h4><span class="nivel nivel-media">Média</span></header>
+        <dl>
+          <div><dt>Serve para</dt><dd>ferro sem fim para baldes, trilhos, funis e bigornas.</dd></div>
+          <div><dt>Onde</dt><dd>longe de outras vilas, para não dividir os golens.</dd></div>
+          <div><dt>Como funciona</dt><dd><span class="tag tag-java">Java</span>3 aldeões com camas veem um zumbi preso, ficam com medo e chamam um golem de ferro. O golem cai num ponto onde morre, e o ferro vai para o funil.</dd></div>
+          <div><dt>Edição</dt><dd>No Bedrock as regras são outras (depende de vila com muitos aldeões e camas). Siga um projeto feito para Bedrock.</dd></div>
+        </dl>
+      </article>
+      <article class="farm" data-grupo="media">
+        <header><h4>Mobs (sala escura)</h4><span class="nivel nivel-media">Média</span></header>
+        <dl>
+          <div><dt>Serve para</dt><dd>ossos (farinha de osso), flechas, pólvora, linha e XP.</dd></div>
+          <div><dt>Onde</dt><dd>no alto, sobre o oceano. Longe de cavernas, os monstros surgem na farm e não lá embaixo.</dd></div>
+          <div><dt>Como funciona</dt><dd>andares totalmente escuros. A água empurra os monstros para um poço. Uma queda de uns 22 blocos deixa quase todos com um golpe de vida, e você dá esse golpe e fica com a XP.</dd></div>
+          <div><dt>Edição</dt><dd>Java e Bedrock.</dd></div>
+        </dl>
+      </article>
+      <article class="farm" data-grupo="media">
+        <header><h4>Salão de troca</h4><span class="nivel nivel-media">Média</span></header>
+        <dl>
+          <div><dt>Serve para</dt><dd>livros encantados como Remendo, esmeraldas e ferramentas de diamante encantadas.</dd></div>
+          <div><dt>Onde</dt><dd>na base, com aldeões trazidos de uma vila.</dd></div>
+          <div><dt>Como funciona</dt><dd>cada aldeão fica num cubículo com a estação de trabalho dele. Troque a estação do bibliotecário até ele oferecer o livro que você quer. Isso só funciona antes da primeira troca. Curar um aldeão zumbi com poção de fraqueza e maçã dourada dá desconto.</dd></div>
+          <div><dt>Edição</dt><dd>Java e Bedrock. Os livros oferecidos podem variar por versão e pelo bioma da vila.</dd></div>
+        </dl>
+      </article>
+      <article class="farm" data-grupo="media">
+        <header><h4>Slime</h4><span class="nivel nivel-media">Média</span></header>
+        <dl>
+          <div><dt>Serve para</dt><dd>bolas de slime para pistões aderentes, laços e blocos de slime.</dd></div>
+          <div><dt>Onde</dt><dd>num slime chunk, abaixo da camada 40. Ache com o <a href="https://www.chunkbase.com/apps/slime-finder" target="_blank" rel="noopener">localizador de slime do Chunkbase</a>, que tem Java e Bedrock.</dd></div>
+          <div><dt>Como funciona</dt><dd>ilumine tudo em volta, abra uma área plana dentro do chunk e leve os slimes até um ponto de abate.</dd></div>
+          <div><dt>Edição</dt><dd>Java e Bedrock, com slime chunks em lugares diferentes.</dd></div>
+        </dl>
+      </article>
+      <article class="farm" data-grupo="avancada">
+        <header><h4>XP de enderman</h4><span class="nivel nivel-avancada">Avançada</span></header>
+        <dl>
+          <div><dt>Serve para</dt><dd>muita XP para encantar e consertar com Remendo, e pérolas.</dd></div>
+          <div><dt>Onde</dt><dd>no End, com o dragão já derrotado.</dd></div>
+          <div><dt>Como funciona</dt><dd>os endermen surgem numa plataforma e são levados até você, que só dá o último golpe. <span class="tag tag-java">Java</span>Um endermite preso atrai os endermen.</dd></div>
+          <div><dt>Edição</dt><dd>Java e Bedrock, com projetos bem diferentes.</dd></div>
+        </dl>
+      </article>
+      <article class="farm" data-grupo="avancada">
+        <header><h4>Ouro</h4><span class="nivel nivel-avancada">Avançada</span></header>
+        <dl>
+          <div><dt>Serve para</dt><dd>ouro e muita XP.</dd></div>
+          <div><dt>Onde</dt><dd>no Nether.</dd></div>
+          <div><dt>Como funciona</dt><dd>piglins zumbificados surgem em grandes plataformas e caem até um ponto de abate. É um projeto grande: siga um tutorial da sua versão.</dd></div>
+          <div><dt>Edição</dt><dd>Java e Bedrock, com projetos diferentes.</dd></div>
+        </dl>
+      </article>
+      <article class="farm" data-grupo="avancada">
+        <header><h4>Guardião</h4><span class="nivel nivel-avancada">Avançada</span></header>
+        <dl>
+          <div><dt>Serve para</dt><dd>XP, prismarinho e peixe.</dd></div>
+          <div><dt>Onde</dt><dd>num monumento oceânico, no oceano profundo.</dd></div>
+          <div><dt>Como funciona</dt><dd>você drena parte do monumento e monta uma área onde os guardiões surgem e são levados ao abate. Antes, derrote os 3 guardiões anciões.</dd></div>
+          <div><dt>Edição</dt><dd>Java e Bedrock.</dd></div>
+        </dl>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="secao" id="missoes" aria-labelledby="missoes-t">
+  <div class="wrap">
+    <div class="secao-cab">
+      <p class="eyebrow">Missões</p>
+      <div class="missoes-cab">
+        <h2 id="missoes-t">Missões difíceis</h2>
+        <p class="contador"><span id="m-feitas">0</span> de <span id="m-total">0</span></p>
+      </div>
+      <p class="lede">Para quando zerar ficar fácil. As primeiras são desafios de run; as outras são as conquistas mais difíceis do jogo. Toque numa missão para marcar como cumprida.</p>
+    </div>
+
+    <div class="grupo-missoes">
+      <h3>Desafios de run</h3>
+      <div class="missoes">
+        <label class="missao" data-tipo="run"><input type="checkbox" class="chk-m" id="m-1h"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Zerar em menos de 1 hora</span><span class="d">Do spawn aos créditos com o cronômetro do roteiro rodando.</span></span></label>
+        <label class="missao" data-tipo="run"><input type="checkbox" class="chk-m" id="m-hardcore"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Zerar no Hardcore</span><span class="d">Uma vida só. Se morrer, o mundo acaba.</span></span></label>
+        <label class="missao" data-tipo="run"><input type="checkbox" class="chk-m" id="m-sem-escambo"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Zerar sem escambo</span><span class="d">Nenhuma troca com piglins. As pérolas vêm só dos endermen.</span></span></label>
+        <label class="missao" data-tipo="run"><input type="checkbox" class="chk-m" id="m-sem-armadura"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Dragão sem armadura</span><span class="d">Entrar no End e derrotar o dragão sem nenhuma peça de armadura.</span></span></label>
+      </div>
+    </div>
+
+    <div class="grupo-missoes">
+      <h3>Conquistas difíceis</h3>
+      <p class="criterio">Os nomes em inglês são os das conquistas do Java. No Bedrock a lista de conquistas é outra, mas os desafios valem do mesmo jeito.</p>
+      <div class="missoes">
+        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-efeitos"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Todos os efeitos</span><span class="d">Ficar com todos os efeitos da lista da conquista ao mesmo tempo. É a mais difícil do jogo, e a lista muda de uma versão para outra.</span><span class="d nome-jogo">How Did We Get Here?</span></span></label>
+        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-biomas"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Visitar todos os biomas</span><span class="d">Passar por todos os biomas do Overworld que a conquista pede.</span><span class="d nome-jogo">Adventuring Time</span></span></label>
+        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-monstros"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Caçar todos os monstros</span><span class="d">Derrotar pelo menos um de cada monstro hostil do jogo.</span><span class="d nome-jogo">Monsters Hunted</span></span></label>
+        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-animais"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Criar todos os animais</span><span class="d">Fazer filhote de cada animal que procria.</span><span class="d nome-jogo">Two by Two</span></span></label>
+        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-comidas"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Comer de tudo</span><span class="d">Comer cada comida do jogo, inclusive carne podre e batata venenosa.</span><span class="d nome-jogo">A Balanced Diet</span></span></label>
+        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-sinalizador"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Sinalizador completo</span><span class="d">Pirâmide de 4 andares: 164 blocos de ferro, ouro, diamante, esmeralda ou netherite.</span><span class="d nome-jogo">Beaconator</span></span></label>
+        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-netherite"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Armadura toda de netherite</span><span class="d">Vestir as 4 peças de netherite ao mesmo tempo.</span><span class="d nome-jogo">Cover Me in Debris</span></span></label>
+        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-enxada"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Enxada de netherite</span><span class="d">Gastar uma barra de netherite inteira numa enxada.</span><span class="d nome-jogo">Serious Dedication</span></span></label>
+        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-sniper"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Franco-atirador</span><span class="d">Matar um esqueleto com flecha a 50 blocos de distância ou mais.</span><span class="d nome-jogo">Sniper Duel</span></span></label>
+        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-ghast"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Devolver a bola de fogo</span><span class="d">Matar um ghast rebatendo a própria bola de fogo dele.</span><span class="d nome-jogo">Return to Sender</span></span></label>
+        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-alianca"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Ghast no Overworld</span><span class="d">Trazer um ghast vivo do Nether pelo portal e derrotá-lo no Overworld.</span><span class="d nome-jogo">Uneasy Alliance</span></span></label>
+        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-heroi"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Herói da vila</span><span class="d">Vencer todas as ondas de um ataque de saqueadores a uma vila.</span><span class="d nome-jogo">Hero of the Village</span></span></label>
+        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-raio"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Raio no aldeão</span><span class="d">Acertar um aldeão com um raio, usando tridente com Canalização numa tempestade.</span><span class="d nome-jogo">Very Very Frightening</span></span></label>
+        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-besta"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Cinco de uma vez</span><span class="d">Matar 5 mobs de tipos diferentes com um único disparo de besta. Perfuração ajuda.</span><span class="d nome-jogo">Arbalistic</span></span></label>
+        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-maca"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">Golpe de maça</span><span class="d">Causar 50 corações de dano num golpe só com a maça.</span><span class="d nome-jogo">Over-Overkill</span></span></label>
+        <label class="missao" data-tipo="desafio"><input type="checkbox" class="chk-m" id="m-dragao2"><span class="moldura" aria-hidden="true"></span><span><span class="missao-t">O dragão de novo</span><span class="d">Reviver o dragão com 4 cristais do End em volta do portal de saída.</span><span class="d nome-jogo">The End... Again...</span></span></label>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="rodape">
+  <div class="wrap">
+    <div>
+      <h3>De onde vêm as informações</h3>
+      <ul>
+        <li>Lançamento da 26.3: <a href="https://www.gamingonlinux.com/2026/09/minecraft-java-edition-26-3-wilderness-bound-update-released/" target="_blank" rel="noopener">GamingOnLinux</a>, <a href="https://nodecraft.com/blog/game-news-tips/minecraft-java-26-3-wilderness-bound-is-out-what-it-means-for-your-server" target="_blank" rel="noopener">Nodecraft</a> e <a href="https://allthings.how/minecraft-wilderness-bound-what-s-new-in-java-26-3-and-bedrock-26-50/" target="_blank" rel="noopener">All Things How</a>.</li>
+        <li>Release candidate da 26.3: <a href="https://www.minecraft.net/ja-jp/article/minecraft-26-3-release-candidate-1" target="_blank" rel="noopener">minecraft.net</a>.</li>
+        <li>Seeds: <a href="https://www.minecraft-guides.com/seeds/1-21/speedrun/" target="_blank" rel="noopener">Minecraft Guides</a> e <a href="https://www.craftmc.net/minecraft-seeds/26.2/three-blacksmith-village-ruined-portal-bedrock-26-30" target="_blank" rel="noopener">CraftMC</a>.</li>
+        <li>Para conferir qualquer detalhe: <a href="https://minecraft.wiki" target="_blank" rel="noopener">Minecraft Wiki</a> e <a href="https://www.chunkbase.com/apps/seed-map" target="_blank" rel="noopener">Chunkbase</a>.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Atualização</h3>
+      <p>O guia é revisado toda semana. Quando sai versão nova do jogo, a seção de versão, as seeds e o que mais mudar são atualizados. Última revisão: 29/10/2026.</p>
+    </div>
+    <p class="aviso">Rota do Dragão é um guia de fã, sem ligação com a Mojang ou a Microsoft. Minecraft é marca da Microsoft.</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---------- armazenamento local (pode falhar em janela anônima) ----------
+  var LS = {
+    get: function (k, d) { try { var v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+    set: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  };
+
+  // ---------- ícones em pixel ----------
+  var ICONES = {
+    rod: { p: { y: "#F8D55C", o: "#E08A1E", d: "#8C4A0E" }, g: ["......yo", ".....yod", "....yod.", "...yod..", "..yod...", ".yod....", "yod.....", "od......"] },
+    pearl: { p: { a: "#0B4D42", b: "#1E8C78", c: "#6FE6D0" }, g: ["..aaaa..", ".abbbba.", "abcbbbba", "abccbbba", "abbbbbba", "abbbbbba", ".abbbba.", "..aaaa.."] },
+    eye: { p: { a: "#1F4D1F", g: "#6AAE3A", l: "#C6EE94", p: "#111111" }, g: ["..aaaa..", ".agggga.", "aglgggga", "aggppgga", "aggppgga", "agggggga", ".agggga.", "..aaaa.."] },
+    bucket: { p: { k: "#3E3E3E", s: "#B5B5B5", h: "#E2E2E2" }, g: ["..kkkk..", ".k....k.", "kkkkkkkk", "kshssssk", "kshssssk", ".kssssk.", ".kssssk.", "..kkkk.."] }
+  };
+  function desenhar(el) {
+    var ic = ICONES[el.getAttribute("data-px")];
+    if (!ic) return;
+    var n = ic.g.length, r = "";
+    for (var y = 0; y < n; y++) {
+      for (var x = 0; x < ic.g[y].length; x++) {
+        var c = ic.g[y][x];
+        if (c !== "." && ic.p[c]) r += '<rect x="' + x + '" y="' + y + '" width="1" height="1" fill="' + ic.p[c] + '"/>';
+      }
+    }
+    el.innerHTML = '<svg viewBox="0 0 ' + n + " " + n + '" xmlns="http://www.w3.org/2000/svg">' + r + "</svg>";
+  }
+  document.querySelectorAll(".px[data-px]").forEach(desenhar);
+
+  // ---------- aviso rápido ----------
+  var toast = document.getElementById("toast"), toastT;
+  function avisar(msg) {
+    toast.textContent = msg; toast.hidden = false;
+    clearTimeout(toastT); toastT = setTimeout(function () { toast.hidden = true; }, 2200);
+  }
+  function copiar(texto, alvo) {
+    var feito = function () { avisar("Copiado"); };
+    var falhou = function () {
+      if (alvo) {
+        var sel = window.getSelection(), r = document.createRange();
+        r.selectNodeContents(alvo); sel.removeAllRanges(); sel.addRange(r);
+        avisar("Texto selecionado: copie com Ctrl+C");
+      } else { avisar("Não deu para copiar"); }
+    };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(texto).then(feito, falhou);
+      else falhou();
+    } catch (e) { falhou(); }
+  }
+
+  // ---------- edição Java / Bedrock ----------
+  var ed = LS.get("rd-ed", "java") === "bedrock" ? "bedrock" : "java";
+  function aplicarEdicao() {
+    document.documentElement.setAttribute("data-ed", ed);
+    document.querySelectorAll(".edicao button").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-ed") === ed));
+    });
+    document.querySelectorAll("code[data-bioma]").forEach(function (c) {
+      var id = c.getAttribute("data-bioma");
+      c.textContent = ed === "java" ? "/locate biome minecraft:" + id : "/locate biome " + id;
+    });
+  }
+  document.querySelectorAll(".edicao button").forEach(function (b) {
+    b.addEventListener("click", function () { ed = b.getAttribute("data-ed"); LS.set("rd-ed", ed); aplicarEdicao(); });
+  });
+  aplicarEdicao();
+
+  // botões "Copiar" ao lado de comandos
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest(".copiar");
+    if (!b) return;
+    var code = b.closest(".cmd-row").querySelector("code");
+    copiar(code.textContent, code);
+  });
+
+  // ---------- etapas feitas ----------
+  var feitas = LS.get("rd-feitas", []);
+  var chks = document.querySelectorAll(".chk");
+  function atualizarFeitas() {
+    var n = 0;
+    chks.forEach(function (c) {
+      var art = c.closest(".etapa");
+      art.classList.toggle("feita", c.checked);
+      if (c.checked) n++;
+    });
+    document.getElementById("prog-hero").textContent = n;
+  }
+  chks.forEach(function (c) {
+    c.checked = feitas.indexOf(c.id) !== -1;
+    c.addEventListener("change", function () {
+      feitas = Array.prototype.filter.call(chks, function (x) { return x.checked; }).map(function (x) { return x.id; });
+      LS.set("rd-feitas", feitas);
+      atualizarFeitas();
+    });
+  });
+  atualizarFeitas();
+
+  // ---------- cronômetro ----------
+  var ETAPAS = ["Madeira e pedra", "Ferro, balde e comida", "Portal do Nether", "Bastião", "Fortaleza do Nether", "Olhos do Ender", "Achar a fortaleza", "Cristais e dragão", "Créditos"];
+  var t = LS.get("rd-timer", { inicio: null, splits: [], fim: null });
+  if (!t || !Array.isArray(t.splits)) t = { inicio: null, splits: [], fim: null };
+  var recorde = LS.get("rd-recorde", null);
+  var elTempo = document.getElementById("t-tempo"), elAtual = document.getElementById("t-atual");
+  var elSplits = document.getElementById("t-splits"), elRec = document.getElementById("t-recorde");
+  var bComecar = document.getElementById("t-comecar"), bProx = document.getElementById("t-proxima"), bZerar = document.getElementById("t-zerar");
+  var artigos = document.querySelectorAll(".etapa");
+  var tick = null;
+
+  function fmt(ms) {
+    if (ms == null || ms < 0) return "–";
+    var d = Math.floor(ms / 100) % 10, s = Math.floor(ms / 1000), h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60);
+    s = s % 60;
+    var ss = (s < 10 ? "0" : "") + s;
+    if (h > 0) return h + ":" + (m < 10 ? "0" : "") + m + ":" + ss;
+    return m + ":" + ss + "." + d;
+  }
+  function rodando() { return t.inicio != null && t.fim == null; }
+  function renderCron() {
+    var agora = Date.now();
+    var total = t.inicio == null ? 0 : (t.fim != null ? t.fim - t.inicio : agora - t.inicio);
+    elTempo.textContent = fmt(total);
+    var cur = t.splits.length;
+    if (t.inicio == null) elAtual.textContent = "Toque em Começar quando entrar no mundo.";
+    else if (t.fim != null) elAtual.textContent = "Zerou em " + fmt(total) + ".";
+    else elAtual.textContent = "Agora: etapa " + (cur + 1) + ", " + ETAPAS[cur];
+    var html = "";
+    for (var i = 0; i < ETAPAS.length; i++) {
+      var fimI = t.splits[i], iniI = i === 0 ? 0 : t.splits[i - 1];
+      var seg = "", acum = "";
+      if (fimI != null) { seg = fmt(fimI - iniI); acum = fmt(fimI); }
+      else if (rodando() && i === cur) { seg = fmt(agora - t.inicio - iniI); }
+      var cls = rodando() && i === cur ? ' class="atual-split"' : "";
+      html += "<li" + cls + "><span>" + (i + 1) + "</span><span>" + ETAPAS[i] + '</span><span class="seg">' + seg + '</span><span class="acum">' + acum + "</span></li>";
+    }
+    elSplits.innerHTML = html;
+    bComecar.textContent = t.inicio == null ? "Começar" : "Recomeçar";
+    bProx.disabled = !rodando();
+    bProx.textContent = cur === ETAPAS.length - 1 ? "Zerou!" : "Próxima etapa";
+    elRec.textContent = recorde ? fmt(recorde) : "nenhum ainda";
+    artigos.forEach(function (a, i) { a.classList.toggle("is-atual", rodando() && i === cur); });
+  }
+  function ligarTick() {
+    clearInterval(tick);
+    if (rodando()) tick = setInterval(renderCron, 100);
+  }
+  bComecar.addEventListener("click", function () {
+    t = { inicio: Date.now(), splits: [], fim: null };
+    LS.set("rd-timer", t); renderCron(); ligarTick();
+  });
+  bProx.addEventListener("click", function () {
+    if (!rodando()) return;
+    var agora = Date.now();
+    t.splits.push(agora - t.inicio);
+    if (t.splits.length >= ETAPAS.length) {
+      t.fim = agora;
+      var total = t.fim - t.inicio;
+      if (!recorde || total < recorde) { recorde = total; LS.set("rd-recorde", recorde); avisar("Recorde novo: " + fmt(total)); }
+    }
+    LS.set("rd-timer", t); renderCron(); ligarTick();
+  });
+  bZerar.addEventListener("click", function () {
+    t = { inicio: null, splits: [], fim: null };
+    LS.set("rd-timer", t); renderCron(); ligarTick();
+  });
+  renderCron(); ligarTick();
+
+  // ---------- testador de seed ----------
+  var LIMITES = { vila: [150, 350], portal: [150, 350], bastiao: [150, 300], fortaleza: [150, 300], stronghold: [1600, 2600] };
+  var NOMES = { vila: "vila", portal: "portal", bastiao: "bastião", fortaleza: "fortaleza do Nether", stronghold: "fortaleza do End" };
+  var ROTULO_NOTA = ["Longe", "Bom", "Ótimo"];
+  var SEED_OK = /^-?\d{1,20}$/;
+  var elSeed = document.getElementById("seed"), elVer = document.getElementById("veredito"), bSalvar = document.getElementById("salvar");
+  var elVersao = document.getElementById("versao-teste"), bResumo = document.getElementById("copiar-resumo"), bPublicar = document.getElementById("publicar");
+  var VERSOES = Array.prototype.map.call(elVersao.options, function (o) { return o.value; });
+  function versaoValida(v) { return VERSOES.indexOf(v) !== -1 ? v : "outra"; }
+  var campos = document.querySelectorAll(".dist input");
+
+  function sortearSeed() {
+    try {
+      var a = new Uint32Array(2); crypto.getRandomValues(a);
+      var v = (BigInt(a[0]) << 32n) | BigInt(a[1]);
+      return BigInt.asIntN(64, v).toString();
+    } catch (e) {
+      return String(Math.floor(Math.random() * 4294967296) - 2147483648);
+    }
+  }
+  function lerDist() {
+    var d = {};
+    campos.forEach(function (c) {
+      var v = c.value.trim();
+      if (v !== "" && !isNaN(Number(v)) && Number(v) >= 0) d[c.getAttribute("data-chave")] = Math.round(Number(v));
+    });
+    return d;
+  }
+  function nota(chave, v) { var l = LIMITES[chave]; return v <= l[0] ? 2 : v <= l[1] ? 1 : 0; }
+  function veredito(d) {
+    var ks = Object.keys(d);
+    if (ks.length < 3) return null;
+    var soma = ks.reduce(function (s, k) { return s + nota(k, d[k]); }, 0), media = soma / ks.length;
+    return media >= 1.6 ? "Ótima para treinar" : media >= 1 ? "Dá para zerar" : "Fraca: sorteie outra";
+  }
+  function avaliar() {
+    var d = lerDist();
+    campos.forEach(function (c) {
+      var k = c.getAttribute("data-chave"), el = document.getElementById("n-" + k);
+      if (d[k] == null) { el.textContent = ""; el.className = "nota"; return; }
+      var n = nota(k, d[k]);
+      el.textContent = ROTULO_NOTA[n]; el.className = "nota nota-" + n;
+    });
+    var v = veredito(d), temSeed = SEED_OK.test(elSeed.value.trim()), temDist = Object.keys(d).length > 0;
+    elVer.textContent = v || "Preencha pelo menos 3 distâncias";
+    bSalvar.disabled = !(temSeed && temDist);
+    bResumo.disabled = !(temSeed && temDist);
+    bPublicar.disabled = !(temSeed && v) || !!(mural && mural.enviando);
+    LS.set("rd-teste", { seed: elSeed.value, d: d, versao: elVersao.value });
+  }
+  var rascunho = LS.get("rd-teste", null);
+  if (rascunho && typeof rascunho === "object") {
+    elSeed.value = rascunho.seed || "";
+    campos.forEach(function (c) { var k = c.getAttribute("data-chave"); if (rascunho.d && rascunho.d[k] != null) c.value = rascunho.d[k]; });
+    if (rascunho.versao) elVersao.value = versaoValida(rascunho.versao);
+  }
+  elVersao.addEventListener("change", avaliar);
+  function atualTeste() {
+    var d = lerDist();
+    return { seed: elSeed.value.trim(), ed: ed, versao: elVersao.value, d: d, veredito: veredito(d) };
+  }
+  // preenche o testador com uma seed (de Minhas seeds, do mural ou de um resumo colado)
+  function preencher(s) {
+    elSeed.value = s.seed;
+    if (s.ed === "java" || s.ed === "bedrock") { ed = s.ed; LS.set("rd-ed", ed); aplicarEdicao(); }
+    if (s.versao) elVersao.value = versaoValida(s.versao);
+    campos.forEach(function (c) { var k = c.getAttribute("data-chave"); c.value = s.d && s.d[k] != null ? s.d[k] : ""; });
+    avaliar();
+    document.getElementById("testador").scrollIntoView({ block: "start" });
+  }
+  campos.forEach(function (c) { c.addEventListener("input", avaliar); });
+  elSeed.addEventListener("input", avaliar);
+  document.getElementById("sortear").addEventListener("click", function () {
+    elSeed.value = sortearSeed();
+    campos.forEach(function (c) { c.value = ""; });
+    avaliar();
+  });
+  document.getElementById("copiar-seed").addEventListener("click", function () {
+    var s = elSeed.value.trim();
+    if (!s) { avisar("Escreva ou sorteie uma seed primeiro"); return; }
+    copiar(s, null);
+  });
+  document.querySelectorAll("[data-testar]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      preencher({ seed: b.getAttribute("data-testar"), ed: b.getAttribute("data-ed"), d: {} });
+      elSeed.focus({ preventScroll: true });
+    });
+  });
+
+  // ---------- minhas seeds ----------
+  var minhas = LS.get("rd-seeds", []);
+  if (!Array.isArray(minhas)) minhas = [];
+  var elMinhas = document.getElementById("minhas");
+  function hoje() {
+    var d = new Date(), dd = String(d.getDate()).padStart(2, "0"), mm = String(d.getMonth() + 1).padStart(2, "0");
+    return dd + "/" + mm + "/" + d.getFullYear();
+  }
+  function resumo(s) {
+    var partes = Object.keys(LIMITES).filter(function (k) { return s.d[k] != null; }).map(function (k) { return NOMES[k] + " " + s.d[k]; });
+    return "Seed " + s.seed + " (" + (s.ed === "bedrock" ? "Bedrock" : "Java") + (s.versao ? ", versão " + s.versao : "") + "): " + partes.join(", ") + " blocos" + (s.veredito ? ". " + s.veredito + "." : ".");
+  }
+  function esc(x) { return String(x).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function renderMinhas() {
+    if (!minhas.length) {
+      elMinhas.innerHTML = '<p class="vazio">Nenhuma seed salva ainda. Teste uma no painel ao lado e toque em “Salvar em Minhas seeds”.</p>';
+      return;
+    }
+    elMinhas.innerHTML = minhas.map(function (s, i) {
+      var dist = Object.keys(LIMITES).filter(function (k) { return s.d[k] != null; }).map(function (k) { return NOMES[k] + " " + s.d[k]; }).join(" · ");
+      return '<article class="card-seed"><p class="num">' + esc(s.seed) + '</p>' +
+        '<div class="meta"><span class="tag ' + (s.ed === "bedrock" ? "tag-bedrock" : "tag-java") + '">' + (s.ed === "bedrock" ? "Bedrock" : "Java") + "</span><span>" + esc(s.veredito || "Sem nota geral") + "</span><span>" + esc(s.data) + "</span></div>" +
+        "<p>" + esc(dist) + "</p>" +
+        '<div class="acoes"><button type="button" class="btn btn-mini" data-acao="resumo" data-i="' + i + '">Copiar resumo</button>' +
+        '<button type="button" class="btn btn-mini" data-acao="abrir" data-i="' + i + '">Abrir no testador</button>' +
+        '<button type="button" class="btn btn-mini" data-acao="remover" data-i="' + i + '">Remover</button></div></article>';
+    }).join("");
+  }
+  bSalvar.addEventListener("click", function () {
+    var s = elSeed.value.trim(), d = lerDist();
+    if (!s || !Object.keys(d).length) return;
+    minhas = minhas.filter(function (x) { return !(x.seed === s && x.ed === ed); });
+    minhas.unshift({ seed: s, ed: ed, versao: elVersao.value, d: d, veredito: veredito(d), data: hoje() });
+    minhas = minhas.slice(0, 50);
+    LS.set("rd-seeds", minhas); renderMinhas(); avisar("Seed salva");
+  });
+  elMinhas.addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-acao]");
+    if (!b) return;
+    var i = Number(b.getAttribute("data-i")), s = minhas[i];
+    if (!s) return;
+    var acao = b.getAttribute("data-acao");
+    if (acao === "resumo") copiar(resumo(s), b.closest(".card-seed").querySelector("p:not(.num)"));
+    if (acao === "abrir") preencher(s);
+    if (acao === "remover") {
+      if (b.getAttribute("data-confirmar") !== "1") {
+        b.setAttribute("data-confirmar", "1"); b.textContent = "Toque de novo para remover";
+        setTimeout(function () { if (b.isConnected) { b.removeAttribute("data-confirmar"); b.textContent = "Remover"; } }, 3000);
+        return;
+      }
+      minhas.splice(i, 1); LS.set("rd-seeds", minhas); renderMinhas();
+    }
+  });
+  renderMinhas();
+  avaliar();
+  bResumo.addEventListener("click", function () { copiar(resumo(atualTeste()), null); });
+
+  // ---------- mural (Supabase: qualquer visitante lê e publica; ninguém de fora edita ou apaga) ----------
+  var MURAL_URL = "https://nkiclkilgwooypuclxfa.supabase.co/rest/v1/seeds";
+  // Chave publicável: é pública por definição. Quem protege os dados são as regras (RLS) do banco.
+  var MURAL_CHAVE = "sb_publishable_iDiW2m6oQIPFXvpe9CdB1A_96Mv0uM1";
+  var MURAL_CAMPOS = "id,seed,edicao,versao,vila,portal,bastiao,fortaleza,stronghold,criado_em";
+  var MSG_FORA = "O mural está fora do ar agora. O resto do guia funciona normalmente.";
+  var elMuralLista = document.getElementById("mural-lista"), elMuralStatus = document.getElementById("mural-status");
+  var elMuralFiltros = document.getElementById("mural-filtros");
+  var mural = { itens: [], porId: {}, filtro: "todas", carregou: false, enviando: false };
+
+  function muralFetch(metodo, url, corpo) {
+    var op = { method: metodo, headers: { apikey: MURAL_CHAVE } };
+    if (corpo) {
+      op.headers["Content-Type"] = "application/json";
+      op.headers.Prefer = "return=minimal";
+      op.body = JSON.stringify(corpo);
+    }
+    return fetch(url, op);
+  }
+  function distLimpa(d) {
+    var r = {};
+    if (!d || typeof d !== "object") return r;
+    Object.keys(LIMITES).forEach(function (k) { var v = Number(d[k]); if (d[k] != null && isFinite(v) && v >= 0 && v <= 100000) r[k] = Math.round(v); });
+    return r;
+  }
+  function mediaNotas(d) {
+    var ks = Object.keys(d);
+    return ks.length ? ks.reduce(function (s, k) { return s + nota(k, d[k]); }, 0) / ks.length : 0;
+  }
+  function dataBR(ms) {
+    if (!ms) return "";
+    var d = new Date(ms);
+    return String(d.getDate()).padStart(2, "0") + "/" + String(d.getMonth() + 1).padStart(2, "0") + "/" + d.getFullYear();
+  }
+  function renderMural() {
+    if (!mural.carregou) return;
+    mural.porId = {};
+    var todas = mural.itens.filter(function (x) {
+      return x && typeof x.seed === "string" && SEED_OK.test(x.seed) && (x.ed === "java" || x.ed === "bedrock");
+    }).map(function (x) {
+      var d = distLimpa(x.d);
+      var item = { id: x.id, seed: x.seed, ed: x.ed, versao: typeof x.versao === "string" ? x.versao.slice(0, 12) : "", d: d, criado: x.criado, media: mediaNotas(d), ver: veredito(d) };
+      mural.porId[item.id] = item;
+      return item;
+    });
+    var lista = todas.filter(function (x) { return mural.filtro === "todas" || x.ed === mural.filtro; })
+      .sort(function (a, b) { return b.media - a.media || b.criado - a.criado; });
+    if (!lista.length) {
+      var msg = todas.length ? "Nenhuma seed dessa edição no mural ainda." : "O mural ainda está vazio. Teste uma seed no painel acima e seja a primeira pessoa a publicar.";
+      elMuralLista.innerHTML = '<p class="vazio">' + esc(msg) + "</p>";
+      return;
+    }
+    elMuralLista.innerHTML = lista.map(function (x) {
+      var n = x.media >= 1.6 ? 2 : x.media >= 1 ? 1 : 0;
+      var dist = Object.keys(LIMITES).filter(function (k) { return x.d[k] != null; }).map(function (k) { return NOMES[k] + " " + x.d[k]; }).join(" · ");
+      return '<article class="card-seed"><p class="num">' + esc(x.seed) + "</p>" +
+        '<div class="meta"><span class="tag ' + (x.ed === "bedrock" ? "tag-bedrock" : "tag-java") + '">' + (x.ed === "bedrock" ? "Bedrock" : "Java") + "</span>" +
+        (x.versao ? "<span>versão " + esc(x.versao) + "</span>" : "") +
+        '<span class="nota-' + n + '">' + esc(x.ver || "Sem nota geral") + "</span><span>" + esc(dataBR(x.criado)) + "</span></div>" +
+        "<p>" + esc(dist) + "</p>" +
+        '<div class="acoes"><button type="button" class="btn btn-mini" data-macao="copiar" data-id="' + esc(x.id) + '">Copiar seed</button>' +
+        '<button type="button" class="btn btn-mini" data-macao="testar" data-id="' + esc(x.id) + '">Abrir no testador</button></div></article>';
+    }).join("");
+  }
+  function carregarMural() {
+    return muralFetch("GET", MURAL_URL + "?select=" + MURAL_CAMPOS + "&order=criado_em.desc&limit=300").then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    }).then(function (linhas) {
+      mural.itens = (Array.isArray(linhas) ? linhas : []).map(function (l) {
+        return {
+          id: String(l.id), seed: l.seed, ed: l.edicao, versao: l.versao === "outra" ? "" : l.versao,
+          d: { vila: l.vila, portal: l.portal, bastiao: l.bastiao, fortaleza: l.fortaleza, stronghold: l.stronghold },
+          criado: Date.parse(l.criado_em) || 0
+        };
+      });
+      mural.carregou = true;
+      elMuralStatus.textContent = "Seeds testadas por quem usa o site, com nota pelo mesmo critério do testador. Qualquer pessoa pode publicar: teste no painel acima e toque em “Publicar no mural”.";
+      elMuralFiltros.hidden = false;
+      bPublicar.hidden = false;
+      renderMural();
+    }).catch(function () {
+      if (mural.carregou) return;
+      elMuralStatus.textContent = MSG_FORA;
+      elMuralLista.innerHTML = '<p class="vazio">' + esc(MSG_FORA) + "</p>";
+      elMuralFiltros.hidden = true;
+      bPublicar.hidden = true;
+    });
+  }
+  bPublicar.addEventListener("click", function () {
+    var t = atualTeste();
+    if (mural.enviando || !SEED_OK.test(t.seed) || !t.veredito) return;
+    if (mural.itens.some(function (x) { return x.seed === t.seed && x.ed === t.ed; })) { avisar("Essa seed já está no mural"); return; }
+    mural.enviando = true;
+    bPublicar.disabled = true;
+    var corpo = { seed: t.seed, edicao: t.ed, versao: t.versao };
+    Object.keys(LIMITES).forEach(function (k) { corpo[k] = t.d[k] != null ? t.d[k] : null; });
+    muralFetch("POST", MURAL_URL, corpo).then(function (r) {
+      if (r.ok) { avisar("Seed publicada no mural"); return carregarMural(); }
+      return r.json().catch(function () { return {}; }).then(function (e) {
+        if (r.status === 409) avisar("Essa seed já está no mural");
+        else if (e && e.code === "P0001") avisar(e.message === "mural cheio" ? "O mural está cheio." : "Muitas seeds em pouco tempo. Tente de novo daqui a alguns minutos.");
+        else avisar("Não deu para publicar. Confira a seed e se há pelo menos 3 distâncias.");
+      });
+    }).catch(function () {
+      avisar(MSG_FORA);
+    }).then(function () {
+      mural.enviando = false;
+      avaliar();
+    });
+  });
+  elMuralLista.addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-macao]");
+    if (!b) return;
+    var x = mural.porId[b.getAttribute("data-id")];
+    if (!x) return;
+    if (b.getAttribute("data-macao") === "copiar") copiar(x.seed, b.closest(".card-seed").querySelector(".num"));
+    else preencher(x);
+  });
+  elMuralFiltros.addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-mural]");
+    if (!b) return;
+    mural.filtro = b.getAttribute("data-mural");
+    elMuralFiltros.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+    renderMural();
+  });
+  document.addEventListener("visibilitychange", function () { if (!document.hidden && mural.carregou) carregarMural(); });
+  carregarMural();
+
+  // ---------- missões ----------
+  var cumpridas = LS.get("rd-missoes", []);
+  if (!Array.isArray(cumpridas)) cumpridas = [];
+  var chkM = document.querySelectorAll(".chk-m");
+  document.getElementById("m-total").textContent = chkM.length;
+  function atualizarMissoes() {
+    var n = 0;
+    chkM.forEach(function (c) {
+      var card = c.closest(".missao"), mold = card.querySelector(".moldura");
+      card.classList.toggle("feita", c.checked);
+      mold.textContent = c.checked ? "✓" : "";
+      if (c.checked) n++;
+    });
+    document.getElementById("m-feitas").textContent = n;
+  }
+  chkM.forEach(function (c) {
+    c.checked = cumpridas.indexOf(c.id) !== -1;
+    c.addEventListener("change", function () {
+      cumpridas = Array.prototype.filter.call(chkM, function (x) { return x.checked; }).map(function (x) { return x.id; });
+      LS.set("rd-missoes", cumpridas);
+      atualizarMissoes();
+      if (c.checked) avisar("Missão cumprida: " + c.closest(".missao").querySelector(".missao-t").textContent);
+    });
+  });
+  atualizarMissoes();
+
+  // ---------- filtros de biomas e farms ----------
+  document.querySelectorAll(".filtros[data-filtro-alvo]").forEach(function (grupo) {
+    var alvo = document.querySelector(grupo.getAttribute("data-filtro-alvo"));
+    grupo.addEventListener("click", function (e) {
+      var b = e.target.closest("button[data-filtro]");
+      if (!b) return;
+      var f = b.getAttribute("data-filtro");
+      grupo.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+      alvo.querySelectorAll("[data-grupo]").forEach(function (card) { card.hidden = f !== "todos" && card.getAttribute("data-grupo") !== f; });
+    });
+  });
+})();
+</script>
+</body>
+</html>
