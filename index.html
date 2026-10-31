@@ -101,15 +101,20 @@ code, .mono { font-family: var(--f-mono); font-size: 0.92em; }
   position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9;
   background: var(--grama-escura); border-bottom: 1px solid #22401A;
 }
-.topo .wrap { max-width: 1280px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; padding-block: 10px; }
+.topo .wrap { max-width: none; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; padding-block: 10px; }
 .marca { font-family: var(--f-display); font-weight: 700; font-size: 1.15rem; color: var(--fg); text-decoration: none; display: flex; align-items: center; gap: 8px; }
 .marca .px { width: 22px; height: 22px; }
 @media (max-width: 419px) { .marca-t { display: none; } }
-.links { display: flex; gap: 4px; overflow-x: auto; flex: 1 1 auto; min-width: 0; order: 3; scrollbar-width: none; }
+.marca { flex: none; white-space: nowrap; }
+.links { position: relative; display: flex; gap: 4px; overflow-x: auto; flex: 1 1 auto; min-width: 0; order: 3; scrollbar-width: none; }
 .links::-webkit-scrollbar { display: none; }
 .links a { color: var(--fg); text-decoration: none; font-size: var(--fs-small); font-weight: 500; padding: 6px 8px; white-space: nowrap; }
 .links a:hover { background: var(--grama); }
-@media (min-width: 860px) { .links { order: 0; flex: 0 1 auto; margin-left: auto; } }
+@media (min-width: 860px) {
+  .topo .wrap { flex-wrap: nowrap; }
+  .links { order: 0; flex: 0 1 auto; margin-left: auto; }
+  .busca-btn, .edicao { flex: none; }
+}
 .edicao { display: inline-flex; border: 2px solid var(--outline); margin-left: auto; }
 @media (min-width: 860px) { .edicao { margin-left: 0; } }
 .edicao button {
@@ -423,6 +428,13 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .grade-mod { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); font-size: var(--fs-small); }
 .grade-mod p { background: var(--surface); border: 1px solid var(--line); padding: 10px 12px; }
 
+/* curiosidades */
+.lista-curio { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.curio { background: var(--surface); border: 1px solid var(--line); padding: 14px 16px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 12px; align-content: start; }
+.curio-n { grid-row: span 2; font: 700 1.3rem/1.2 var(--f-num); color: var(--accent); min-width: 2ch; }
+.curio-t { font-size: var(--fs-small); }
+.curio-g { font-size: var(--fs-cap); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+
 .toast {
   position: fixed; left: 50%; transform: translateX(-50%);
   bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
@@ -454,6 +466,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
       <a href="#construcoes">Construções</a>
       <a href="#mods">Mods</a>
       <a href="#missoes">Missões</a>
+      <a href="#curiosidades">Curiosidades</a>
     </div>
     <button type="button" class="btn btn-mini busca-btn" id="busca-btn" aria-expanded="false" aria-controls="busca">Buscar</button>
     <div class="edicao" role="group" aria-label="Edição do jogo">
@@ -1795,6 +1808,129 @@ td:first-child { font-weight: 600; white-space: nowrap; }
   </div>
 </section>
 
+<section class="secao" id="curiosidades" aria-labelledby="curiosidades-t">
+  <div class="wrap">
+    <div class="secao-cab">
+      <p class="eyebrow">Curiosidades</p>
+      <div class="missoes-cab">
+        <h2 id="curiosidades-t">100 curiosidades do Minecraft</h2>
+        <button type="button" class="btn btn-forte" id="curio-sorte">Curiosidade aleatória</button>
+      </div>
+      <p class="lede">História do jogo, mobs, blocos, segredos escondidos e coisas que pouca gente sabe.</p>
+    </div>
+    <div class="filtros" role="group" aria-label="Filtrar curiosidades" data-filtro-alvo="#lista-curio">
+      <button type="button" data-filtro="todos" aria-pressed="true">Todas</button>
+      <button type="button" data-filtro="historia" aria-pressed="false">História</button>
+      <button type="button" data-filtro="mobs" aria-pressed="false">Mobs</button>
+      <button type="button" data-filtro="blocos" aria-pressed="false">Blocos e itens</button>
+      <button type="button" data-filtro="mundo" aria-pressed="false">Mundo</button>
+      <button type="button" data-filtro="segredos" aria-pressed="false">Segredos</button>
+    </div>
+    <ol class="lista-curio" id="lista-curio">
+      <li class="curio" data-grupo="historia"><span class="curio-n">1</span><p class="curio-t">O Minecraft foi criado pelo sueco Markus Persson, o Notch. A primeira versão saiu em 17/05/2009.</p><span class="curio-g">História</span></li>
+      <li class="curio" data-grupo="historia"><span class="curio-n">2</span><p class="curio-t">Antes de virar Minecraft, o projeto se chamou “Cave Game” e depois “Minecraft: Order of the Stone”.</p><span class="curio-g">História</span></li>
+      <li class="curio" data-grupo="historia"><span class="curio-n">3</span><p class="curio-t">A versão 1.0, o lançamento oficial, saiu em 18/11/2011, durante a MineCon.</p><span class="curio-g">História</span></li>
+      <li class="curio" data-grupo="historia"><span class="curio-n">4</span><p class="curio-t">Em 2011, Jens Bergensten, o Jeb, assumiu o comando do desenvolvimento no lugar do Notch.</p><span class="curio-g">História</span></li>
+      <li class="curio" data-grupo="historia"><span class="curio-n">5</span><p class="curio-t">A Microsoft comprou a Mojang em 2014 por 2,5 bilhões de dólares.</p><span class="curio-g">História</span></li>
+      <li class="curio" data-grupo="historia"><span class="curio-n">6</span><p class="curio-t">Minecraft é o jogo mais vendido da história: passou de 300 milhões de cópias em 2023.</p><span class="curio-g">História</span></li>
+      <li class="curio" data-grupo="historia"><span class="curio-n">7</span><p class="curio-t">“Mojang” vem de uma palavra sueca que quer dizer algo como “bugiganga”.</p><span class="curio-g">História</span></li>
+      <li class="curio" data-grupo="historia"><span class="curio-n">8</span><p class="curio-t">As músicas clássicas, como “Sweden” e “Wet Hands”, são de C418, nome artístico de Daniel Rosenfeld.</p><span class="curio-g">História</span></li>
+      <li class="curio" data-grupo="historia"><span class="curio-n">9</span><p class="curio-t">A versão de celular, a Pocket Edition, saiu em 2011. Em 2017 ela virou a base do Minecraft Bedrock.</p><span class="curio-g">História</span></li>
+      <li class="curio" data-grupo="historia"><span class="curio-n">10</span><p class="curio-t">O Nether chegou em 2010, na atualização de Halloween.</p><span class="curio-g">História</span></li>
+      <li class="curio" data-grupo="historia"><span class="curio-n">11</span><p class="curio-t">O End e o Ender Dragon chegaram junto com a versão 1.0, em 2011.</p><span class="curio-g">História</span></li>
+      <li class="curio" data-grupo="historia"><span class="curio-n">12</span><p class="curio-t">A Alex, a segunda personagem padrão, chegou em 2014.</p><span class="curio-g">História</span></li>
+      <li class="curio" data-grupo="historia"><span class="curio-n">13</span><p class="curio-t">Em 2022, o jogo ganhou mais sete personagens padrão: Sunny, Kai, Ari, Noor, Zuri, Efe e Makena.</p><span class="curio-g">História</span></li>
+      <li class="curio" data-grupo="historia"><span class="curio-n">14</span><p class="curio-t">Os élitros chegaram na versão 1.9, em 2016.</p><span class="curio-g">História</span></li>
+      <li class="curio" data-grupo="historia"><span class="curio-n">15</span><p class="curio-t">O tridente veio com a Update Aquatic, em 2018, junto com golfinhos e tartarugas.</p><span class="curio-g">História</span></li>
+      <li class="curio" data-grupo="historia"><span class="curio-n">16</span><p class="curio-t">A maça, a arma que fica mais forte com a queda, chegou na versão 1.21, em 2024.</p><span class="curio-g">História</span></li>
+      <li class="curio" data-grupo="historia"><span class="curio-n">17</span><p class="curio-t">“Um Filme Minecraft” estreou nos cinemas em abril de 2025, com Jack Black no papel de Steve.</p><span class="curio-g">História</span></li>
+      <li class="curio" data-grupo="historia"><span class="curio-n">18</span><p class="curio-t">O Minecraft ganhou outros jogos: Story Mode (2015), Dungeons (2020) e Legends (2023).</p><span class="curio-g">História</span></li>
+      <li class="curio" data-grupo="historia"><span class="curio-n">19</span><p class="curio-t">O Minecraft Earth, de realidade aumentada no celular, saiu em 2019 e foi encerrado em 2021.</p><span class="curio-g">História</span></li>
+      <li class="curio" data-grupo="historia"><span class="curio-n">20</span><p class="curio-t">Existe uma edição para escolas, a Education Edition, usada para ensinar programação, química e história.</p><span class="curio-g">História</span></li>
+      <li class="curio" data-grupo="historia"><span class="curio-n">21</span><p class="curio-t">Em 2026, as versões passaram a usar o ano no número, como 26.1, 26.2 e 26.3.</p><span class="curio-g">História</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">22</span><p class="curio-t">O creeper nasceu de um erro: o Notch tentou fazer um porco e trocou a altura pelo comprimento.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">23</span><p class="curio-t">Os creepers têm medo de gatos e jaguatiricas e fogem deles.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">24</span><p class="curio-t">Um creeper atingido por um raio vira creeper carregado, com uma explosão bem mais forte.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">25</span><p class="curio-t">Quando um creeper carregado mata um mob, a cabeça do mob cai como item.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">26</span><p class="curio-t">Um porco atingido por raio vira piglin zumbificado.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">27</span><p class="curio-t">Um aldeão atingido por raio vira bruxa.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">28</span><p class="curio-t">Água e chuva machucam o enderman. Por isso ele teleporta quando começa a chover.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">29</span><p class="curio-t">Com uma abóbora esculpida na cabeça, você pode olhar para o enderman sem ele ficar bravo.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">30</span><p class="curio-t">Os endermen pegam alguns blocos do chão e saem carregando por aí.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">31</span><p class="curio-t">Os sons do ghast foram feitos a partir do gato do C418, o compositor das músicas.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">32</span><p class="curio-t">O Warden é cego: ele te acha pelas vibrações e pelo cheiro.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">33</span><p class="curio-t">O Warden tem 500 pontos de vida, ou 250 corações: mais que o Ender Dragon.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">34</span><p class="curio-t">O Wither é o único chefe que o próprio jogador precisa montar e invocar para lutar.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">35</span><p class="curio-t">Um bebê zumbi montado numa galinha é o raro jóquei galinha.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">36</span><p class="curio-t">Um esqueleto montado numa aranha é o jóquei aranha.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">37</span><p class="curio-t">O golem de ferro às vezes oferece uma papoula aos aldeões bebês.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">38</span><p class="curio-t">O golem de neve é feito com 2 blocos de neve e uma abóbora. Tesoura tira a abóbora da cabeça dele.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">39</span><p class="curio-t">Os piglins são loucos por ouro: pegam qualquer item de ouro que veem no chão.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">40</span><p class="curio-t">Os phantoms só aparecem se você passa 3 noites ou mais sem dormir.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">41</span><p class="curio-t">Os papagaios imitam os sons dos monstros que estão por perto e dançam perto de um toca-discos tocando.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">42</span><p class="curio-t">Biscoito é venenoso para papagaio: nunca dê um para ele.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">43</span><p class="curio-t">Alimente um golfinho com peixe cru e ele te leva até um naufrágio ou ruína no fundo do mar.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">44</span><p class="curio-t">O axolote azul é raríssimo: nasce em cerca de 1 a cada 1.200 filhotes.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">45</span><p class="curio-t">A ovelha rosa nasce sozinha, mas é rara: só uns 0,16% das ovelhas.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">46</span><p class="curio-t">Gatos domados às vezes trazem presentes de manhã, como penas ou pés de coelho.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">47</span><p class="curio-t">As raposas carregam itens na boca e adoram frutas doces.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">48</span><p class="curio-t">As tartarugas sempre voltam para a praia onde nasceram para botar ovos.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">49</span><p class="curio-t">Os pandas têm personalidades: preguiçoso, brincalhão, agressivo, preocupado e outros. O panda marrom é raro.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">50</span><p class="curio-t">O allay recolhe do chão itens iguais ao que você entregou a ele e traz para você. Ele também dança perto de toca-discos.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">51</span><p class="curio-t">O farejador foi o vencedor da votação de mobs de 2022. Em 2021 venceu o allay, e em 2023 o tatu.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">52</span><p class="curio-t">O creaking, do jardim pálido, só se mexe quando você não está olhando para ele.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">53</span><p class="curio-t">As lhamas cospem quando ficam bravas.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="mobs"><span class="curio-n">54</span><p class="curio-t">As traças se escondem dentro de blocos de pedra infestados e saem quando você quebra.</p><span class="curio-g">Mobs</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">55</span><p class="curio-t">A esmeralda é o minério mais raro do jogo, mais raro que o diamante.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">56</span><p class="curio-t">A rocha-mãe (bedrock) não pode ser quebrada no modo Sobrevivência.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">57</span><p class="curio-t">A obsidiana aguenta explosões de TNT e de creeper sem quebrar.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">58</span><p class="curio-t">Itens de netherite boiam na lava e não queimam.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">59</span><p class="curio-t">Os detritos antigos também não queimam na lava e aguentam explosões muito fortes.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">60</span><p class="curio-t">Um fardo de feno amortece a queda e corta o dano em 80%.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">61</span><p class="curio-t">Cair num bloco de slime não machuca: você quica.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">62</span><p class="curio-t">No bloco de mel você gruda e escorrega devagar pelas paredes.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">63</span><p class="curio-t">Esponja molhada seca na hora se for colocada no Nether.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">64</span><p class="curio-t">Não dá para colocar água no Nether com balde: ela evapora na hora.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">65</span><p class="curio-t">Camas explodem se você tentar dormir no Nether ou no End.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">66</span><p class="curio-t">A bússola aponta para o spawn do mundo, mas ligada numa magnetita aponta para ela.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">67</span><p class="curio-t">O bolo é comido em 7 pedaços, e pode ser compartilhado.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">68</span><p class="curio-t">A maçã dourada encantada tinha receita com 8 blocos de ouro. A receita foi tirada na versão 1.9.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">69</span><p class="curio-t">O disco “Pigstep”, composto por Lena Raine, só aparece nos baús dos bastiões.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">70</span><p class="curio-t">O disco “5” precisa ser montado com 9 fragmentos achados na cidade antiga.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">71</span><p class="curio-t">O cobre fica esverdeado com o tempo. Favo de mel encera e impede, e raio limpa a ferrugem.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">72</span><p class="curio-t">A luneta é feita com cobre e um fragmento de ametista.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">73</span><p class="curio-t">Os cristais de ametista fazem um som de sino quando você anda ou bate neles.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">74</span><p class="curio-t">As frutas brilhantes das cavernas exuberantes iluminam como uma tocha fraca.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">75</span><p class="curio-t">Com redstone, jogadores já construíram calculadoras e até computadores funcionando dentro do jogo.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">76</span><p class="curio-t">O bloco de comando e o bloco de barreira não aparecem no inventário do Criativo: só com comando.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">77</span><p class="curio-t">Com botas de couro você anda por cima da neve em pó sem afundar.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">78</span><p class="curio-t">Fogo em cima de netherrack nunca apaga sozinho.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="blocos"><span class="curio-n">79</span><p class="curio-t">A rocha-mãe forma o fundo do mundo e também o teto do Nether.</p><span class="curio-g">Blocos e itens</span></li>
+      <li class="curio" data-grupo="mundo"><span class="curio-n">80</span><p class="curio-t">Um dia no Minecraft dura 20 minutos de verdade.</p><span class="curio-g">Mundo</span></li>
+      <li class="curio" data-grupo="mundo"><span class="curio-n">81</span><p class="curio-t">A lua tem 8 fases. Na lua cheia aparecem mais slimes no pântano.</p><span class="curio-g">Mundo</span></li>
+      <li class="curio" data-grupo="mundo"><span class="curio-n">82</span><p class="curio-t">No Java, a borda do mundo fica a quase 30 milhões de blocos do centro.</p><span class="curio-g">Mundo</span></li>
+      <li class="curio" data-grupo="mundo"><span class="curio-n">83</span><p class="curio-t">Nas versões antigas, a uns 12,5 milhões de blocos, o terreno virava as “Far Lands”, um paredão deformado.</p><span class="curio-g">Mundo</span></li>
+      <li class="curio" data-grupo="mundo"><span class="curio-n">84</span><p class="curio-t">Desde a versão 1.18, o mundo vai da camada −64 até a 320.</p><span class="curio-g">Mundo</span></li>
+      <li class="curio" data-grupo="mundo"><span class="curio-n">85</span><p class="curio-t">Mesma seed, mesma edição e mesma versão geram exatamente o mesmo mundo.</p><span class="curio-g">Mundo</span></li>
+      <li class="curio" data-grupo="mundo"><span class="curio-n">86</span><p class="curio-t">Uma dimensão do céu chegou a ser planejada no começo do jogo, mas nunca saiu.</p><span class="curio-g">Mundo</span></li>
+      <li class="curio" data-grupo="mundo"><span class="curio-n">87</span><p class="curio-t">Nos campos de cogumelos não nascem monstros naturalmente.</p><span class="curio-g">Mundo</span></li>
+      <li class="curio" data-grupo="mundo"><span class="curio-n">88</span><p class="curio-t">Algumas vilas já nascem abandonadas e cheias de zumbis. São raras.</p><span class="curio-g">Mundo</span></li>
+      <li class="curio" data-grupo="mundo"><span class="curio-n">89</span><p class="curio-t">No Nether, bússolas e relógios ficam girando sem rumo.</p><span class="curio-g">Mundo</span></li>
+      <li class="curio" data-grupo="mundo"><span class="curio-n">90</span><p class="curio-t">O jardim pálido, com árvores claras e o creaking, chegou em dezembro de 2024.</p><span class="curio-g">Mundo</span></li>
+      <li class="curio" data-grupo="mundo"><span class="curio-n">91</span><p class="curio-t">Cada bloco andado no Nether vale 8 blocos no Overworld.</p><span class="curio-g">Mundo</span></li>
+      <li class="curio" data-grupo="mundo"><span class="curio-n">92</span><p class="curio-t">Os geodos de ametista ficam escondidos no subsolo, cobertos por uma camada de calcita e basalto liso.</p><span class="curio-g">Mundo</span></li>
+      <li class="curio" data-grupo="mundo"><span class="curio-n">93</span><p class="curio-t">Em 2020, fãs descobriram a seed exata da imagem do mundo mostrada no antigo ícone de pacote padrão, o “pack.png”.</p><span class="curio-g">Mundo</span></li>
+      <li class="curio" data-grupo="segredos"><span class="curio-n">94</span><p class="curio-t">O Herobrine nunca existiu no jogo. Mesmo assim, as notas de atualização brincavam com “Herobrine removido”.</p><span class="curio-g">Segredos</span></li>
+      <li class="curio" data-grupo="segredos"><span class="curio-n">95</span><p class="curio-t">Dê o nome “Dinnerbone” ou “Grumm” a um mob com etiqueta e ele fica de cabeça para baixo.</p><span class="curio-g">Segredos</span></li>
+      <li class="curio" data-grupo="segredos"><span class="curio-n">96</span><p class="curio-t">Uma ovelha chamada “jeb_” fica trocando de cor sem parar, como um arco-íris. A lã continua da cor original.</p><span class="curio-g">Segredos</span></li>
+      <li class="curio" data-grupo="segredos"><span class="curio-n">97</span><p class="curio-t">Um coelho chamado “Toast” ganha uma pelagem especial, em homenagem ao coelho de estimação de um jogador.</p><span class="curio-g">Segredos</span></li>
+      <li class="curio" data-grupo="segredos"><span class="curio-n">98</span><p class="curio-t">De vez em quando, o logo da tela inicial aparece escrito “Minceraft”, com as letras trocadas.</p><span class="curio-g">Segredos</span></li>
+      <li class="curio" data-grupo="segredos"><span class="curio-n">99</span><p class="curio-t">As frases amarelas da tela inicial mudam a cada vez que você abre o jogo, e algumas só aparecem em datas especiais.</p><span class="curio-g">Segredos</span></li>
+      <li class="curio" data-grupo="segredos"><span class="curio-n">100</span><p class="curio-t">O nome “Steve” começou como uma brincadeira e acabou virando o nome oficial do personagem.</p><span class="curio-g">Segredos</span></li>
+    </ol>
+  </div>
+</section>
+
 <footer class="rodape">
   <div class="wrap">
     <div>
@@ -2230,10 +2366,11 @@ td:first-child { font-weight: 600; white-space: nowrap; }
     var n = 0;
     document.querySelectorAll("body > section[id]").forEach(function (sec) {
       var nomeSec = (sec.querySelector(".eyebrow") || sec.querySelector("h2") || {}).textContent || "";
-      sec.querySelectorAll(".etapa h3, .itens h4, .farm h4, .bioma h4, .lista-rec h4, .card-seed .num, .missao-t, tbody td:first-child").forEach(function (h) {
+      sec.querySelectorAll(".etapa h3, .itens h4, .farm h4, .bioma h4, .lista-rec h4, .card-seed .num, .missao-t, tbody td:first-child, .curio-t").forEach(function (h) {
         var alvo = h.closest("article, li, tr, .missao-card") || h;
         if (!alvo.id) alvo.id = "b-" + (++n);
         var texto = h.textContent.trim();
+        if (texto.length > 70) texto = texto.slice(0, 67).replace(/\s+\S*$/, "") + "…";
         indice.push({ id: alvo.id, texto: texto, onde: nomeSec.trim(), chave: semAcento(texto), corpo: semAcento(alvo.textContent) });
       });
     });
@@ -2301,6 +2438,15 @@ td:first-child { font-weight: 600; white-space: nowrap; }
   if ("serviceWorker" in navigator && location.protocol === "https:") {
     window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });
   }
+
+  // ---------- curiosidade aleatória ----------
+  document.getElementById("curio-sorte").addEventListener("click", function () {
+    var todas = Array.prototype.filter.call(document.querySelectorAll("#lista-curio .curio"), function (c) { return !c.hidden; });
+    if (!todas.length) return;
+    var c = todas[Math.floor(Math.random() * todas.length)];
+    c.scrollIntoView({ block: "center" });
+    c.classList.remove("realce"); void c.offsetWidth; c.classList.add("realce");
+  });
 
   // ---------- missões ----------
   var cumpridas = LS.get("rd-missoes", []);
