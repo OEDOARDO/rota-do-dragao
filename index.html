@@ -465,6 +465,24 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .ver-data { font: 600 var(--fs-small)/1.6 var(--f-num); color: var(--muted); }
 @media (max-width: 520px) { .linha-tempo li { grid-template-columns: 1fr; gap: 2px; } }
 
+/* modo partida: tela enxuta para deixar o celular do lado durante a run */
+.partida {
+  position: fixed; inset: 0; z-index: 30; overflow: auto; background: var(--bg);
+  padding: calc(env(safe-area-inset-top, 0px) + 16px) max(16px, env(safe-area-inset-right, 0px)) calc(env(safe-area-inset-bottom, 0px) + 16px) max(16px, env(safe-area-inset-left, 0px));
+  display: grid; gap: 14px; align-content: start; justify-items: stretch;
+}
+.partida > * { width: 100%; max-width: 720px; margin-inline: auto; }
+.partida-topo { display: flex; justify-content: space-between; align-items: center; }
+.partida-topo .painel-titulo { margin: 0; }
+.partida-tempo { font: 700 clamp(3rem, 16vw, 5.5rem)/1 var(--f-num); font-variant-numeric: tabular-nums; text-align: center; }
+.partida-acesa { text-align: center; font-size: var(--fs-cap); color: var(--muted); min-height: 1.2em; }
+.partida-etapa { background: var(--surface); border: 1px solid var(--line); border-top: 6px solid var(--dim, var(--accent)); padding: 16px 18px; display: grid; gap: 10px; }
+.partida-etapa h3 { font-size: 1.3rem; }
+.partida-etapa ul { margin: 0; padding-left: 20px; display: grid; gap: 8px; }
+.partida-botoes { display: grid; grid-template-columns: 2fr 1fr; gap: 10px; }
+.partida-botoes .btn { padding: 18px 14px; font-size: 1.05rem; }
+body.em-partida { overflow: hidden; }
+
 .toast {
   position: fixed; left: 50%; transform: translateX(-50%);
   bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
@@ -517,6 +535,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
       <p class="lede">O caminho mais curto do spawn até os créditos: o que pegar em cada dimensão, seeds para treinar, o bioma certo para cada tarefa e as farms para depois do dragão.</p>
       <div class="hero-acoes">
         <a class="btn btn-forte" href="#roteiro">Ver o roteiro</a>
+        <button type="button" class="btn abrir-partida">Modo partida</button>
         <a class="btn" href="#seeds">Ver seeds</a>
         <button type="button" class="btn" id="compartilhar">Compartilhar</button>
       </div>
@@ -592,7 +611,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
     </ol>
     <div class="secao-cab" id="comidas" style="margin-top: 12px;">
       <h3>Tabela de comidas</h3>
-      <p class="lede">Quanto cada comida enche a barra de fome. A barra tem 20 pontos, ou 10 coxinhas: cada coxinha vale 2 pontos.</p>
+      <p class="lede">Quanto cada comida enche a barra de fome. A barra tem 20 pontos, ou 10 coxinhas: cada coxinha vale 2 pontos. Os valores principais foram conferidos em guias de comida do jogo (veja o rodapé).</p>
     </div>
     <div class="tabela-wrap">
       <table>
@@ -821,6 +840,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
           <button type="button" class="btn" id="t-proxima" disabled>Próxima etapa</button>
           <button type="button" class="btn" id="t-voltar" disabled>Voltar etapa</button>
           <button type="button" class="btn" id="t-zerar">Zerar</button>
+          <button type="button" class="btn btn-forte abrir-partida">Modo partida</button>
         </div>
         <ol class="splits" id="t-splits" aria-label="Tempo por etapa"></ol>
         <p class="recorde">Seu recorde: <b id="t-recorde">nenhum ainda</b></p>
@@ -2738,6 +2758,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
         <li>Release candidate da 26.3: <a href="https://www.minecraft.net/ja-jp/article/minecraft-26-3-release-candidate-1" target="_blank" rel="noopener">minecraft.net</a>.</li>
         <li>Seeds: <a href="https://www.minecraft-guides.com/seeds/1-21/speedrun/" target="_blank" rel="noopener">Minecraft Guides</a> e <a href="https://www.craftmc.net/minecraft-seeds/26.2/three-blacksmith-village-ruined-portal-bedrock-26-30" target="_blank" rel="noopener">CraftMC</a>.</li>
         <li>Versões de 2024 a 2026: <a href="https://allthings.how/minecraft-1-21-9-the-copper-age-arrives-september-30-java/" target="_blank" rel="noopener">All Things How (Copper Age)</a>, <a href="https://beebom.com/minecraft-mounts-of-mayhem-release-date/amp/" target="_blank" rel="noopener">Beebom (Mounts of Mayhem)</a>, <a href="https://winternode.com/blog/minecraft/java/26-1-tiny-takeover" target="_blank" rel="noopener">WinterNode (26.1)</a>, <a href="https://fabricmc.net/2026/03/14/261.html" target="_blank" rel="noopener">Fabric (26.1)</a>, <a href="https://xgamingserver.com/blog/minecraft-26-2-chaos-cubed-release-date-sulfur-caves-everything-new/" target="_blank" rel="noopener">XGamingServer (26.2)</a>, <a href="https://www.gamergeeks.net/apps/minecraft/blocks-by-version" target="_blank" rel="noopener">GamerGeeks</a> e <a href="https://www.minecraft.net/pl-pl/article/minecraft-new-version-numbering-system" target="_blank" rel="noopener">minecraft.net (número novo)</a>.</li>
+        <li>Comidas: <a href="https://www.creeperhost.net/blog/guide-to-food-in-minecraft/" target="_blank" rel="noopener">CreeperHost</a> e <a href="https://xgamingserver.com/tools/minecraft/food-calculator" target="_blank" rel="noopener">XGamingServer</a>.</li>
         <li>Para conferir qualquer detalhe: <a href="https://minecraft.wiki" target="_blank" rel="noopener">Minecraft Wiki</a> e <a href="https://www.chunkbase.com/apps/seed-map" target="_blank" rel="noopener">Chunkbase</a>.</li>
       </ul>
     </div>
@@ -2749,6 +2770,19 @@ td:first-child { font-weight: 600; white-space: nowrap; }
   </div>
 </footer>
 
+<div class="partida" id="partida" role="dialog" aria-modal="true" aria-labelledby="pt-titulo" hidden>
+  <div class="partida-topo">
+    <p class="painel-titulo" id="pt-titulo">Modo partida</p>
+    <button type="button" class="btn btn-mini" id="pt-sair">Sair</button>
+  </div>
+  <p class="partida-tempo" id="pt-tempo">0:00.0</p>
+  <p class="partida-acesa" id="pt-acesa"></p>
+  <div class="partida-etapa" id="pt-etapa"></div>
+  <div class="partida-botoes">
+    <button type="button" class="btn btn-forte" id="pt-principal">Começar</button>
+    <button type="button" class="btn" id="pt-voltar">Voltar etapa</button>
+  </div>
+</div>
 <button type="button" class="btn btn-forte atualizar" id="atualizar" hidden>Versão nova do guia: toque para atualizar</button>
 <a class="btn subir" id="subir" href="#inicio" aria-label="Voltar ao topo" hidden>↑</a>
 <div class="toast" id="toast" role="status" hidden></div>
@@ -2885,6 +2919,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
     bProx.textContent = cur === ETAPAS.length - 1 ? "Zerou!" : "Próxima etapa";
     elRec.textContent = recorde ? fmt(recorde) : "nenhum ainda";
     artigos.forEach(function (a, i) { a.classList.toggle("is-atual", rodando() && i === cur); });
+    if (typeof renderPartida === "function") renderPartida();
   }
   function ligarTick() {
     clearInterval(tick);
@@ -3279,6 +3314,60 @@ td:first-child { font-weight: 600; white-space: nowrap; }
     c.scrollIntoView({ block: "center" });
     c.classList.remove("realce"); void c.offsetWidth; c.classList.add("realce");
   });
+
+  // ---------- modo partida ----------
+  var elPartida = document.getElementById("partida"), ptPrincipal = document.getElementById("pt-principal");
+  var ptVoltar = document.getElementById("pt-voltar"), ptEtapa = document.getElementById("pt-etapa"), ptAcesa = document.getElementById("pt-acesa");
+  var travaTela = null, focoAntes = null;
+  function renderPartida() {
+    if (!elPartida || elPartida.hidden) return;
+    document.getElementById("pt-tempo").textContent = elTempo.textContent;
+    var cur = t.splits.length, parado = t.inicio == null, fim = t.fim != null;
+    ptPrincipal.textContent = parado ? "Começar" : fim ? "Recomeçar" : cur === ETAPAS.length - 1 ? "Zerou!" : "Próxima etapa";
+    ptVoltar.disabled = !rodando() || !cur;
+    var chave = (parado ? 0 : fim ? -1 : cur) + "|" + (fim ? "fim" : "");
+    if (ptEtapa.getAttribute("data-chave") === chave) return;
+    ptEtapa.setAttribute("data-chave", chave);
+    if (fim) {
+      ptEtapa.style.removeProperty("--dim");
+      ptEtapa.innerHTML = "<h3>Zerou em " + esc(elTempo.textContent) + "</h3><p>" + (recorde ? "Seu recorde: " + esc(fmt(recorde)) + "." : "") + " Toque em Recomeçar para outra run.</p>";
+      return;
+    }
+    var art = artigos[parado ? 0 : cur];
+    ptEtapa.style.setProperty("--dim", getComputedStyle(art).getPropertyValue("--dim"));
+    var lista = art.querySelector("ul"), saia = art.querySelector(".saia");
+    ptEtapa.innerHTML = '<p class="etapa-dim">' + (parado ? "Primeira etapa · " : "Etapa " + (cur + 1) + " de " + ETAPAS.length + " · ") + esc(art.querySelector(".etapa-dim").textContent) + "</p>" +
+      "<h3>" + esc(art.querySelector("h3").textContent) + "</h3>" + (lista ? "<ul>" + lista.innerHTML + "</ul>" : "") +
+      (saia ? '<p class="saia">' + saia.innerHTML + "</p>" : "");
+    ptEtapa.querySelectorAll("a").forEach(function (a) { a.replaceWith(document.createTextNode(a.textContent)); });
+  }
+  function manterAcesa() {
+    if (!("wakeLock" in navigator)) { ptAcesa.textContent = "Deixe a tela do celular sem apagar enquanto joga."; return; }
+    navigator.wakeLock.request("screen").then(function (w) {
+      travaTela = w; ptAcesa.textContent = "A tela fica acesa enquanto o modo partida estiver aberto.";
+      w.addEventListener("release", function () { travaTela = null; });
+    }).catch(function () { ptAcesa.textContent = "Deixe a tela do celular sem apagar enquanto joga."; });
+  }
+  function abrirPartida() {
+    focoAntes = document.activeElement;
+    elPartida.hidden = false; document.body.classList.add("em-partida");
+    ptEtapa.removeAttribute("data-chave");
+    renderPartida(); manterAcesa(); ptPrincipal.focus();
+  }
+  function sairPartida() {
+    elPartida.hidden = true; document.body.classList.remove("em-partida");
+    if (travaTela) travaTela.release().catch(function () {});
+    if (focoAntes && focoAntes.focus) focoAntes.focus();
+  }
+  document.querySelectorAll(".abrir-partida").forEach(function (b) { b.addEventListener("click", abrirPartida); });
+  document.getElementById("pt-sair").addEventListener("click", sairPartida);
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !elPartida.hidden) sairPartida(); });
+  ptPrincipal.addEventListener("click", function () {
+    if (t.inicio == null || t.fim != null) bComecar.click(); else bProx.click();
+  });
+  ptVoltar.addEventListener("click", function () { bVoltar.click(); });
+  // a trava de tela cai quando o app vai para segundo plano: pede de novo ao voltar
+  document.addEventListener("visibilitychange", function () { if (!document.hidden && !elPartida.hidden && !travaTela) manterAcesa(); });
 
   // ---------- missões ----------
   var cumpridas = LS.get("rd-missoes", []);
