@@ -447,6 +447,8 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .glossario dt { font-weight: 600; color: var(--accent-forte); }
 .glossario dd { margin: 4px 0 0; font-size: var(--fs-small); }
 .progresso { display: grid; gap: 2px; }
+.progresso a { color: inherit; text-decoration-color: var(--line); }
+.progresso a:hover { color: var(--fg); text-decoration-color: currentColor; }
 
 .atualizar {
   position: fixed; left: 50%; transform: translateX(-50%); z-index: 21; max-width: calc(100% - 32px);
@@ -531,9 +533,9 @@ td:first-child { font-weight: 600; white-space: nowrap; }
         <li data-dim="end"><span class="rota-dim">End</span><span class="rota-n">8–9</span><span class="rota-o">dragão</span></li>
       </ol>
       <div class="progresso" aria-label="Seu progresso">
-        <p><b id="prog-hero">0</b> de 9 etapas do roteiro</p>
-        <p><b id="prog-m">0</b> de <span id="prog-m-total">20</span> missões cumpridas</p>
-        <p>Mochila do End: <b id="prog-mo">0</b> de 7 itens</p>
+        <p><a href="#roteiro"><b id="prog-hero">0</b> de 9 etapas do roteiro</a></p>
+        <p><a href="#missoes"><b id="prog-m">0</b> de <span id="prog-m-total">20</span> missões cumpridas</a></p>
+        <p><a href="#mochila-end">Mochila do End: <b id="prog-mo">0</b> de 7 itens</a></p>
       </div>
     </div>
   </div>
@@ -728,7 +730,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
             <li>Lá dentro, procure a sala do portal. Ela tem uma escada sobre lava e um gerador de traças. Quebre ou tape o gerador.</li>
             <li>Coloque os olhos nas 12 molduras. Algumas já vêm com olho.</li>
           </ul>
-          <div class="saia">
+          <div class="saia" id="mochila-end">
             <p><strong>Leve para o End:</strong> marque o que já está no inventário.</p>
             <ul class="mochila" id="mochila">
               <li><label><input type="checkbox" value="arco"> Arco</label></li>
