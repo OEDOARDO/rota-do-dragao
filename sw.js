@@ -1,6 +1,6 @@
 // Deixa o Rota do Dragão abrir sem internet e ser instalado no celular.
 // A página vem sempre da rede quando dá (para pegar as atualizações) e do cache quando não dá.
-var CACHE = "rota-do-dragao-v1";
+var CACHE = "rota-do-dragao-v2";
 var ARQUIVOS = ["./", "./index.html", "./icone.svg", "./icone-192.png", "./icone-512.png", "./og.png", "./manifest.webmanifest"];
 
 self.addEventListener("install", function (e) {
@@ -17,7 +17,8 @@ self.addEventListener("fetch", function (e) {
   var req = e.request;
   if (req.method !== "GET" || new URL(req.url).origin !== self.location.origin) return;
   if (req.mode === "navigate") {
-    e.respondWith(fetch(req).then(function (r) {
+    // "no-cache" faz o navegador conferir com o GitHub se a página mudou, em vez de usar a cópia guardada
+    e.respondWith(fetch(req, { cache: "no-cache" }).then(function (r) {
       var copia = r.clone();
       caches.open(CACHE).then(function (c) { c.put("./index.html", copia); });
       return r;
