@@ -455,6 +455,16 @@ td:first-child { font-weight: 600; white-space: nowrap; }
   top: calc(env(safe-area-inset-top, 0px) + 12px); box-shadow: 0 0 0 2px var(--outline), 0 6px 18px rgba(0, 0, 0, 0.45);
 }
 
+/* versões e tabelas agrupadas */
+.tab-grupo th { background: var(--surface-2); color: var(--accent-forte); font-size: var(--fs-small); letter-spacing: 0.04em; }
+.linha-tempo { list-style: none; margin: 0; padding: 0 0 0 18px; display: grid; gap: 0; border-left: 3px solid var(--line); }
+.linha-tempo li { position: relative; display: grid; grid-template-columns: 7.5em minmax(0, 1fr); gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.linha-tempo li::before { content: ""; position: absolute; left: -26px; top: 18px; width: 13px; height: 13px; background: var(--accent); border: 3px solid var(--bg); }
+.linha-tempo h4 { font-size: 1.02rem; }
+.linha-tempo p { font-size: var(--fs-small); margin-top: 2px; }
+.ver-data { font: 600 var(--fs-small)/1.6 var(--f-num); color: var(--muted); }
+@media (max-width: 520px) { .linha-tempo li { grid-template-columns: 1fr; gap: 2px; } }
+
 .toast {
   position: fixed; left: 50%; transform: translateX(-50%);
   bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
@@ -471,6 +481,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
       <a href="#iniciante">Iniciante</a>
       <a href="#roteiro">Roteiro</a>
       <a href="#dimensoes">Dimensões</a>
+      <a href="#mobs">Mobs</a>
       <a href="#pocoes">Poções</a>
       <a href="#seeds">Seeds</a>
       <a href="#biomas">Biomas</a>
@@ -479,6 +490,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
       <a href="#construcoes">Construções</a>
       <a href="#mods">Mods</a>
       <a href="#missoes">Missões</a>
+      <a href="#versoes">Versões</a>
       <a href="#curiosidades">Curiosidades</a>
     </div>
     <button type="button" class="btn btn-mini busca-btn" id="busca-btn" aria-expanded="false" aria-controls="busca">Buscar</button>
@@ -578,6 +590,46 @@ td:first-child { font-weight: 600; white-space: nowrap; }
       <li><div><h4>Poções</h4><p>O suporte de poções leva 1 vara de blaze e 3 pedregulhos. Quase toda poção começa com garrafa de água e verruga do Nether, que vem da fortaleza do Nether.</p></div></li>
       <li><div><h4>Dificuldade</h4><p>Para aprender, comece no Fácil ou no Normal. No Pacífico não nascem monstros, mas a fome também não aparece e não dá para zerar do mesmo jeito.</p></div></li>
     </ol>
+    <div class="secao-cab" id="comidas" style="margin-top: 12px;">
+      <h3>Tabela de comidas</h3>
+      <p class="lede">Quanto cada comida enche a barra de fome. A barra tem 20 pontos, ou 10 coxinhas: cada coxinha vale 2 pontos.</p>
+    </div>
+    <div class="tabela-wrap">
+      <table>
+        <thead><tr><th scope="col">Comida</th><th scope="col">Enche</th><th scope="col">Observação</th></tr></thead>
+        <tbody>
+          <tr><td>Bife (carne cozida)</td><td class="mono">8 pontos</td><td>Uma das melhores. Vacas dão bastante.</td></tr>
+          <tr><td>Costeleta de porco cozida</td><td class="mono">8 pontos</td><td>Tão boa quanto o bife.</td></tr>
+          <tr><td>Torta de abóbora</td><td class="mono">8 pontos</td><td>Abóbora, açúcar e ovo.</td></tr>
+          <tr><td>Ensopado de coelho</td><td class="mono">10 pontos</td><td>A comida que mais enche, mas é cara de fazer.</td></tr>
+          <tr><td>Cenoura dourada</td><td class="mono">6 pontos</td><td>Enche menos, mas a saturação é a maior: a fome demora a voltar.</td></tr>
+          <tr><td>Frango assado</td><td class="mono">6 pontos</td><td>Fácil com a farm de frango.</td></tr>
+          <tr><td>Carneiro cozido</td><td class="mono">6 pontos</td><td>Ovelhas dão carne e lã.</td></tr>
+          <tr><td>Salmão cozido</td><td class="mono">6 pontos</td><td>Bom para quem pesca.</td></tr>
+          <tr><td>Ensopado de cogumelo</td><td class="mono">6 pontos</td><td>Tigela e 2 cogumelos. A vaca-cogumelo dá de graça.</td></tr>
+          <tr><td>Sopa de beterraba</td><td class="mono">6 pontos</td><td>6 beterrabas e uma tigela.</td></tr>
+          <tr><td>Mel em garrafa</td><td class="mono">6 pontos</td><td>Também tira o veneno.</td></tr>
+          <tr><td>Pão</td><td class="mono">5 pontos</td><td>3 trigos. A comida mais fácil do começo.</td></tr>
+          <tr><td>Batata assada</td><td class="mono">5 pontos</td><td>Planta fácil e rende muito.</td></tr>
+          <tr><td>Bacalhau cozido</td><td class="mono">5 pontos</td><td>Pesca ou oceano.</td></tr>
+          <tr><td>Coelho cozido</td><td class="mono">5 pontos</td><td>Desertos e campos de flores.</td></tr>
+          <tr><td>Maçã</td><td class="mono">4 pontos</td><td>Cai das folhas de carvalho.</td></tr>
+          <tr><td>Maçã dourada</td><td class="mono">4 pontos</td><td>Dá regeneração e absorção. Ótima numa luta.</td></tr>
+          <tr><td>Fruta do coro</td><td class="mono">4 pontos</td><td>Só no End. Comer teleporta você.</td></tr>
+          <tr><td>Carne podre</td><td class="mono">4 pontos</td><td>Pode dar fome. Só em emergência.</td></tr>
+          <tr><td>Cenoura</td><td class="mono">3 pontos</td><td>Também serve para criar porcos e coelhos.</td></tr>
+          <tr><td>Carne crua, porco cru ou coelho cru</td><td class="mono">3 pontos</td><td>Melhor cozinhar: rende mais que o dobro.</td></tr>
+          <tr><td>Melancia (fatia)</td><td class="mono">2 pontos</td><td>Enche pouco, mas uma melancia dá várias fatias.</td></tr>
+          <tr><td>Frutas doces e frutas brilhantes</td><td class="mono">2 pontos</td><td>Fáceis de achar, mas enchem pouco.</td></tr>
+          <tr><td>Biscoito</td><td class="mono">2 pontos</td><td>Nunca dê a um papagaio.</td></tr>
+          <tr><td>Bolo (por pedaço)</td><td class="mono">2 pontos</td><td>7 pedaços. Fica no chão e todo mundo pode comer.</td></tr>
+          <tr><td>Olho de aranha</td><td class="mono">2 pontos</td><td>Dá veneno.</td></tr>
+          <tr><td>Batata venenosa</td><td class="mono">2 pontos</td><td>Pode dar veneno.</td></tr>
+          <tr><td>Frango cru</td><td class="mono">2 pontos</td><td>Pode dar fome. Cozinhe.</td></tr>
+          <tr><td>Batata, beterraba, alga seca e baiacu</td><td class="mono">1 pontos</td><td>Enchem quase nada. O baiacu dá veneno e náusea.</td></tr>
+        </tbody>
+      </table>
+    </div>
     <div class="secao-cab" id="glossario">
       <h3>Glossário</h3>
       <p class="lede">As palavras que aparecem no guia e nos vídeos de Minecraft.</p>
@@ -856,6 +908,529 @@ td:first-child { font-weight: 600; white-space: nowrap; }
   </div>
 </section>
 
+<section class="secao" id="mobs" aria-labelledby="mobs-t">
+  <div class="wrap">
+    <div class="secao-cab">
+      <p class="eyebrow">Mobs</p>
+      <h2 id="mobs-t">Guia de mobs</h2>
+      <p class="lede">Onde cada criatura aparece, o que ela deixa cair e como lidar com ela. Hostis atacam sempre, neutros só se você provocar, passivos nunca atacam.</p>
+    </div>
+    <div class="filtros" role="group" aria-label="Filtrar mobs" data-filtro-alvo="#lista-mobs">
+      <button type="button" data-filtro="todos" aria-pressed="true">Todos</button>
+      <button type="button" data-filtro="chefe" aria-pressed="false">Chefes</button>
+      <button type="button" data-filtro="hostil" aria-pressed="false">Hostis</button>
+      <button type="button" data-filtro="neutro" aria-pressed="false">Neutros</button>
+      <button type="button" data-filtro="passivo" aria-pressed="false">Passivos</button>
+    </div>
+    <div class="grade-cards" id="lista-mobs">
+      <article class="farm mob" data-grupo="chefe">
+        <header><h4>Ender Dragon</h4><span class="nivel nivel-avancada">Chefe</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>No End, na ilha central.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Muita XP e o ovo do dragão.</dd></div>
+          <div><dt>Dica</dt><dd>Derrube os cristais antes. Camas explodem no End e dão muito dano quando ele pousa.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="chefe">
+        <header><h4>Wither</h4><span class="nivel nivel-avancada">Chefe</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Só aparece se você invocar: 4 areias das almas em T e 3 crânios de esqueleto wither em cima.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Estrela do Nether, que faz o sinalizador.</dd></div>
+          <div><dt>Dica</dt><dd>Invoque num túnel fechado. Espada com Julgamento, poção de força e maçãs douradas.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Zumbi</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Overworld, no escuro e à noite.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Carne podre e, às vezes, ferro, cenoura ou batata.</dd></div>
+          <div><dt>Dica</dt><dd>Queima no sol. O bebê zumbi é rápido e não queima.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Husk</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Desertos.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Carne podre.</dd></div>
+          <div><dt>Dica</dt><dd>Zumbi do deserto: não queima no sol e o golpe dá fome.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Afogado</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Rios e oceanos.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Carne podre e, às vezes, tridente, concha de náutilo ou cobre.</dd></div>
+          <div><dt>Dica</dt><dd>Os que seguram tridente atiram de longe. É o jeito de conseguir um tridente.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Esqueleto</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Overworld, no escuro.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Ossos, flechas e, às vezes, o arco.</dd></div>
+          <div><dt>Dica</dt><dd>Queima no sol. Avance em zigue-zague ou use escudo.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Esqueleto errante (Stray)</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Biomas gelados.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Ossos e flechas de lentidão.</dd></div>
+          <div><dt>Dica</dt><dd>Igual ao esqueleto, mas a flecha deixa você lento.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Bogged</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Pântanos e Trial Chambers.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Ossos, flechas de veneno e cogumelos.</dd></div>
+          <div><dt>Dica</dt><dd>Esqueleto do pântano: atira flechas de veneno.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Creeper</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Overworld, no escuro.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Pólvora. Morto por esqueleto, deixa um disco.</dd></div>
+          <div><dt>Dica</dt><dd>Ouviu o chiado, corra para trás. Escudo segura a explosão.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Aranha</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Overworld, no escuro. De dia fica calma.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Linha e olho de aranha.</dd></div>
+          <div><dt>Dica</dt><dd>Sobe paredes. Linha faz arco e lã.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Aranha de caverna</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Geradores das minas abandonadas e, desde a 26.2, nas cavernas de enxofre.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Linha e olho de aranha.</dd></div>
+          <div><dt>Dica</dt><dd>Menor e venenosa. Leve leite.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Enderman</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Overworld à noite, floresta distorcida do Nether e todo o End.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Pérola do Ender.</dd></div>
+          <div><dt>Dica</dt><dd>Não olhe nos olhos. Fique num lugar de 2 blocos de altura: ele tem 3 e não entra.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Bruxa</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>No escuro e na cabana do pântano.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Redstone, pedra luminosa, açúcar, garrafas e outros.</dd></div>
+          <div><dt>Dica</dt><dd>Joga poções e bebe poção de cura. Ataque rápido.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Slime</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Pântanos à noite e slime chunks abaixo da camada 40.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Bola de slime.</dd></div>
+          <div><dt>Dica</dt><dd>Divide em slimes menores quando morre.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Phantom</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Aparece no céu se você passa 3 noites ou mais sem dormir.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Membrana de phantom.</dd></div>
+          <div><dt>Dica</dt><dd>Durma numa cama e eles não aparecem.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Traça</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Sai de blocos de pedra infestados, comuns nas fortalezas.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Nada.</dd></div>
+          <div><dt>Dica</dt><dd>Quebre blocos suspeitos com cuidado: uma chama as outras.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Saqueador (Pillager)</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Postos de saqueadores e ataques às vilas.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Flechas e, às vezes, a besta. O capitão deixa a garrafa sinistra.</dd></div>
+          <div><dt>Dica</dt><dd>O capitão carrega um estandarte na cabeça.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Vingador (Vindicator)</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Mansões da floresta e ataques às vilas.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Esmeralda e, às vezes, o machado.</dd></div>
+          <div><dt>Dica</dt><dd>Bate forte de perto. Mantenha distância.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Evocador</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Mansões da floresta e ataques às vilas.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Totem da imortalidade e esmeralda.</dd></div>
+          <div><dt>Dica</dt><dd>Invoca vex e presas do chão. Vá para cima dele rápido.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Devastador (Ravager)</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Ataques às vilas.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Sela.</dd></div>
+          <div><dt>Dica</dt><dd>Muita vida e empurra longe. Use escudo.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Guardião</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Monumento oceânico.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Prismarinho e peixe.</dd></div>
+          <div><dt>Dica</dt><dd>Atira um laser. Fique atrás de pilares.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Guardião ancião</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>3 dentro de cada monumento oceânico.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Esponja molhada.</dd></div>
+          <div><dt>Dica</dt><dd>Dá fadiga de mineração. Leve leite.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Warden</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Escuro profundo, quando os sensores sculk são ativados várias vezes.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Catalisador de sculk.</dd></div>
+          <div><dt>Dica</dt><dd>É cego e acha você pelo barulho. Ande agachado e fuja: tem muita vida.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Breeze</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Trial Chambers.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Vara de brisa, que faz cargas de vento e a maça.</dd></div>
+          <div><dt>Dica</dt><dd>Rebate flechas. Lute de perto.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Shulker</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Cidades do End.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Casca de shulker, que faz a caixa de shulker.</dd></div>
+          <div><dt>Dica</dt><dd>O tiro faz você levitar. Cuidado com a queda depois.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Blaze</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Fortaleza do Nether, perto dos geradores.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Vara de blaze.</dd></div>
+          <div><dt>Dica</dt><dd>Atira bolas de fogo. Poção de resistência ao fogo e bolas de neve ajudam.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Ghast</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Nether, em áreas abertas.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Lágrima de ghast e pólvora.</dd></div>
+          <div><dt>Dica</dt><dd>Rebata a bola de fogo de volta nele com um golpe.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Cubo de magma</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Nether, principalmente nos deltas de basalto.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Creme de magma.</dd></div>
+          <div><dt>Dica</dt><dd>Pula alto e divide como o slime.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Esqueleto wither</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Fortaleza do Nether.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Ossos, carvão e, às vezes, o crânio.</dd></div>
+          <div><dt>Dica</dt><dd>O golpe dá o efeito wither. Julgamento na espada ajuda.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Piglin bruto</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Bastiões.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Machado de ouro.</dd></div>
+          <div><dt>Dica</dt><dd>Ataca sempre, mesmo com ouro no corpo.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Hoglin</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Floresta carmesim.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Carne de porco crua e couro.</dd></div>
+          <div><dt>Dica</dt><dd>Joga você longe. Tem medo de fungo distorcido.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Creaking</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Jardim pálido, à noite.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Nada.</dd></div>
+          <div><dt>Dica</dt><dd>Só se mexe quando você não olha. Quebre o coração de creaking que fica na árvore.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="hostil">
+        <header><h4>Cubo de enxofre</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Cavernas de enxofre, desde a 26.2.</dd></div>
+          <div><dt>Deixa cair</dt><dd>—</dd></div>
+          <div><dt>Dica</dt><dd>Mob novo da 26.2: absorve blocos por perto e ganha as propriedades deles.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="neutro">
+        <header><h4>Lobo</h4><span class="nivel nivel-media">Neutro</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Florestas, taigas e outras regiões.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Nada.</dd></div>
+          <div><dt>Dica</dt><dd>Dome com osso. Domado, luta do seu lado.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="neutro">
+        <header><h4>Abelha</h4><span class="nivel nivel-media">Neutro</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Colmeias perto de flores.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Nada.</dd></div>
+          <div><dt>Dica</dt><dd>Ataca em grupo se você mexer na colmeia sem fogueira embaixo.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="neutro">
+        <header><h4>Golem de ferro</h4><span class="nivel nivel-media">Neutro</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Vilas, ou feito com 4 blocos de ferro e uma abóbora.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Ferro e papoula.</dd></div>
+          <div><dt>Dica</dt><dd>Protege os aldeões. Não bata nele.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="neutro">
+        <header><h4>Lhama</h4><span class="nivel nivel-media">Neutro</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Savanas e montanhas.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Couro.</dd></div>
+          <div><dt>Dica</dt><dd>Cospe quando brava. Com baú, carrega coisas.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="neutro">
+        <header><h4>Panda</h4><span class="nivel nivel-media">Neutro</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Selvas de bambu.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Bambu.</dd></div>
+          <div><dt>Dica</dt><dd>Cada panda tem uma personalidade. Cria com bambu.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="neutro">
+        <header><h4>Urso polar</h4><span class="nivel nivel-media">Neutro</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Biomas gelados.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Peixe cru.</dd></div>
+          <div><dt>Dica</dt><dd>Ataca se você chegar perto do filhote.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="neutro">
+        <header><h4>Piglin</h4><span class="nivel nivel-media">Neutro</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Nether, principalmente nos bastiões.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Ouro e itens que ele estiver segurando.</dd></div>
+          <div><dt>Dica</dt><dd>Com uma peça de ouro no corpo, ele não ataca e faz escambo.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="neutro">
+        <header><h4>Piglin zumbificado</h4><span class="nivel nivel-media">Neutro</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Nether.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Carne podre e pepitas de ouro.</dd></div>
+          <div><dt>Dica</dt><dd>Bater em um deixa o grupo todo bravo.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="neutro">
+        <header><h4>Golfinho</h4><span class="nivel nivel-media">Neutro</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Oceanos.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Peixe cru.</dd></div>
+          <div><dt>Dica</dt><dd>Dê peixe e ele leva você até um tesouro no fundo do mar.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="neutro">
+        <header><h4>Cabra</h4><span class="nivel nivel-media">Neutro</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Montanhas.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Chifre de cabra, quando bate a cabeça em blocos.</dd></div>
+          <div><dt>Dica</dt><dd>Dá cabeçadas e pode derrubar você do penhasco.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="passivo">
+        <header><h4>Vaca</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Planícies e florestas.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Carne e couro. Com balde, dá leite.</dd></div>
+          <div><dt>Dica</dt><dd>Leite tira os efeitos de poção, inclusive veneno.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="passivo">
+        <header><h4>Porco</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Planícies e florestas.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Carne de porco.</dd></div>
+          <div><dt>Dica</dt><dd>Com sela e cenoura na vara, dá para montar.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="passivo">
+        <header><h4>Ovelha</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Planícies e montanhas.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Lã e carne de carneiro.</dd></div>
+          <div><dt>Dica</dt><dd>Tesoura tira a lã sem matar. A cor da lã pode ser tingida.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="passivo">
+        <header><h4>Galinha</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Planícies e florestas.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Pena e frango cru. Bota ovos.</dd></div>
+          <div><dt>Dica</dt><dd>Penas fazem flechas.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="passivo">
+        <header><h4>Cavalo</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Planícies e savanas.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Couro.</dd></div>
+          <div><dt>Dica</dt><dd>Monte várias vezes até domar. Precisa de sela.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="passivo">
+        <header><h4>Aldeão</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Vilas.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Nada.</dd></div>
+          <div><dt>Dica</dt><dd>Troca itens por esmeraldas. Cada bloco de trabalho dá uma profissão.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="passivo">
+        <header><h4>Gato</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Vilas e cabanas de bruxa.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Linha.</dd></div>
+          <div><dt>Dica</dt><dd>Dome com bacalhau ou salmão crus. Creepers e phantoms fogem dele.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="passivo">
+        <header><h4>Raposa</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Taigas.</dd></div>
+          <div><dt>Deixa cair</dt><dd>O item que estiver na boca.</dd></div>
+          <div><dt>Dica</dt><dd>Foge de você. Cria com frutas doces.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="passivo">
+        <header><h4>Papagaio</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Selvas.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Pena.</dd></div>
+          <div><dt>Dica</dt><dd>Dome com sementes. Nunca dê biscoito.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="passivo">
+        <header><h4>Tartaruga</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Praias.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Grama marinha; o filhote crescido solta escama.</dd></div>
+          <div><dt>Dica</dt><dd>Escamas fazem o casco de tartaruga.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="passivo">
+        <header><h4>Axolote</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Cavernas exuberantes.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Nada.</dd></div>
+          <div><dt>Dica</dt><dd>Pegue com balde de água. Ajuda a lutar contra mobs da água.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="passivo">
+        <header><h4>Sapo</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Pântanos e manguezais.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Nada.</dd></div>
+          <div><dt>Dica</dt><dd>Come cubos de magma pequenos e solta luz-sapo.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="passivo">
+        <header><h4>Camelo</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Desertos.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Nada.</dd></div>
+          <div><dt>Dica</dt><dd>Leva 2 pessoas e é alto o bastante para fugir de muitos mobs.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="passivo">
+        <header><h4>Tatu</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Savanas e badlands.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Escamas, com o pincel.</dd></div>
+          <div><dt>Dica</dt><dd>As escamas fazem a armadura de lobo.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="passivo">
+        <header><h4>Farejador</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Nasce de ovo achado nas ruínas do oceano quente.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Nada.</dd></div>
+          <div><dt>Dica</dt><dd>Fareja sementes antigas de plantas raras.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="passivo">
+        <header><h4>Allay</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Postos de saqueadores e mansões, preso em jaulas.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Nada.</dd></div>
+          <div><dt>Dica</dt><dd>Busca itens iguais ao que você der a ele.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="passivo">
+        <header><h4>Lavagante (Strider)</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Mares de lava do Nether.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Linha.</dd></div>
+          <div><dt>Dica</dt><dd>Com sela e vara com fungo distorcido, atravessa a lava.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="passivo">
+        <header><h4>Ghast feliz</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Nasce de um ghast seco colocado na água, desde a 1.21.6.</dd></div>
+          <div><dt>Deixa cair</dt><dd>—</dd></div>
+          <div><dt>Dica</dt><dd>Com arreio, leva até 4 pessoas voando.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="passivo">
+        <header><h4>Morcego</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Cavernas escuras.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Nada.</dd></div>
+          <div><dt>Dica</dt><dd>Inofensivo. Só faz barulho.</dd></div>
+        </dl>
+      </article>
+      <article class="farm mob" data-grupo="passivo">
+        <header><h4>Lula e lula brilhante</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <dl>
+          <div><dt>Onde</dt><dd>Oceanos e, a brilhante, águas escuras.</dd></div>
+          <div><dt>Deixa cair</dt><dd>Bolsa de tinta ou de tinta brilhante.</dd></div>
+          <div><dt>Dica</dt><dd>A tinta brilhante faz placas brilharem.</dd></div>
+        </dl>
+      </article>
+    </div>
+  </div>
+</section>
+
 <section class="secao" id="pocoes" aria-labelledby="pocoes-t">
   <div class="wrap">
     <div class="secao-cab">
@@ -1016,6 +1591,88 @@ td:first-child { font-weight: 600; white-space: nowrap; }
       </table>
     </div>
 
+    <div class="secao-cab" id="todos-biomas">
+      <h3>Lista completa de biomas (66)</h3>
+      <p class="lede">Todos os biomas do jogo na 26.3, nas três dimensões. O nome em português pode variar um pouco no jogo; o nome técnico (ID) é o mesmo em qualquer idioma.</p>
+    </div>
+    <div class="tabela-wrap">
+      <table>
+        <thead><tr><th scope="col">Bioma</th><th scope="col">ID</th><th scope="col">Destaque</th></tr></thead>
+        <tbody>
+          <tr class="tab-grupo"><th colspan="3" scope="colgroup">Overworld: superfície</th></tr>
+          <tr><td>Planícies</td><td class="mono">plains</td><td>Plano e aberto. Vilas, cavalos e ovelhas.</td></tr>
+          <tr><td>Planícies de girassol</td><td class="mono">sunflower_plains</td><td>Planície com girassóis.</td></tr>
+          <tr><td>Planícies nevadas</td><td class="mono">snowy_plains</td><td>Neve no chão, vilas de neve e ursos polares.</td></tr>
+          <tr><td>Picos de gelo</td><td class="mono">ice_spikes</td><td>Torres altas de gelo compactado.</td></tr>
+          <tr><td>Deserto</td><td class="mono">desert</td><td>Areia, vilas, templos e husks. Pouca madeira.</td></tr>
+          <tr><td>Pântano</td><td class="mono">swamp</td><td>Cabana de bruxa, slimes à noite e sapos.</td></tr>
+          <tr><td>Manguezal</td><td class="mono">mangrove_swamp</td><td>Árvores de mangue, lama e sapos.</td></tr>
+          <tr><td>Floresta</td><td class="mono">forest</td><td>Carvalho e bétula, lobos.</td></tr>
+          <tr><td>Floresta de flores</td><td class="mono">flower_forest</td><td>Muitas flores: boa para abelhas e corantes.</td></tr>
+          <tr><td>Floresta de bétulas</td><td class="mono">birch_forest</td><td>Só bétulas.</td></tr>
+          <tr><td>Floresta de bétulas antiga</td><td class="mono">old_growth_birch_forest</td><td>Bétulas bem altas.</td></tr>
+          <tr><td>Floresta escura</td><td class="mono">dark_forest</td><td>Mansões da floresta e cogumelos gigantes.</td></tr>
+          <tr><td>Jardim pálido</td><td class="mono">pale_garden</td><td>Carvalho pálido, musgo pálido e o creaking. Desde a 1.21.4.</td></tr>
+          <tr><td>Dappled forest (nome em inglês)</td><td class="mono">—</td><td>Floresta nova com álamos e acampamentos abandonados. Desde a 26.3.</td></tr>
+          <tr><td>Taiga</td><td class="mono">taiga</td><td>Pinheiros, lobos, raposas e frutas doces.</td></tr>
+          <tr><td>Taiga de pinheiros antiga</td><td class="mono">old_growth_pine_taiga</td><td>Pinheiros enormes e podzol.</td></tr>
+          <tr><td>Taiga de abetos antiga</td><td class="mono">old_growth_spruce_taiga</td><td>Abetos enormes.</td></tr>
+          <tr><td>Taiga nevada</td><td class="mono">snowy_taiga</td><td>Taiga com neve.</td></tr>
+          <tr><td>Savana</td><td class="mono">savanna</td><td>Acácias, vilas, cavalos e lhamas.</td></tr>
+          <tr><td>Planalto de savana</td><td class="mono">savanna_plateau</td><td>Savana no alto.</td></tr>
+          <tr><td>Savana desgastada</td><td class="mono">windswept_savanna</td><td>Savana com terreno muito irregular.</td></tr>
+          <tr><td>Colinas desgastadas</td><td class="mono">windswept_hills</td><td>Morros de pedra com esmeralda e lhamas.</td></tr>
+          <tr><td>Colinas de cascalho desgastadas</td><td class="mono">windswept_gravelly_hills</td><td>Morros cobertos de cascalho.</td></tr>
+          <tr><td>Floresta desgastada</td><td class="mono">windswept_forest</td><td>Morros com árvores.</td></tr>
+          <tr><td>Selva</td><td class="mono">jungle</td><td>Templos da selva, jaguatiricas, papagaios e cacau.</td></tr>
+          <tr><td>Selva esparsa</td><td class="mono">sparse_jungle</td><td>Selva com menos árvores.</td></tr>
+          <tr><td>Selva de bambu</td><td class="mono">bamboo_jungle</td><td>Muito bambu e pandas.</td></tr>
+          <tr><td>Badlands</td><td class="mono">badlands</td><td>Terracota colorida e ouro extra.</td></tr>
+          <tr><td>Badlands erodidas</td><td class="mono">eroded_badlands</td><td>Torres de terracota.</td></tr>
+          <tr><td>Badlands arborizadas</td><td class="mono">wooded_badlands</td><td>Badlands com carvalhos no alto.</td></tr>
+          <tr><td>Prado</td><td class="mono">meadow</td><td>Flores no alto das montanhas, abelhas e às vezes vilas.</td></tr>
+          <tr><td>Cerejal</td><td class="mono">cherry_grove</td><td>Cerejeiras rosas. Desde a 1.20.</td></tr>
+          <tr><td>Bosque nevado (Grove)</td><td class="mono">grove</td><td>Pinheiros e neve na encosta das montanhas.</td></tr>
+          <tr><td>Encostas nevadas</td><td class="mono">snowy_slopes</td><td>Neve em pó e cabras.</td></tr>
+          <tr><td>Picos congelados</td><td class="mono">frozen_peaks</td><td>Gelo e cabras.</td></tr>
+          <tr><td>Picos irregulares</td><td class="mono">jagged_peaks</td><td>Os picos mais altos e pontudos.</td></tr>
+          <tr><td>Picos rochosos</td><td class="mono">stony_peaks</td><td>Pedra, calcita e esmeralda.</td></tr>
+          <tr><td>Campos de cogumelos</td><td class="mono">mushroom_fields</td><td>Vacas-cogumelo e nenhum monstro.</td></tr>
+          <tr class="tab-grupo"><th colspan="3" scope="colgroup">Overworld: água e praia</th></tr>
+          <tr><td>Rio</td><td class="mono">river</td><td>Afogados, salmões e argila.</td></tr>
+          <tr><td>Rio congelado</td><td class="mono">frozen_river</td><td>Rio com gelo por cima.</td></tr>
+          <tr><td>Praia</td><td class="mono">beach</td><td>Tartarugas, naufrágios e tesouro enterrado.</td></tr>
+          <tr><td>Praia nevada</td><td class="mono">snowy_beach</td><td>Praia com neve.</td></tr>
+          <tr><td>Costa pedregosa</td><td class="mono">stony_shore</td><td>Encosta de pedra no mar.</td></tr>
+          <tr><td>Oceano quente</td><td class="mono">warm_ocean</td><td>Recifes de coral e baiacus. Ruínas com ovo de farejador.</td></tr>
+          <tr><td>Oceano morno</td><td class="mono">lukewarm_ocean</td><td>Peixes tropicais.</td></tr>
+          <tr><td>Oceano morno profundo</td><td class="mono">deep_lukewarm_ocean</td><td>Mais fundo, com monumentos.</td></tr>
+          <tr><td>Oceano</td><td class="mono">ocean</td><td>O oceano comum.</td></tr>
+          <tr><td>Oceano profundo</td><td class="mono">deep_ocean</td><td>Monumentos oceânicos.</td></tr>
+          <tr><td>Oceano frio</td><td class="mono">cold_ocean</td><td>Salmões e bacalhaus.</td></tr>
+          <tr><td>Oceano frio profundo</td><td class="mono">deep_cold_ocean</td><td>Mais fundo, com monumentos.</td></tr>
+          <tr><td>Oceano congelado</td><td class="mono">frozen_ocean</td><td>Icebergs e ursos polares.</td></tr>
+          <tr><td>Oceano congelado profundo</td><td class="mono">deep_frozen_ocean</td><td>Icebergs e monumentos.</td></tr>
+          <tr class="tab-grupo"><th colspan="3" scope="colgroup">Overworld: cavernas</th></tr>
+          <tr><td>Cavernas de espeleotemas</td><td class="mono">dripstone_caves</td><td>Espeleotemas e muito cobre.</td></tr>
+          <tr><td>Cavernas exuberantes</td><td class="mono">lush_caves</td><td>Axolotes, azaleia e frutas brilhantes.</td></tr>
+          <tr><td>Escuro profundo</td><td class="mono">deep_dark</td><td>Cidade antiga e o Warden.</td></tr>
+          <tr><td>Cavernas de enxofre</td><td class="mono">—</td><td>Enxofre, cinábrio, poças tóxicas e o cubo de enxofre. Desde a 26.2.</td></tr>
+          <tr class="tab-grupo"><th colspan="3" scope="colgroup">Nether</th></tr>
+          <tr><td>Desertos do Nether</td><td class="mono">nether_wastes</td><td>Netherrack, piglins, fortalezas e bastiões.</td></tr>
+          <tr><td>Vale das almas</td><td class="mono">soul_sand_valley</td><td>Areia das almas, esqueletos e ghasts.</td></tr>
+          <tr><td>Floresta carmesim</td><td class="mono">crimson_forest</td><td>Hoglins e piglins.</td></tr>
+          <tr><td>Floresta distorcida</td><td class="mono">warped_forest</td><td>Endermen e quase nada hostil.</td></tr>
+          <tr><td>Deltas de basalto</td><td class="mono">basalt_deltas</td><td>Basalto, cubos de magma e terreno difícil.</td></tr>
+          <tr class="tab-grupo"><th colspan="3" scope="colgroup">The End</th></tr>
+          <tr><td>The End</td><td class="mono">the_end</td><td>A ilha central, com o dragão.</td></tr>
+          <tr><td>Ilhas pequenas do End</td><td class="mono">small_end_islands</td><td>Ilhotas soltas no vazio.</td></tr>
+          <tr><td>Terras médias do End</td><td class="mono">end_midlands</td><td>Beirada das ilhas externas.</td></tr>
+          <tr><td>Planaltos do End</td><td class="mono">end_highlands</td><td>Centro das ilhas externas, com cidades e fruta do coro.</td></tr>
+          <tr><td>Ilhas desoladas do End</td><td class="mono">end_barrens</td><td>Bordas vazias das ilhas externas.</td></tr>
+        </tbody>
+      </table>
+    </div>
     <div class="filtros" role="group" aria-label="Filtrar biomas" data-filtro-alvo="#lista-biomas">
       <button type="button" data-filtro="todos" aria-pressed="true">Todos</button>
       <button type="button" data-filtro="overworld" aria-pressed="false">Overworld</button>
@@ -1896,6 +2553,59 @@ td:first-child { font-weight: 600; white-space: nowrap; }
   </div>
 </section>
 
+<section class="secao" id="versoes" aria-labelledby="versoes-t">
+  <div class="wrap">
+    <div class="secao-cab">
+      <p class="eyebrow">Versões</p>
+      <h2 id="versoes-t">Todas as versões do Minecraft</h2>
+      <p class="lede">As atualizações principais do Java, da primeira versão até a mais nova, e o que veio em cada uma.</p>
+    </div>
+    <div class="grade-mod ver-info">
+      <p><span class="rot">Snapshots:</span> versões de teste do Java que saem quase toda semana antes de cada atualização. São mais de mil ao todo. Dá para jogar ativando “Snapshots” no launcher, num mundo separado.</p>
+      <p><span class="rot">Bedrock:</span> recebe as mesmas atualizações com outro número (a 26.3 do Java é a 26.50 no Bedrock). As versões de teste se chamam Beta e Preview.</p>
+      <p><span class="rot">Número novo:</span> desde 2026 a versão diz o ano e o drop. A 26.3 é o 3º drop de 2026. Antes, as versões começavam com 1.</p>
+    </div>
+    <ol class="linha-tempo">
+      <li><span class="ver-data">2009</span><div><h4>Classic</h4><p>A primeira versão pública, de maio de 2009. Só construção, com poucos blocos, sem monstros nem sobrevivência.</p></div></li>
+      <li><span class="ver-data">2009–2010</span><div><h4>Indev e Infdev</h4><p>Testes da sobrevivência: fabricação, mobs, dia e noite. No Infdev o mundo virou infinito.</p></div></li>
+      <li><span class="ver-data">2010</span><div><h4>Alpha</h4><p>O modo Sobrevivência como conhecemos, redstone e, na atualização de Halloween de outubro, o Nether.</p></div></li>
+      <li><span class="ver-data">2010–2011</span><div><h4>Beta</h4><p>Camas, pistões, chuva e lobos. A Adventure Update trouxe fome, corrida, vilas, fortalezas e endermen.</p></div></li>
+      <li><span class="ver-data">18/11/2011</span><div><h4>1.0</h4><p>O lançamento oficial: o End, o Ender Dragon, encantamentos e poções.</p></div></li>
+      <li><span class="ver-data">2012</span><div><h4>1.2</h4><p>Selvas, jaguatiricas e o golem de ferro. O mundo passou a ter 256 de altura.</p></div></li>
+      <li><span class="ver-data">2012</span><div><h4>1.3</h4><p>Esmeraldas e trocas com aldeões, templos do deserto e da selva.</p></div></li>
+      <li><span class="ver-data">2012</span><div><h4>1.4 Pretty Scary Update</h4><p>O Wither, bruxas, morcegos, a bigorna, cenouras e batatas.</p></div></li>
+      <li><span class="ver-data">2013</span><div><h4>1.5 Redstone Update</h4><p>Funil, comparador, quartzo do Nether e sensor de luz.</p></div></li>
+      <li><span class="ver-data">2013</span><div><h4>1.6 Horse Update</h4><p>Cavalos, burros e mulas, fardo de feno e tapetes.</p></div></li>
+      <li><span class="ver-data">2013</span><div><h4>1.7 The Update that Changed the World</h4><p>Dezenas de biomas novos, como savana, badlands e floresta escura, e pesca melhorada.</p></div></li>
+      <li><span class="ver-data">2014</span><div><h4>1.8 Bountiful Update</h4><p>Monumentos oceânicos e guardiões, coelhos, estandartes, granito, diorito e andesito.</p></div></li>
+      <li><span class="ver-data">2016</span><div><h4>1.9 Combat Update</h4><p>Escudo, segunda mão, élitros, cidades do End e shulkers. O ataque ganhou tempo de recarga.</p></div></li>
+      <li><span class="ver-data">2016</span><div><h4>1.10 Frostburn Update</h4><p>Ursos polares, husks, esqueletos errantes, blocos de magma e fósseis.</p></div></li>
+      <li><span class="ver-data">2016</span><div><h4>1.11 Exploration Update</h4><p>Mansões da floresta, mapas do cartógrafo, totem, lhamas, caixas de shulker e observador.</p></div></li>
+      <li><span class="ver-data">2017</span><div><h4>1.12 World of Color</h4><p>Concreto, terracota esmaltada, papagaios e o livro de receitas.</p></div></li>
+      <li><span class="ver-data">2018</span><div><h4>1.13 Update Aquatic</h4><p>Oceanos novos, golfinhos, tartarugas, tridente, afogados, naufrágios, corais e phantoms.</p></div></li>
+      <li><span class="ver-data">2019</span><div><h4>1.14 Village & Pillage</h4><p>Vilas refeitas, profissões com blocos de trabalho, saqueadores, ataques, raposas, pandas e bambu.</p></div></li>
+      <li><span class="ver-data">2019</span><div><h4>1.15 Buzzy Bees</h4><p>Abelhas, colmeias e mel.</p></div></li>
+      <li><span class="ver-data">2020</span><div><h4>1.16 Nether Update</h4><p>Biomas novos do Nether, netherite, piglins, bastiões, hoglins e lavagantes.</p></div></li>
+      <li><span class="ver-data">2021</span><div><h4>1.17 Caves & Cliffs, parte 1</h4><p>Cobre, ametista, axolotes, cabras, lula brilhante, luneta e para-raios.</p></div></li>
+      <li><span class="ver-data">2021</span><div><h4>1.18 Caves & Cliffs, parte 2</h4><p>Geração nova: cavernas gigantes, montanhas altas e o mundo de −64 a 320.</p></div></li>
+      <li><span class="ver-data">2022</span><div><h4>1.19 The Wild Update</h4><p>Escuro profundo, Warden, cidade antiga, manguezal, sapos e allay.</p></div></li>
+      <li><span class="ver-data">2023</span><div><h4>1.20 Trails & Tales</h4><p>Cerejal, camelos, farejador, arqueologia com pincel e moldes de enfeite de armadura.</p></div></li>
+      <li><span class="ver-data">2024</span><div><h4>1.20.5</h4><p>Tatu e armadura de lobo.</p></div></li>
+      <li><span class="ver-data">06/2024</span><div><h4>1.21 Tricky Trials</h4><p>Trial Chambers, breeze, bogged, a maça e o fabricador automático.</p></div></li>
+      <li><span class="ver-data">10/2024</span><div><h4>1.21.2 Bundles of Bravery</h4><p>A bolsa, que guarda vários itens num espaço só.</p></div></li>
+      <li><span class="ver-data">12/2024</span><div><h4>1.21.4 The Garden Awakens</h4><p>Jardim pálido, creaking e blocos de resina.</p></div></li>
+      <li><span class="ver-data">03/2025</span><div><h4>1.21.5 Spring to Life</h4><p>Variantes de vaca, porco e galinha conforme o clima do bioma e mais detalhes de natureza.</p></div></li>
+      <li><span class="ver-data">06/2025</span><div><h4>1.21.6 Chase the Skies</h4><p>Ghast feliz, que dá para montar, ghast seco, arreio e a barra de localização dos jogadores.</p></div></li>
+      <li><span class="ver-data">30/09/2025</span><div><h4>1.21.9 The Copper Age</h4><p>Ferramentas e armadura de cobre, golem de cobre e prateleiras de cobre.</p></div></li>
+      <li><span class="ver-data">09/12/2025</span><div><h4>1.21.11 Mounts of Mayhem</h4><p>Lança e o encantamento Investida (Lunge), náutilo montável, cavalos zumbis, camelos zumbis (camel husk), o mob parched e armadura de netherite para cavalo.</p></div></li>
+      <li><span class="ver-data">24/03/2026</span><div><h4>26.1 Tiny Takeover</h4><p>Reforma dos filhotes de mobs, com sons novos, e o dente-de-leão dourado. Primeira versão com o número novo: ano, drop e correção.</p></div></li>
+      <li><span class="ver-data">16/06/2026</span><div><h4>26.2 Chaos Cubed</h4><p>Cavernas de enxofre, o cubo de enxofre, blocos de enxofre e cinábrio e aranhas de caverna nascendo nas cavernas.</p></div></li>
+      <li><span class="ver-data">15/09/2026</span><div><h4>26.3 Wilderness Bound</h4><p>Floresta nova com álamos, acampamentos abandonados, camas de palha, almofadas e escadas e lajes de lã e concreto.</p></div></li>
+    </ol>
+    <p class="criterio">Datas e conteúdo das versões de 2024 a 2026 conferidos em notícias e sites sobre o jogo, listados no rodapé. Antes disso, o resumo traz só as novidades mais conhecidas de cada versão.</p>
+  </div>
+</section>
+
 <section class="secao" id="curiosidades" aria-labelledby="curiosidades-t">
   <div class="wrap">
     <div class="secao-cab">
@@ -2027,6 +2737,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
         <li>Lançamento da 26.3: <a href="https://www.gamingonlinux.com/2026/09/minecraft-java-edition-26-3-wilderness-bound-update-released/" target="_blank" rel="noopener">GamingOnLinux</a>, <a href="https://nodecraft.com/blog/game-news-tips/minecraft-java-26-3-wilderness-bound-is-out-what-it-means-for-your-server" target="_blank" rel="noopener">Nodecraft</a> e <a href="https://allthings.how/minecraft-wilderness-bound-what-s-new-in-java-26-3-and-bedrock-26-50/" target="_blank" rel="noopener">All Things How</a>.</li>
         <li>Release candidate da 26.3: <a href="https://www.minecraft.net/ja-jp/article/minecraft-26-3-release-candidate-1" target="_blank" rel="noopener">minecraft.net</a>.</li>
         <li>Seeds: <a href="https://www.minecraft-guides.com/seeds/1-21/speedrun/" target="_blank" rel="noopener">Minecraft Guides</a> e <a href="https://www.craftmc.net/minecraft-seeds/26.2/three-blacksmith-village-ruined-portal-bedrock-26-30" target="_blank" rel="noopener">CraftMC</a>.</li>
+        <li>Versões de 2024 a 2026: <a href="https://allthings.how/minecraft-1-21-9-the-copper-age-arrives-september-30-java/" target="_blank" rel="noopener">All Things How (Copper Age)</a>, <a href="https://beebom.com/minecraft-mounts-of-mayhem-release-date/amp/" target="_blank" rel="noopener">Beebom (Mounts of Mayhem)</a>, <a href="https://winternode.com/blog/minecraft/java/26-1-tiny-takeover" target="_blank" rel="noopener">WinterNode (26.1)</a>, <a href="https://fabricmc.net/2026/03/14/261.html" target="_blank" rel="noopener">Fabric (26.1)</a>, <a href="https://xgamingserver.com/blog/minecraft-26-2-chaos-cubed-release-date-sulfur-caves-everything-new/" target="_blank" rel="noopener">XGamingServer (26.2)</a>, <a href="https://www.gamergeeks.net/apps/minecraft/blocks-by-version" target="_blank" rel="noopener">GamerGeeks</a> e <a href="https://www.minecraft.net/pl-pl/article/minecraft-new-version-numbering-system" target="_blank" rel="noopener">minecraft.net (número novo)</a>.</li>
         <li>Para conferir qualquer detalhe: <a href="https://minecraft.wiki" target="_blank" rel="noopener">Minecraft Wiki</a> e <a href="https://www.chunkbase.com/apps/seed-map" target="_blank" rel="noopener">Chunkbase</a>.</li>
       </ul>
     </div>
@@ -2463,7 +3174,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
     var n = 0;
     document.querySelectorAll("body > section[id]").forEach(function (sec) {
       var nomeSec = (sec.querySelector(".eyebrow") || sec.querySelector("h2") || {}).textContent || "";
-      sec.querySelectorAll(".etapa h3, .itens h4, .farm h4, .bioma h4, .lista-rec h4, .card-seed .num, .missao-t, tbody td:first-child, .curio-t, .glossario dt").forEach(function (h) {
+      sec.querySelectorAll(".etapa h3, .itens h4, .farm h4, .bioma h4, .lista-rec h4, .card-seed .num, .missao-t, tbody td:first-child, .curio-t, .glossario dt, .linha-tempo h4").forEach(function (h) {
         var alvo = h.closest("article, li, tr, .missao-card, .glossario div") || h;
         if (!alvo.id) alvo.id = "b-" + (++n);
         var texto = h.textContent.trim();
