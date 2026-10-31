@@ -448,6 +448,11 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .glossario dd { margin: 4px 0 0; font-size: var(--fs-small); }
 .progresso { display: grid; gap: 2px; }
 
+.atualizar {
+  position: fixed; left: 50%; transform: translateX(-50%); z-index: 21; max-width: calc(100% - 32px);
+  top: calc(env(safe-area-inset-top, 0px) + 12px); box-shadow: 0 0 0 2px var(--outline), 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
 .toast {
   position: fixed; left: 50%; transform: translateX(-50%);
   bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
@@ -2045,6 +2050,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
   </div>
 </footer>
 
+<button type="button" class="btn btn-forte atualizar" id="atualizar" hidden>Versão nova do guia: toque para atualizar</button>
 <a class="btn subir" id="subir" href="#inicio" aria-label="Voltar ao topo" hidden>↑</a>
 <div class="toast" id="toast" role="status" hidden></div>
 
@@ -2539,8 +2545,32 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 
   // ---------- app instalável e uso sem internet ----------
   if ("serviceWorker" in navigator && location.protocol === "https:") {
-    window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });
+    var registro = null, tinhaControle = !!navigator.serviceWorker.controller, recarregou = false;
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("sw.js").then(function (r) { registro = r; }).catch(function () {});
+    });
+    // quando um service worker novo assume, recarrega uma vez para mostrar a versão nova
+    navigator.serviceWorker.addEventListener("controllerchange", function () {
+      if (tinhaControle && !recarregou) { recarregou = true; location.reload(); }
+    });
   }
+
+  // ---------- aviso de versão nova (o app no celular fica aberto em segundo plano e não recarrega sozinho) ----------
+  var bAtualizar = document.getElementById("atualizar"), versaoCarregada = null;
+  function versaoNoSite() {
+    return fetch(location.pathname, { method: "HEAD", cache: "no-store" }).then(function (r) {
+      return r.ok ? (r.headers.get("etag") || r.headers.get("last-modified")) : null;
+    }).catch(function () { return null; });
+  }
+  if (location.protocol === "https:") {
+    versaoNoSite().then(function (v) { versaoCarregada = v; });
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) return;
+      if (registro) registro.update().catch(function () {});
+      versaoNoSite().then(function (v) { if (v && versaoCarregada && v !== versaoCarregada) bAtualizar.hidden = false; });
+    });
+  }
+  bAtualizar.addEventListener("click", function () { location.reload(); });
 
   // ---------- curiosidade aleatória ----------
   document.getElementById("curio-sorte").addEventListener("click", function () {
