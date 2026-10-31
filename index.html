@@ -110,13 +110,19 @@ code, .mono { font-family: var(--f-mono); font-size: 0.92em; }
 .links::-webkit-scrollbar { display: none; }
 .links a { color: var(--fg); text-decoration: none; font-size: var(--fs-small); font-weight: 500; padding: 6px 8px; white-space: nowrap; }
 .links a:hover { background: var(--grama); }
-@media (min-width: 860px) {
+@media (min-width: 1440px) {
   .topo .wrap { flex-wrap: nowrap; }
   .links { order: 0; flex: 0 1 auto; margin-left: auto; }
   .busca-btn, .edicao { flex: none; }
 }
-.edicao { display: inline-flex; border: 2px solid var(--outline); margin-left: auto; }
-@media (min-width: 860px) { .edicao { margin-left: 0; } }
+/* tablet deitado e telas médias: os links vão para uma segunda linha, todos à vista */
+@media (min-width: 900px) and (max-width: 1439px) {
+  .links { flex-wrap: wrap; overflow: visible; justify-content: space-between; }
+}
+/* quando os links rolam de lado (celular), a borda direita esmaece para mostrar que tem mais */
+.links.tem-mais { -webkit-mask-image: linear-gradient(to right, #000 82%, transparent); mask-image: linear-gradient(to right, #000 82%, transparent); }
+.edicao { display: inline-flex; border: 2px solid var(--outline); margin-left: 0; }
+
 .edicao button {
   font: 600 var(--fs-cap)/1 var(--f-body); letter-spacing: 0.06em; text-transform: uppercase;
   background: var(--surface); color: var(--fg); border: 0; padding: 8px 12px; cursor: pointer;
@@ -393,7 +399,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 
 /* busca, receitas e abas de dimensões */
 .busca-btn { margin-left: auto; }
-@media (min-width: 860px) { .busca-btn { margin-left: 0; } }
+@media (min-width: 1440px) { .busca-btn { margin-left: 0; } }
 .busca { border-top: 1px solid #22401A; background: var(--grama-escura); }
 .busca .wrap { padding-block: 10px; display: grid; gap: 8px; }
 .busca .campo { width: 100%; }
@@ -2330,8 +2336,13 @@ td:first-child { font-weight: 600; white-space: nowrap; }
       }
     }
     ultimoAtivo = atual;
+    var caixaLinks = linksNav.length && linksNav[0].parentNode;
+    if (caixaLinks) caixaLinks.classList.toggle("tem-mais", caixaLinks.scrollLeft + caixaLinks.clientWidth < caixaLinks.scrollWidth - 4);
   }
-  window.addEventListener("scroll", function () { if (!agendado) { agendado = true; requestAnimationFrame(aoRolar); } }, { passive: true });
+  function agendar() { if (!agendado) { agendado = true; requestAnimationFrame(aoRolar); } }
+  window.addEventListener("scroll", agendar, { passive: true });
+  window.addEventListener("resize", agendar);
+  if (linksNav.length) linksNav[0].parentNode.addEventListener("scroll", agendar, { passive: true });
   aoRolar();
 
   // ---------- abas das dimensões ----------
