@@ -116,7 +116,7 @@ code, .mono { font-family: var(--f-mono); font-size: 0.92em; }
   .busca-btn, .edicao { flex: none; }
 }
 /* tablet deitado e telas médias: os links vão para uma segunda linha, todos à vista */
-@media (min-width: 1100px) and (max-width: 1919px) {
+@media (min-width: 1240px) and (max-width: 1919px) {
   .links { flex-wrap: wrap; overflow: visible; justify-content: space-between; gap: 2px; }
   .links a { padding: 6px 5px; font-size: 0.84rem; }
 }
@@ -518,6 +518,47 @@ td .px-mini { margin-right: 10px; }
 .slot-r b { position: absolute; right: 2px; bottom: 0; font: 700 0.95rem/1 var(--f-num); color: #FFFFFF; text-shadow: 2px 2px 0 #3F3F3F; }
 .seta-fab { font: 700 1.6rem/1 var(--f-body); color: var(--muted); }
 
+/* esquemas das farms */
+.mat { margin: 10px 0 0; }
+.esquema { margin: 12px 0 4px; display: grid; gap: 8px; }
+.esq-grade { display: grid; gap: 0; width: max-content; max-width: 100%; padding: 6px; background: #5E89B8; border: 2px solid var(--outline); }
+.esq-grade[data-cols="3"] { grid-template-columns: repeat(3, 26px); }
+.esq-grade[data-cols="4"] { grid-template-columns: repeat(4, 26px); }
+.esq-grade[data-cols="5"] { grid-template-columns: repeat(5, 26px); }
+.esq-grade[data-cols="6"] { grid-template-columns: repeat(6, 26px); }
+.esq-grade[data-cols="7"] { grid-template-columns: repeat(7, 26px); }
+.esq-grade[data-cols="8"] { grid-template-columns: repeat(8, 26px); }
+.esq-c { width: 26px; height: 26px; display: block; }
+.esq-c .px { width: 26px; height: 26px; }
+.esquema figcaption { font-size: var(--fs-small); }
+.esq-legenda { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: var(--fs-cap); color: var(--muted); }
+.esq-legenda .px-mini { width: 16px; height: 16px; vertical-align: -3px; margin-right: 5px; }
+
+/* acabamento: seleção, rolagem, seções alternadas, relevo dos cartões, tabelas e detalhes */
+::selection { background: var(--accent); color: var(--on-accent); }
+html { scrollbar-color: var(--slot-hi) var(--bg); }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; }
+.eb-ic { width: 20px; height: 20px; }
+main > .secao:nth-of-type(even) { background: #241A12; }
+.farm, .bioma, .card-seed, .missao-card, .curio, .lista-rec li, .glossario div, .atalhos div, .grade-mod p, .etapa {
+  box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.05), inset -2px -2px 0 rgba(0, 0, 0, 0.28);
+  transition: border-color 0.15s ease;
+}
+.farm:hover, .bioma:hover, .card-seed:hover, .curio:hover, .lista-rec li:hover { border-color: var(--slot-hi); }
+tbody tr:nth-child(even):not(.tab-grupo) td { background: rgba(255, 255, 255, 0.025); }
+tbody tr:not(.tab-grupo):hover td { background: rgba(108, 192, 74, 0.09); }
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+.como > summary::before, .receitas > summary::before {
+  content: ""; display: inline-block; width: 0; height: 0; margin-right: 8px; vertical-align: 2px;
+  border-left: 7px solid currentColor; border-top: 5px solid transparent; border-bottom: 5px solid transparent; transition: transform 0.15s ease;
+}
+.como[open] > summary::before, .receitas[open] > summary::before { transform: rotate(90deg); }
+.rodape { background: #1E150E; }
+.secao-cab h2 { position: relative; padding-bottom: 10px; }
+.secao-cab h2::after { content: ""; position: absolute; left: 0; bottom: 0; width: 48px; height: 4px; background: var(--accent); box-shadow: 8px 0 0 var(--accent-fundo); }
+@media (prefers-reduced-motion: reduce) { .farm, .bioma, .card-seed, .curio, .lista-rec li, .como > summary::before, .receitas > summary::before { transition: none; } }
+
 .toast {
   position: fixed; left: 50%; transform: translateX(-50%);
   bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
@@ -535,6 +576,7 @@ td .px-mini { margin-right: 10px; }
       <a href="#iniciante"><span class="px nav-ic" data-px="grama" aria-hidden="true"></span><span class="nav-t">Iniciante</span></a>
       <a href="#roteiro"><span class="px nav-ic" data-px="mapa" aria-hidden="true"></span><span class="nav-t">Roteiro</span></a>
       <a href="#dimensoes"><span class="px nav-ic" data-px="portal" aria-hidden="true"></span><span class="nav-t">Dimensões</span></a>
+      <a href="#escambo"><span class="px nav-ic" data-px="ouro" aria-hidden="true"></span><span class="nav-t">Escambo</span></a>
       <a href="#estruturas"><span class="px nav-ic" data-px="bau" aria-hidden="true"></span><span class="nav-t">Estruturas</span></a>
       <a href="#mobs"><span class="px nav-ic" data-px="creeper" aria-hidden="true"></span><span class="nav-t">Mobs</span></a>
       <a href="#pocoes"><span class="px nav-ic" data-px="pocao" aria-hidden="true"></span><span class="nav-t">Poções</span></a>
@@ -614,7 +656,7 @@ td .px-mini { margin-right: 10px; }
   <div class="wrap">
     <div class="versao-grade">
       <div class="secao-cab">
-        <p class="eyebrow">Versão coberta</p>
+        <p class="eyebrow"><span class="px eb-ic" data-px="relogio" aria-hidden="true"></span>Versão coberta</p>
         <h2 id="versao-t">O que mudou na versão nova</h2>
         <p class="versao-num">Java 26.3<br>Bedrock 26.50</p>
         <p class="lede">Game drop Wilderness Bound, lançado em 15/09/2026 nas duas edições.</p>
@@ -632,7 +674,7 @@ td .px-mini { margin-right: 10px; }
 <section class="secao" id="iniciante" aria-labelledby="iniciante-t">
   <div class="wrap">
     <div class="secao-cab">
-      <p class="eyebrow">Iniciante</p>
+      <p class="eyebrow"><span class="px eb-ic" data-px="grama" aria-hidden="true"></span>Iniciante</p>
       <h2 id="iniciante-t">Dicas para quem está começando</h2>
       <p class="lede">O básico que ninguém explica. Leia antes de seguir o roteiro.</p>
     </div>
@@ -746,7 +788,7 @@ td .px-mini { margin-right: 10px; }
 <section class="secao" id="roteiro" aria-labelledby="roteiro-t">
   <div class="wrap">
     <div class="secao-cab">
-      <p class="eyebrow">Roteiro</p>
+      <p class="eyebrow"><span class="px eb-ic" data-px="mapa" aria-hidden="true"></span>Roteiro</p>
       <h2 id="roteiro-t">Do spawn aos créditos em 9 etapas</h2>
       <p class="lede">As etapas estão na ordem em que acontecem. Marque o que já sabe fazer. Para treinar, use o cronômetro: ele marca quanto tempo você leva em cada etapa e guarda o seu recorde.</p>
     </div>
@@ -967,7 +1009,7 @@ td .px-mini { margin-right: 10px; }
 <section class="secao" id="dimensoes" aria-labelledby="dimensoes-t">
   <div class="wrap">
     <div class="secao-cab">
-      <p class="eyebrow">Dimensões</p>
+      <p class="eyebrow"><span class="px eb-ic" data-px="portal" aria-hidden="true"></span>Dimensões</p>
       <h2 id="dimensoes-t">O melhor de cada dimensão</h2>
       <p class="lede">O que vale a pena fazer no Overworld, no Nether e no End, além de zerar.</p>
     </div>
@@ -1026,7 +1068,7 @@ td .px-mini { margin-right: 10px; }
 <section class="secao" id="mobs" aria-labelledby="mobs-t">
   <div class="wrap">
     <div class="secao-cab">
-      <p class="eyebrow">Mobs</p>
+      <p class="eyebrow"><span class="px eb-ic" data-px="creeper" aria-hidden="true"></span>Mobs</p>
       <h2 id="mobs-t">Guia de mobs</h2>
       <p class="lede">Onde cada criatura aparece, o que ela deixa cair e como lidar com ela. Hostis atacam sempre, neutros só se você provocar, passivos nunca atacam.</p>
     </div>
@@ -1549,7 +1591,7 @@ td .px-mini { margin-right: 10px; }
 <section class="secao" id="pocoes" aria-labelledby="pocoes-t">
   <div class="wrap">
     <div class="secao-cab">
-      <p class="eyebrow">Poções</p>
+      <p class="eyebrow"><span class="px eb-ic" data-px="pocao" aria-hidden="true"></span>Poções</p>
       <h2 id="pocoes-t">Guia de poções</h2>
       <p class="lede">Toda poção começa igual: garrafa de água e verruga do Nether no suporte de poções, que viram a poção estranha. Depois entra o ingrediente da tabela.</p>
     </div>
@@ -1594,10 +1636,64 @@ td .px-mini { margin-right: 10px; }
   </div>
 </section>
 
+<section class="secao" id="escambo" aria-labelledby="escambo-t">
+  <div class="wrap">
+    <div class="secao-cab">
+      <p class="eyebrow"><span class="px eb-ic" data-px="ouro" aria-hidden="true"></span>Escambo</p>
+      <h2 id="escambo-t">Trocas com os piglins</h2>
+      <p class="lede">O escambo é o jeito mais rápido de conseguir pérolas do Ender, resistência ao fogo e obsidiana no Nether. Veja como trocar bem e o que cada barra de ouro pode render.</p>
+    </div>
+    <div class="grade-mod ver-info">
+      <p><span class="rot">Pérolas:</span> saem em cerca de 2% das trocas, de 2 a 4 por vez. Em média são umas 16 barras de ouro por pérola, então 12 pérolas pedem por volta de 190 barras. A sorte pode ajudar ou atrapalhar.</p>
+      <p><span class="rot">Resistência ao fogo:</span> sai em cerca de 3,4% das trocas, somando a poção comum e a arremessável. Guarde para a fortaleza do Nether.</p>
+      <p><span class="rot">Velocidade das almas:</span> o escambo é a única forma renovável de conseguir esse encantamento.</p>
+    </div>
+    <ol class="itens">
+      <li><div><h3 class="h4">Vista ouro</h3><p>Pelo menos uma peça de armadura de ouro. Botas bastam. Sem ouro no corpo, o piglin ataca.</p></div></li>
+      <li><div><h3 class="h4">Junte barras de ouro</h3><p>Só a barra de ouro serve para trocar. Um bloco de ouro vira 9 barras, e 9 pepitas fazem 1 barra. O minério de ouro do Nether dá pepitas, e os baús do bastião costumam ter ouro.</p></div></li>
+      <li><div><h3 class="h4">Entregue ao piglin adulto</h3><p>Jogue a barra perto dele ou use a barra nele. Ele examina por uns segundos e joga um item sorteado da tabela abaixo.</p></div></li>
+      <li><div><h3 class="h4">Use vários piglins ao mesmo tempo</h3><p>Cada piglin troca uma barra por vez. Jogue barras para vários e a troca anda muito mais rápido.</p></div></li>
+      <li><div><h3 class="h4">Não deixe eles bravos</h3><p>Abrir baús, quebrar blocos de ouro ou minério de ouro perto deles, ou bater em um, deixa o grupo bravo. Piglins bebês pegam o ouro e não devolvem nada.</p></div></li>
+      <li><div><h3 class="h4">Faça um cantinho seguro</h3><p>Prenda alguns piglins em espaços de 1 bloco, com um funil e um baú embaixo de onde os itens caem. Assim você troca sem correr risco.</p></div></li>
+      <li><div><h3 class="h4">Não leve piglin para o Overworld</h3><p>Fora do Nether ele vira piglin zumbificado depois de alguns segundos.</p></div></li>
+    </ol>
+    <div class="secao-cab sub-cab" id="tabela-escambo">
+      <h3>Tudo o que os piglins dão</h3>
+      <p class="lede">A chance de cada item em uma troca, na tabela do Java. No Bedrock as chances são parecidas, mas no lugar das flechas espectrais vêm flechas comuns. A tabela pode mudar em versões novas.</p>
+    </div>
+    <div class="tabela-wrap" tabindex="0" role="region" aria-label="Tabela de escambo com piglins">
+      <table>
+        <thead><tr><th scope="col">Item</th><th scope="col">Quantidade</th><th scope="col">Chance por troca</th></tr></thead>
+        <tbody>
+          <tr><td><span class="px px-mini" data-px="encantado" aria-hidden="true"></span>Livro encantado de Velocidade das almas</td><td class="mono">1</td><td class="mono">1,07%</td></tr>
+          <tr><td><span class="px px-mini" data-px="botas" aria-hidden="true"></span>Botas de ferro com Velocidade das almas</td><td class="mono">1</td><td class="mono">1,71%</td></tr>
+          <tr><td><span class="px px-mini" data-px="pocao:p=E49A3A,P=F5C27A" aria-hidden="true"></span>Poção de resistência ao fogo</td><td class="mono">1</td><td class="mono">1,71%</td></tr>
+          <tr><td><span class="px px-mini" data-px="pocao:p=E49A3A,P=F5C27A,k=5E5E5E" aria-hidden="true"></span>Poção arremessável de resistência ao fogo</td><td class="mono">1</td><td class="mono">1,71%</td></tr>
+          <tr><td><span class="px px-mini" data-px="pocao:p=3A6EC9,P=7FA8F0" aria-hidden="true"></span>Garrafa de água</td><td class="mono">1</td><td class="mono">2,13%</td></tr>
+          <tr><td><span class="px px-mini" data-px="lingote:k=8A8A8A,N=C9C9C9,n=EDEDED" aria-hidden="true"></span>Pepitas de ferro</td><td class="mono">10 a 36</td><td class="mono">2,13%</td></tr>
+          <tr><td><span class="px px-mini" data-px="pearl" aria-hidden="true"></span>Pérolas do Ender</td><td class="mono">2 a 4</td><td class="mono">2,13%</td></tr>
+          <tr><td><span class="px px-mini" data-px="rosto:s=D9D2C6,S=B5AEA2,e=5A5A5A,m=8A8A8A" aria-hidden="true"></span>Ghast seco (desde a 1.21.6)</td><td class="mono">1</td><td class="mono">2,13%</td></tr>
+          <tr><td><span class="px px-mini" data-px="linha" aria-hidden="true"></span>Linha</td><td class="mono">3 a 9</td><td class="mono">4,26%</td></tr>
+          <tr><td><span class="px px-mini" data-px="minerio:s=EDE6DA,S=C9BFAE,o=FFFFFF,O=D9D2C6" aria-hidden="true"></span>Quartzo do Nether</td><td class="mono">5 a 12</td><td class="mono">4,26%</td></tr>
+          <tr><td><span class="px px-mini" data-px="bloco:t=1E0F2E,T=3A2450,d=1E0F2E,D=2A1840" aria-hidden="true"></span>Obsidiana</td><td class="mono">1</td><td class="mono">8,53%</td></tr>
+          <tr><td><span class="px px-mini" data-px="bloco:t=1E0F2E,T=8A3FD1,d=1E0F2E,D=7D35C4" aria-hidden="true"></span>Obsidiana chorona</td><td class="mono">1 a 3</td><td class="mono">8,53%</td></tr>
+          <tr><td><span class="px px-mini" data-px="po" aria-hidden="true"></span>Carga de fogo</td><td class="mono">1</td><td class="mono">8,53%</td></tr>
+          <tr><td><span class="px px-mini" data-px="tabua:t=A0603A,T=7B4A2A" aria-hidden="true"></span>Couro</td><td class="mono">2 a 4</td><td class="mono">8,53%</td></tr>
+          <tr><td><span class="px px-mini" data-px="bloco:t=5E4A3A,T=4A3A2E,d=5E4A3A,D=4A3A2E" aria-hidden="true"></span>Areia das almas</td><td class="mono">2 a 8</td><td class="mono">8,53%</td></tr>
+          <tr><td><span class="px px-mini" data-px="tijolo:b=4A1E24,B=3A1418,m=2A0E10" aria-hidden="true"></span>Tijolos do Nether</td><td class="mono">2 a 8</td><td class="mono">8,53%</td></tr>
+          <tr><td><span class="px px-mini" data-px="flecha:k=E3C15A,p=F5DA7A" aria-hidden="true"></span>Flechas espectrais (no Bedrock, flechas comuns)</td><td class="mono">6 a 12</td><td class="mono">8,53%</td></tr>
+          <tr><td><span class="px px-mini" data-px="pedregulho:s=8C8580,S=6E6862" aria-hidden="true"></span>Cascalho</td><td class="mono">8 a 16</td><td class="mono">8,53%</td></tr>
+          <tr><td><span class="px px-mini" data-px="bloco:t=2A2428,T=1E1A1E,d=2A2428,D=1E1A1E" aria-hidden="true"></span>Pedra-negra</td><td class="mono">8 a 16</td><td class="mono">8,53%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
 <section class="secao" id="estruturas" aria-labelledby="estruturas-t">
   <div class="wrap">
     <div class="secao-cab">
-      <p class="eyebrow">Estruturas</p>
+      <p class="eyebrow"><span class="px eb-ic" data-px="bau" aria-hidden="true"></span>Estruturas</p>
       <h2 id="estruturas-t">Estruturas e minérios</h2>
       <p class="lede">Tudo o que o jogo constrói sozinho pelo mundo: onde achar, o que tem dentro e o perigo de cada uma. E, no fim, onde fica cada minério.</p>
     </div>
@@ -1805,7 +1901,7 @@ td .px-mini { margin-right: 10px; }
 <section class="secao" id="seeds" aria-labelledby="seeds-t">
   <div class="wrap">
     <div class="secao-cab">
-      <p class="eyebrow">Seeds</p>
+      <p class="eyebrow"><span class="px eb-ic" data-px="semente" aria-hidden="true"></span>Seeds</p>
       <h2 id="seeds-t">Seeds para treinar</h2>
       <p class="lede">Uma seed boa para zerar tem vila e portal em ruínas perto do spawn, e bastião e fortaleza perto do portal no Nether. Versão nova pode mudar o mapa, então confira a seed no mapa do Chunkbase antes de jogar. Não precisa de comando nenhum.</p>
     </div>
@@ -1885,7 +1981,7 @@ td .px-mini { margin-right: 10px; }
 <section class="secao" id="biomas" aria-labelledby="biomas-t">
   <div class="wrap">
     <div class="secao-cab">
-      <p class="eyebrow">Biomas</p>
+      <p class="eyebrow"><span class="px eb-ic" data-px="arvore" aria-hidden="true"></span>Biomas</p>
       <h2 id="biomas-t">O melhor bioma para cada coisa</h2>
       <p class="lede">O bioma decide o que aparece por perto. Escolha pelo que você quer fazer ou percorra a lista. Para achar um bioma sem comando, abra a seed no <a href="https://www.chunkbase.com/apps/biome-finder" target="_blank" rel="noopener">localizador de biomas do Chunkbase</a>.</p>
     </div>
@@ -2161,7 +2257,7 @@ td .px-mini { margin-right: 10px; }
 <section class="secao" id="depois" aria-labelledby="depois-t">
   <div class="wrap">
     <div class="secao-cab">
-      <p class="eyebrow">Depois de zerar</p>
+      <p class="eyebrow"><span class="px eb-ic" data-px="espada" aria-hidden="true"></span>Depois de zerar</p>
       <h2 id="depois-t">As melhores coisas para conseguir</h2>
       <p class="lede">Com o dragão derrotado, o resto do jogo abre. Esta é uma ordem que funciona bem, porque cada item ajuda a pegar o seguinte. Troque o que quiser.</p>
     </div>
@@ -2280,7 +2376,9 @@ td .px-mini { margin-right: 10px; }
           <div><dt>Como funciona</dt><dd>a cana cresce, um observador vê o bloco novo e aciona um pistão que a quebra. Funis levam tudo para um baú.</dd></div>
           <div><dt>Edição</dt><dd>Java e Bedrock.</dd></div>
         </dl>
-        <details class="como"><summary>Passo a passo</summary><ol>
+        <details class="como"><summary>Passo a passo</summary><p class="mat"><span class="rot">Você vai precisar:</span> cana, terra ou areia, balde de água, pistões, observadores, redstone, funis e um baú.</p>
+        <figure class="esquema" role="group" aria-label="Esquema da farm de Cana-de-açúcar automática"><div class="esq-grade" data-cols="4"><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="cana" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pistao" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="cana" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="bloco:t=3A6EC9,T=5A8EE0,d=3A6EC9,D=2E58A8" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=8B5A2B,T=6B4220,d=8B5A2B,D=6B4220" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span></div><figcaption><span class="rot">Esquema simplificado, visto de lado.</span> A cana cresce até o 2º bloco, o pistão empurra e ela cai. A água do lado é obrigatória.</figcaption><ul class="esq-legenda"><li><span class="px px-mini" data-px="cana" aria-hidden="true"></span>cana-de-açúcar</li><li><span class="px px-mini" data-px="pistao" aria-hidden="true"></span>pistão</li><li><span class="px px-mini" data-px="pedregulho" aria-hidden="true"></span>bloco qualquer</li><li><span class="px px-mini" data-px="bloco:t=3A6EC9,T=5A8EE0,d=3A6EC9,D=2E58A8" aria-hidden="true"></span>água</li><li><span class="px px-mini" data-px="bloco:t=8B5A2B,T=6B4220,d=8B5A2B,D=6B4220" aria-hidden="true"></span>terra</li></ul></figure>
+<ol>
           <li>Cave um canal de água de 1 bloco de largura e deixe uma fileira de terra ou areia colada nele.</li>
           <li>Plante a cana nessa fileira. Ela só cresce encostada na água.</li>
           <li>Atrás da cana, na altura do 2º bloco dela, coloque uma fileira de pistões virados para a cana.</li>
@@ -2297,7 +2395,9 @@ td .px-mini { margin-right: 10px; }
           <div><dt>Como funciona</dt><dd>o mesmo princípio da cana: um observador vê o fruto nascer ao lado do pé e um pistão quebra.</dd></div>
           <div><dt>Edição</dt><dd>Java e Bedrock.</dd></div>
         </dl>
-        <details class="como"><summary>Passo a passo</summary><ol>
+        <details class="como"><summary>Passo a passo</summary><p class="mat"><span class="rot">Você vai precisar:</span> sementes de abóbora ou melancia, enxada e balde de água (na automática, também pistões, observadores e funis).</p>
+        <figure class="esquema" role="group" aria-label="Esquema da farm de Abóbora e melancia"><div class="esq-grade" data-cols="4"><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="caule" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="abobora" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="bloco:t=3A6EC9,T=5A8EE0,d=3A6EC9,D=2E58A8" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=4A2E18,T=3A2410,d=6B4220,D=5A3A1E" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=8B5A2B,T=6B4220,d=8B5A2B,D=6B4220" aria-hidden="true"></span></span><span class="esq-c"></span></div><figcaption><span class="rot">Esquema simplificado, visto de lado.</span> O pé fica na terra arada e o fruto nasce no bloco do lado. Deixe esse bloco sempre livre.</figcaption><ul class="esq-legenda"><li><span class="px px-mini" data-px="caule" aria-hidden="true"></span>pé (caule)</li><li><span class="px px-mini" data-px="abobora" aria-hidden="true"></span>abóbora ou melancia</li><li><span class="px px-mini" data-px="bloco:t=3A6EC9,T=5A8EE0,d=3A6EC9,D=2E58A8" aria-hidden="true"></span>água</li><li><span class="px px-mini" data-px="bloco:t=4A2E18,T=3A2410,d=6B4220,D=5A3A1E" aria-hidden="true"></span>terra arada</li><li><span class="px px-mini" data-px="bloco:t=8B5A2B,T=6B4220,d=8B5A2B,D=6B4220" aria-hidden="true"></span>terra</li></ul></figure>
+<ol>
           <li>Faça fileiras de terra arada com água a no máximo 4 blocos de distância.</li>
           <li>Plante as sementes em fileiras alternadas: ao lado de cada pé fica um bloco livre de terra ou grama, onde o fruto nasce.</li>
           <li>Versão manual: quebre só o fruto com machado. O pé fica e dá fruto de novo.</li>
@@ -2313,7 +2413,9 @@ td .px-mini { margin-right: 10px; }
           <div><dt>Como funciona</dt><dd>um aldeão agricultor colhe e replanta. Quando junta muito, joga para outro aldeão, e um funil no caminho recolhe.</dd></div>
           <div><dt>Edição</dt><dd>Java e Bedrock, com projetos diferentes.</dd></div>
         </dl>
-        <details class="como"><summary>Passo a passo</summary><ol>
+        <details class="como"><summary>Passo a passo</summary><p class="mat"><span class="rot">Você vai precisar:</span> enxada, sementes ou cenouras, balde de água, composteira, 2 aldeões, vidro, funil e baú.</p>
+        <figure class="esquema" role="group" aria-label="Esquema da farm de Trigo e cenoura com aldeão"><div class="esq-grade" data-cols="6"><span class="esq-c"><span class="px" data-px="composteira" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="rosto:s=C9935A,S=A8784A,e=2E6B3A,m=6B4220" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="trigo" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="trigo" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="vidro" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="rosto:s=C9935A,S=A8784A,e=2E6B3A,m=6B4220" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=4A2E18,T=3A2410,d=6B4220,D=5A3A1E" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=3A6EC9,T=5A8EE0,d=3A6EC9,D=2E58A8" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=4A2E18,T=3A2410,d=6B4220,D=5A3A1E" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="funil" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bau" aria-hidden="true"></span></span></div><figcaption><span class="rot">Esquema simplificado, visto de lado.</span> O agricultor colhe e joga a comida para o aldeão de fora; o funil embaixo pega o que cai.</figcaption><ul class="esq-legenda"><li><span class="px px-mini" data-px="composteira" aria-hidden="true"></span>composteira</li><li><span class="px px-mini" data-px="rosto:s=C9935A,S=A8784A,e=2E6B3A,m=6B4220" aria-hidden="true"></span>aldeão</li><li><span class="px px-mini" data-px="trigo" aria-hidden="true"></span>plantação</li><li><span class="px px-mini" data-px="vidro" aria-hidden="true"></span>vidro</li><li><span class="px px-mini" data-px="pedregulho" aria-hidden="true"></span>bloco qualquer</li><li><span class="px px-mini" data-px="bloco:t=4A2E18,T=3A2410,d=6B4220,D=5A3A1E" aria-hidden="true"></span>terra arada</li><li><span class="px px-mini" data-px="bloco:t=3A6EC9,T=5A8EE0,d=3A6EC9,D=2E58A8" aria-hidden="true"></span>água</li><li><span class="px px-mini" data-px="funil" aria-hidden="true"></span>funil</li><li><span class="px px-mini" data-px="bau" aria-hidden="true"></span>baú</li></ul></figure>
+<ol>
           <li>Faça um cercado com terra arada e água, e plante trigo, cenoura ou batata.</li>
           <li>Coloque dentro uma composteira e um aldeão sem profissão: ele vira agricultor. Ou traga um agricultor de uma vila.</li>
           <li>Ele colhe e replanta sozinho. Quando junta comida, joga para outro aldeão.</li>
@@ -2329,7 +2431,9 @@ td .px-mini { margin-right: 10px; }
           <div><dt>Como funciona</dt><dd>galinhas presas botam ovos num funil. Um ejetor choca pintinhos. Quando crescem, ficam altos o bastante para encostar numa lâmina de lava e cair como frango assado.</dd></div>
           <div><dt>Edição</dt><dd>Java e Bedrock.</dd></div>
         </dl>
-        <details class="como"><summary>Passo a passo</summary><ol>
+        <details class="como"><summary>Passo a passo</summary><p class="mat"><span class="rot">Você vai precisar:</span> galinhas, funis, ejetor, botão ou relógio de redstone, lajes, balde de lava, vidro e baú.</p>
+        <figure class="esquema" role="group" aria-label="Esquema da farm de Frango assado automático"><div class="esq-grade" data-cols="5"><span class="esq-c"><span class="px" data-px="vidro" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="rosto:s=F5F5F5,S=DCDCDC,e=111111,m=E8A030" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="vidro" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=E8821E,T=F5C542,d=E8821E,D=C9601E" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="funil" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="ejetor" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="rosto:s=F5F5F5,S=DCDCDC,e=111111,m=E8A030" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="funil" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bau" aria-hidden="true"></span></span></div><figcaption><span class="rot">Esquema simplificado, visto de lado.</span> Os ovos descem pelo funil até o ejetor. Os pintinhos crescem, encostam na lava e cozinham.</figcaption><ul class="esq-legenda"><li><span class="px px-mini" data-px="vidro" aria-hidden="true"></span>vidro</li><li><span class="px px-mini" data-px="rosto:s=F5F5F5,S=DCDCDC,e=111111,m=E8A030" aria-hidden="true"></span>galinha</li><li><span class="px px-mini" data-px="pedregulho" aria-hidden="true"></span>bloco qualquer</li><li><span class="px px-mini" data-px="bloco:t=E8821E,T=F5C542,d=E8821E,D=C9601E" aria-hidden="true"></span>lava</li><li><span class="px px-mini" data-px="funil" aria-hidden="true"></span>funil</li><li><span class="px px-mini" data-px="ejetor" aria-hidden="true"></span>ejetor</li><li><span class="px px-mini" data-px="bau" aria-hidden="true"></span>baú</li></ul></figure>
+<ol>
           <li>Prenda algumas galinhas em cima de um funil, num espaço cercado de vidro.</li>
           <li>O funil leva os ovos até um ejetor. Ligue o ejetor a um relógio de redstone (ou a um botão) para ele atirar os ovos.</li>
           <li>Os pintinhos nascem numa câmara fechada logo à frente.</li>
@@ -2345,7 +2449,9 @@ td .px-mini { margin-right: 10px; }
           <div><dt>Como funciona</dt><dd><span class="tag tag-java">Java</span>3 aldeões com camas veem um zumbi preso, ficam com medo e chamam um golem de ferro. O golem cai num ponto onde morre, e o ferro vai para o funil.</dd></div>
           <div><dt>Edição</dt><dd>No Bedrock as regras são outras (depende de vila com muitos aldeões e camas). Siga um projeto feito para Bedrock.</dd></div>
         </dl>
-        <details class="como"><summary>Passo a passo</summary><ol>
+        <details class="como"><summary>Passo a passo</summary><p class="mat"><span class="rot">Você vai precisar:</span> 3 aldeões, 3 camas, 1 zumbi e uma etiqueta, balde de lava, placa, água, vidro, funil, baú e muitos blocos.</p>
+        <figure class="esquema" role="group" aria-label="Esquema da farm de Ferro"><div class="esq-grade" data-cols="5"><span class="esq-c"><span class="px" data-px="rosto:s=4E8F3A,S=3C7030,e=111111,m=2A4A20" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="vidro" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="rosto:s=C9935A,S=A8784A,e=2E6B3A,m=6B4220" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="cama" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="rosto:s=C9935A,S=A8784A,e=2E6B3A,m=6B4220" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=E8821E,T=F5C542,d=E8821E,D=C9601E" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="placa" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="rosto:s=D9D2C6,S=B5AEA2,e=C0392B,m=5A8A3A" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="funil" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bau" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span></div><figcaption><span class="rot">Esquema simplificado, visto de lado.</span> Os aldeões veem o zumbi e chamam o golem. Ele cai no buraco, a lava presa pela placa acaba com ele e o ferro desce para o baú.</figcaption><ul class="esq-legenda"><li><span class="px px-mini" data-px="rosto:s=4E8F3A,S=3C7030,e=111111,m=2A4A20" aria-hidden="true"></span>zumbi</li><li><span class="px px-mini" data-px="vidro" aria-hidden="true"></span>vidro</li><li><span class="px px-mini" data-px="rosto:s=C9935A,S=A8784A,e=2E6B3A,m=6B4220" aria-hidden="true"></span>aldeão</li><li><span class="px px-mini" data-px="cama" aria-hidden="true"></span>cama</li><li><span class="px px-mini" data-px="pedregulho" aria-hidden="true"></span>bloco qualquer</li><li><span class="px px-mini" data-px="bloco:t=E8821E,T=F5C542,d=E8821E,D=C9601E" aria-hidden="true"></span>lava</li><li><span class="px px-mini" data-px="placa" aria-hidden="true"></span>placa</li><li><span class="px px-mini" data-px="rosto:s=D9D2C6,S=B5AEA2,e=C0392B,m=5A8A3A" aria-hidden="true"></span>golem de ferro</li><li><span class="px px-mini" data-px="funil" aria-hidden="true"></span>funil</li><li><span class="px px-mini" data-px="bau" aria-hidden="true"></span>baú</li></ul></figure>
+<ol>
           <li>Escolha um lugar longe de vilas, para os golens nascerem só na farm.</li>
           <li>Faça uma cabine com 3 camas e prenda 3 aldeões, cada um perto de uma cama.</li>
           <li>Prenda um zumbi onde os aldeões vejam mas ele não alcance, coberto do sol. Dê nome a ele com uma etiqueta para não sumir.</li>
@@ -2362,7 +2468,9 @@ td .px-mini { margin-right: 10px; }
           <div><dt>Como funciona</dt><dd>andares totalmente escuros. A água empurra os monstros para um poço. Uma queda de uns 22 blocos deixa quase todos com um golpe de vida, e você dá esse golpe e fica com a XP.</dd></div>
           <div><dt>Edição</dt><dd>Java e Bedrock.</dd></div>
         </dl>
-        <details class="como"><summary>Passo a passo</summary><ol>
+        <details class="como"><summary>Passo a passo</summary><p class="mat"><span class="rot">Você vai precisar:</span> muitos blocos, baldes de água, alçapões ou lajes, funis, baú e escadas de mão.</p>
+        <figure class="esquema" role="group" aria-label="Esquema da farm de Mobs (sala escura)"><div class="esq-grade" data-cols="7"><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=3A6EC9,T=5A8EE0,d=3A6EC9,D=2E58A8" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="bloco:t=3A6EC9,T=5A8EE0,d=3A6EC9,D=2E58A8" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="rosto:s=C9935A,S=A8784A,e=3A6EC9,m=6B4220" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="funil" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bau" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"></span></div><figcaption><span class="rot">Esquema simplificado, visto de lado.</span> A água leva os monstros ao buraco, eles caem uns 22 blocos e chegam quase sem vida até você.</figcaption><ul class="esq-legenda"><li><span class="px px-mini" data-px="pedregulho" aria-hidden="true"></span>bloco qualquer</li><li><span class="px px-mini" data-px="bloco:t=3A6EC9,T=5A8EE0,d=3A6EC9,D=2E58A8" aria-hidden="true"></span>água</li><li><span class="px px-mini" data-px="rosto:s=C9935A,S=A8784A,e=3A6EC9,m=6B4220" aria-hidden="true"></span>você</li><li><span class="px px-mini" data-px="funil" aria-hidden="true"></span>funil</li><li><span class="px px-mini" data-px="bau" aria-hidden="true"></span>baú</li></ul></figure>
+<ol>
           <li>Construa bem alto sobre o oceano, longe de cavernas. Assim os monstros só nascem na farm.</li>
           <li>Faça 2 ou 3 andares de piso cercado, com canais de água que levem até um buraco no centro.</li>
           <li>Cubra tudo: lá dentro precisa ficar totalmente escuro.</li>
@@ -2379,7 +2487,9 @@ td .px-mini { margin-right: 10px; }
           <div><dt>Como funciona</dt><dd>cada aldeão fica num cubículo com a estação de trabalho dele. Troque a estação do bibliotecário até ele oferecer o livro que você quer. Isso só funciona antes da primeira troca. Curar um aldeão zumbi com poção de fraqueza e maçã dourada dá desconto.</dd></div>
           <div><dt>Edição</dt><dd>Java e Bedrock. Os livros oferecidos podem variar por versão e pelo bioma da vila.</dd></div>
         </dl>
-        <details class="como"><summary>Passo a passo</summary><ol>
+        <details class="como"><summary>Passo a passo</summary><p class="mat"><span class="rot">Você vai precisar:</span> aldeões, os blocos de trabalho (atril, alto-forno, rebolo...), vidro e blocos; barco ou trilhos para trazer os aldeões.</p>
+        <figure class="esquema" role="group" aria-label="Esquema da farm de Salão de troca"><div class="esq-grade" data-cols="7"><span class="esq-c"><span class="px" data-px="vidro" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="rosto:s=C9935A,S=A8784A,e=2E6B3A,m=6B4220" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="vidro" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="rosto:s=C9935A,S=A8784A,e=2E6B3A,m=6B4220" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="vidro" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="rosto:s=C9935A,S=A8784A,e=2E6B3A,m=6B4220" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="vidro" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="mesa" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="mesa" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="mesa" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span></div><figcaption><span class="rot">Esquema simplificado, visto de lado.</span> Cada aldeão no seu cubículo, com o bloco de trabalho dele bem na frente.</figcaption><ul class="esq-legenda"><li><span class="px px-mini" data-px="vidro" aria-hidden="true"></span>vidro</li><li><span class="px px-mini" data-px="rosto:s=C9935A,S=A8784A,e=2E6B3A,m=6B4220" aria-hidden="true"></span>aldeão</li><li><span class="px px-mini" data-px="pedregulho" aria-hidden="true"></span>bloco qualquer</li><li><span class="px px-mini" data-px="mesa" aria-hidden="true"></span>bloco de trabalho</li></ul></figure>
+<ol>
           <li>Traga aldeões de uma vila de barco ou vagoneta, ou cure aldeões zumbis.</li>
           <li>Faça cubículos de 1 bloco, cada um com a estação de trabalho do aldeão na frente (um atril para o bibliotecário).</li>
           <li>Olhe as trocas do bibliotecário. Se não for o livro que você quer, quebre o atril e coloque de novo: as trocas mudam.</li>
@@ -2395,7 +2505,9 @@ td .px-mini { margin-right: 10px; }
           <div><dt>Como funciona</dt><dd>ilumine tudo em volta, abra uma área plana dentro do chunk e leve os slimes até um ponto de abate.</dd></div>
           <div><dt>Edição</dt><dd>Java e Bedrock, com slime chunks em lugares diferentes.</dd></div>
         </dl>
-        <details class="como"><summary>Passo a passo</summary><ol>
+        <details class="como"><summary>Passo a passo</summary><p class="mat"><span class="rot">Você vai precisar:</span> tochas, muitos blocos, um golem de ferro (ou lava), funis e baú.</p>
+        <figure class="esquema" role="group" aria-label="Esquema da farm de Slime"><div class="esq-grade" data-cols="7"><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="rosto:s=7ED957,S=5FB83E,e=2A5A1E,m=3E7A2A" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="rosto:s=D9D2C6,S=B5AEA2,e=C0392B,m=5A8A3A" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="rosto:s=7ED957,S=5FB83E,e=2A5A1E,m=3E7A2A" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="funil" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="bau" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span></div><figcaption><span class="rot">Esquema simplificado, visto de lado.</span> Área plana dentro do slime chunk, abaixo da camada 40. O golem ataca os slimes e o funil pega as bolas.</figcaption><ul class="esq-legenda"><li><span class="px px-mini" data-px="pedregulho" aria-hidden="true"></span>bloco qualquer</li><li><span class="px px-mini" data-px="rosto:s=7ED957,S=5FB83E,e=2A5A1E,m=3E7A2A" aria-hidden="true"></span>slime</li><li><span class="px px-mini" data-px="rosto:s=D9D2C6,S=B5AEA2,e=C0392B,m=5A8A3A" aria-hidden="true"></span>golem de ferro</li><li><span class="px px-mini" data-px="funil" aria-hidden="true"></span>funil</li><li><span class="px px-mini" data-px="bau" aria-hidden="true"></span>baú</li></ul></figure>
+<ol>
           <li>Ache um slime chunk no localizador do Chunkbase. Um chunk é um quadrado de 16 por 16 blocos.</li>
           <li>Desça dentro do chunk até abaixo da camada 40 e escave uma área plana do tamanho do chunk, com 3 blocos de altura. Pode fazer vários andares.</li>
           <li>Ilumine as cavernas em volta: os slimes nascem no escuro ou no claro, os outros monstros só no escuro.</li>
@@ -2411,7 +2523,9 @@ td .px-mini { margin-right: 10px; }
           <div><dt>Como funciona</dt><dd>os endermen surgem numa plataforma e são levados até você, que só dá o último golpe. <span class="tag tag-java">Java</span>Um endermite preso atrai os endermen.</dd></div>
           <div><dt>Edição</dt><dd>Java e Bedrock, com projetos bem diferentes.</dd></div>
         </dl>
-        <details class="como"><summary>Passo a passo</summary><ol>
+        <details class="como"><summary>Passo a passo</summary><p class="mat"><span class="rot">Você vai precisar:</span> muitos blocos, endermite com etiqueta e vagoneta (no Java), funis, baú e uma boa espada.</p>
+        <figure class="esquema" role="group" aria-label="Esquema da farm de XP de enderman"><div class="esq-grade" data-cols="8"><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="rosto:s=141414,S=1E1E1E,e=D98AFF,m=0A0A0A" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="rosto:s=C9935A,S=A8784A,e=3A6EC9,m=6B4220" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="funil" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bau" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"></span></div><figcaption><span class="rot">Esquema simplificado, visto de lado.</span> Os endermen andam até a beira da plataforma, caem e chegam até você para o último golpe.</figcaption><ul class="esq-legenda"><li><span class="px px-mini" data-px="pedregulho" aria-hidden="true"></span>bloco qualquer</li><li><span class="px px-mini" data-px="rosto:s=141414,S=1E1E1E,e=D98AFF,m=0A0A0A" aria-hidden="true"></span>enderman</li><li><span class="px px-mini" data-px="rosto:s=C9935A,S=A8784A,e=3A6EC9,m=6B4220" aria-hidden="true"></span>você</li><li><span class="px px-mini" data-px="funil" aria-hidden="true"></span>funil</li><li><span class="px px-mini" data-px="bau" aria-hidden="true"></span>baú</li></ul></figure>
+<ol>
           <li>Derrote o dragão e volte ao End.</li>
           <li>Longe das ilhas, no vazio, construa uma plataforma grande: os endermen vão nascer nela.</li>
           <li>Faça uma beirada que leve os endermen a cair num poço, até uma sala abaixo onde você espera.</li>
@@ -2428,7 +2542,9 @@ td .px-mini { margin-right: 10px; }
           <div><dt>Como funciona</dt><dd>piglins zumbificados surgem em grandes plataformas e caem até um ponto de abate. É um projeto grande: siga um tutorial da sua versão.</dd></div>
           <div><dt>Edição</dt><dd>Java e Bedrock, com projetos diferentes.</dd></div>
         </dl>
-        <details class="como"><summary>Passo a passo</summary><ol>
+        <details class="como"><summary>Passo a passo</summary><p class="mat"><span class="rot">Você vai precisar:</span> muitos blocos de magma, ovo de tartaruga (no Java), blocos, funis, baú e espada.</p>
+        <figure class="esquema" role="group" aria-label="Esquema da farm de Ouro"><div class="esq-grade" data-cols="7"><span class="esq-c"><span class="px" data-px="bloco:t=5A1A0E,T=F5A030,d=5A1A0E,D=E0601E" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=5A1A0E,T=F5A030,d=5A1A0E,D=E0601E" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=5A1A0E,T=F5A030,d=5A1A0E,D=E0601E" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=5A1A0E,T=F5A030,d=5A1A0E,D=E0601E" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=5A1A0E,T=F5A030,d=5A1A0E,D=E0601E" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="rosto:s=E8A0A0,S=5A8A3A,e=111111,m=3A5A2A" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="bloco:t=5A1A0E,T=F5A030,d=5A1A0E,D=E0601E" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=5A1A0E,T=F5A030,d=5A1A0E,D=E0601E" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=5A1A0E,T=F5A030,d=5A1A0E,D=E0601E" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=5A1A0E,T=F5A030,d=5A1A0E,D=E0601E" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=5A1A0E,T=F5A030,d=5A1A0E,D=E0601E" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="rosto:s=E8A0A0,S=5A8A3A,e=111111,m=3A5A2A" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="rosto:s=C9935A,S=A8784A,e=3A6EC9,m=6B4220" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="funil" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bau" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span></div><figcaption><span class="rot">Esquema simplificado, visto de lado.</span> Os piglins zumbificados nascem nas plataformas de magma, andam até a beira e caem até a sala de abate.</figcaption><ul class="esq-legenda"><li><span class="px px-mini" data-px="bloco:t=5A1A0E,T=F5A030,d=5A1A0E,D=E0601E" aria-hidden="true"></span>bloco de magma</li><li><span class="px px-mini" data-px="rosto:s=E8A0A0,S=5A8A3A,e=111111,m=3A5A2A" aria-hidden="true"></span>piglin zumbificado</li><li><span class="px px-mini" data-px="pedregulho" aria-hidden="true"></span>bloco qualquer</li><li><span class="px px-mini" data-px="rosto:s=C9935A,S=A8784A,e=3A6EC9,m=6B4220" aria-hidden="true"></span>você</li><li><span class="px px-mini" data-px="funil" aria-hidden="true"></span>funil</li><li><span class="px px-mini" data-px="bau" aria-hidden="true"></span>baú</li></ul></figure>
+<ol>
           <li>No Nether, construa sobre um mar de lava, longe do chão, para os mobs nascerem só na farm.</li>
           <li>Faça plataformas grandes de blocos de magma: piglins zumbificados nascem nelas e quase nenhum outro mob nasce.</li>
           <li>Leve os piglins para a beirada (no Java, um ovo de tartaruga atrai eles) e faça eles caírem até uma sala de abate.</li>
@@ -2444,7 +2560,9 @@ td .px-mini { margin-right: 10px; }
           <div><dt>Como funciona</dt><dd>você drena parte do monumento e monta uma área onde os guardiões surgem e são levados ao abate. Antes, derrote os 3 guardiões anciões.</dd></div>
           <div><dt>Edição</dt><dd>Java e Bedrock.</dd></div>
         </dl>
-        <details class="como"><summary>Passo a passo</summary><ol>
+        <details class="como"><summary>Passo a passo</summary><p class="mat"><span class="rot">Você vai precisar:</span> esponjas ou areia, muitos blocos, baldes de água, poções de respiração e visão noturna, funis e baú.</p>
+        <figure class="esquema" role="group" aria-label="Esquema da farm de Guardião"><div class="esq-grade" data-cols="6"><span class="esq-c"><span class="px" data-px="bloco:t=3A6EC9,T=5A8EE0,d=3A6EC9,D=2E58A8" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=3A6EC9,T=5A8EE0,d=3A6EC9,D=2E58A8" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=3A6EC9,T=5A8EE0,d=3A6EC9,D=2E58A8" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=3A6EC9,T=5A8EE0,d=3A6EC9,D=2E58A8" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=3A6EC9,T=5A8EE0,d=3A6EC9,D=2E58A8" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=3A6EC9,T=5A8EE0,d=3A6EC9,D=2E58A8" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=3A6EC9,T=5A8EE0,d=3A6EC9,D=2E58A8" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="rosto:s=5FA898,S=4A8A7A,e=E07A2E,m=2E5A50" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=3A6EC9,T=5A8EE0,d=3A6EC9,D=2E58A8" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=3A6EC9,T=5A8EE0,d=3A6EC9,D=2E58A8" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="rosto:s=5FA898,S=4A8A7A,e=E07A2E,m=2E5A50" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=3A6EC9,T=5A8EE0,d=3A6EC9,D=2E58A8" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bloco:t=3A6EC9,T=5A8EE0,d=3A6EC9,D=2E58A8" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="bloco:t=3A6EC9,T=5A8EE0,d=3A6EC9,D=2E58A8" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="rosto:s=C9935A,S=A8784A,e=3A6EC9,m=6B4220" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="funil" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="bau" aria-hidden="true"></span></span><span class="esq-c"><span class="px" data-px="pedregulho" aria-hidden="true"></span></span><span class="esq-c"></span></div><figcaption><span class="rot">Esquema simplificado, visto de lado.</span> Os guardiões nascem nos andares cheios de água, descem e caem para fora dela, onde você espera.</figcaption><ul class="esq-legenda"><li><span class="px px-mini" data-px="bloco:t=3A6EC9,T=5A8EE0,d=3A6EC9,D=2E58A8" aria-hidden="true"></span>água</li><li><span class="px px-mini" data-px="rosto:s=5FA898,S=4A8A7A,e=E07A2E,m=2E5A50" aria-hidden="true"></span>guardião</li><li><span class="px px-mini" data-px="pedregulho" aria-hidden="true"></span>bloco qualquer</li><li><span class="px px-mini" data-px="rosto:s=C9935A,S=A8784A,e=3A6EC9,m=6B4220" aria-hidden="true"></span>você</li><li><span class="px px-mini" data-px="funil" aria-hidden="true"></span>funil</li><li><span class="px px-mini" data-px="bau" aria-hidden="true"></span>baú</li></ul></figure>
+<ol>
           <li>Ache um monumento no oceano profundo. Leve poções de respiração aquática e de visão noturna, e leite para tirar a fadiga.</li>
           <li>Derrote os 3 guardiões anciões: enquanto eles vivem, a fadiga de mineração não para.</li>
           <li>Escolha uma parte do monumento e tire a água com esponjas ou areia.</li>
@@ -2483,7 +2601,7 @@ td .px-mini { margin-right: 10px; }
 <section class="secao" id="construcoes" aria-labelledby="construcoes-t">
   <div class="wrap">
     <div class="secao-cab">
-      <p class="eyebrow">Construções</p>
+      <p class="eyebrow"><span class="px eb-ic" data-px="tijolo" aria-hidden="true"></span>Construções</p>
       <h2 id="construcoes-t">Tutoriais de construção</h2>
       <p class="lede">Do abrigo da primeira noite ao castelo. Tudo no modo Sobrevivência, sem comando. Abra o passo a passo de cada uma.</p>
     </div>
@@ -2599,7 +2717,7 @@ td .px-mini { margin-right: 10px; }
 <section class="secao" id="redstone" aria-labelledby="redstone-t">
   <div class="wrap">
     <div class="secao-cab">
-      <p class="eyebrow">Redstone</p>
+      <p class="eyebrow"><span class="px eb-ic" data-px="tocha" aria-hidden="true"></span>Redstone</p>
       <h2 id="redstone-t">Redstone para começar</h2>
       <p class="lede">A redstone é a “eletricidade” do Minecraft. Com poucas peças já dá para fazer portas, luzes e as farms automáticas.</p>
     </div>
@@ -2669,7 +2787,7 @@ td .px-mini { margin-right: 10px; }
 <section class="secao" id="mods" aria-labelledby="mods-t">
   <div class="wrap">
     <div class="secao-cab">
-      <p class="eyebrow">Mods</p>
+      <p class="eyebrow"><span class="px eb-ic" data-px="mesa" aria-hidden="true"></span>Mods</p>
       <h2 id="mods-t">Mods para deixar o jogo mais legal</h2>
       <p class="lede">Mods são do Minecraft Java. Antes de baixar, confira na página do mod se ele já tem versão para a sua versão do jogo: quando sai versão nova, os mods levam um tempo para atualizar.</p>
     </div>
@@ -2747,7 +2865,7 @@ td .px-mini { margin-right: 10px; }
 <section class="secao" id="missoes" aria-labelledby="missoes-t">
   <div class="wrap">
     <div class="secao-cab">
-      <p class="eyebrow">Missões</p>
+      <p class="eyebrow"><span class="px eb-ic" data-px="trofeu" aria-hidden="true"></span>Missões</p>
       <div class="missoes-cab">
         <h2 id="missoes-t">Missões difíceis</h2>
         <p class="contador"><span id="m-feitas">0</span> de <span id="m-total">0</span></p>
@@ -2958,7 +3076,7 @@ td .px-mini { margin-right: 10px; }
 <section class="secao" id="versoes" aria-labelledby="versoes-t">
   <div class="wrap">
     <div class="secao-cab">
-      <p class="eyebrow">Versões</p>
+      <p class="eyebrow"><span class="px eb-ic" data-px="relogio" aria-hidden="true"></span>Versões</p>
       <h2 id="versoes-t">Todas as versões do Minecraft</h2>
       <p class="lede">As atualizações principais do Java, da primeira versão até a mais nova, e o que veio em cada uma.</p>
     </div>
@@ -3011,7 +3129,7 @@ td .px-mini { margin-right: 10px; }
 <section class="secao" id="quiz" aria-labelledby="quiz-t">
   <div class="wrap">
     <div class="secao-cab">
-      <p class="eyebrow">Quiz</p>
+      <p class="eyebrow"><span class="px eb-ic" data-px="quiz" aria-hidden="true"></span>Quiz</p>
       <h2 id="quiz-t">Quanto você sabe de Minecraft?</h2>
       <p class="lede">10 perguntas sorteadas de um banco de 30. As respostas estão espalhadas pelo guia.</p>
     </div>
@@ -3030,7 +3148,7 @@ td .px-mini { margin-right: 10px; }
 <section class="secao" id="curiosidades" aria-labelledby="curiosidades-t">
   <div class="wrap">
     <div class="secao-cab">
-      <p class="eyebrow">Curiosidades</p>
+      <p class="eyebrow"><span class="px eb-ic" data-px="livro" aria-hidden="true"></span>Curiosidades</p>
       <div class="missoes-cab">
         <h2 id="curiosidades-t">100 curiosidades do Minecraft</h2>
         <button type="button" class="btn btn-forte" id="curio-sorte">Curiosidade aleatória</button>
@@ -3163,6 +3281,7 @@ td .px-mini { margin-right: 10px; }
         <li>Seeds: <a href="https://www.minecraft-guides.com/seeds/1-21/speedrun/" target="_blank" rel="noopener">Minecraft Guides</a> e <a href="https://www.craftmc.net/minecraft-seeds/26.2/three-blacksmith-village-ruined-portal-bedrock-26-30" target="_blank" rel="noopener">CraftMC</a>.</li>
         <li>Versões de 2024 a 2026: <a href="https://allthings.how/minecraft-1-21-9-the-copper-age-arrives-september-30-java/" target="_blank" rel="noopener">All Things How (Copper Age)</a>, <a href="https://beebom.com/minecraft-mounts-of-mayhem-release-date/amp/" target="_blank" rel="noopener">Beebom (Mounts of Mayhem)</a>, <a href="https://winternode.com/blog/minecraft/java/26-1-tiny-takeover" target="_blank" rel="noopener">WinterNode (26.1)</a>, <a href="https://fabricmc.net/2026/03/14/261.html" target="_blank" rel="noopener">Fabric (26.1)</a>, <a href="https://xgamingserver.com/blog/minecraft-26-2-chaos-cubed-release-date-sulfur-caves-everything-new/" target="_blank" rel="noopener">XGamingServer (26.2)</a>, <a href="https://www.gamergeeks.net/apps/minecraft/blocks-by-version" target="_blank" rel="noopener">GamerGeeks</a> e <a href="https://www.minecraft.net/pl-pl/article/minecraft-new-version-numbering-system" target="_blank" rel="noopener">minecraft.net (número novo)</a>.</li>
         <li>Comidas: <a href="https://www.creeperhost.net/blog/guide-to-food-in-minecraft/" target="_blank" rel="noopener">CreeperHost</a> e <a href="https://xgamingserver.com/tools/minecraft/food-calculator" target="_blank" rel="noopener">XGamingServer</a>.</li>
+        <li>Escambo: <a href="https://www.craftmc.net/tools/piglin-bartering-simulator" target="_blank" rel="noopener">CraftMC (pesos do Java)</a> e <a href="https://xgamingserver.com/blog/minecraft-piglin-guide/" target="_blank" rel="noopener">XGamingServer</a>.</li>
         <li>Para conferir qualquer detalhe: <a href="https://minecraft.wiki" target="_blank" rel="noopener">Minecraft Wiki</a> e <a href="https://www.chunkbase.com/apps/seed-map" target="_blank" rel="noopener">Chunkbase</a>.</li>
       </ul>
     </div>
@@ -3241,6 +3360,17 @@ td .px-mini { margin-right: 10px; }
   ICONES.flecha = { p: {"k": "#5E5E5E", "w": "#7B5230", "p": "#F5F5F5"}, g: [".......k", "......kk", ".....k..", "....w...", "...w....", "..w.....", "pw......", "pp......"] };
   ICONES.barco = { p: {"t": "#7B5230", "T": "#C49A6C"}, g: ["........", "........", "t......t", "tTTTTTTt", "tttttttt", ".tttttt.", "........", "........"] };
   ICONES.pa = { p: {"p": "#C49A6C", "w": "#7B5230"}, g: ["....ppp.", "...ppp..", "...ppp..", "..w.....", ".w......", "w.......", "........", "........"] };
+  ICONES.vidro = { p: {"v": "#BFE3F0", "w": "#FFFFFF"}, g: ["vvvvvvvv", "v......v", "v.w....v", "v..w...v", "v......v", "v......v", "v......v", "vvvvvvvv"] };
+  ICONES.cana = { p: {"g": "#7FC94A", "G": "#5FA83A", "l": "#9BD95A"}, g: ["..gG....", "..gG.l..", "..gGll..", "..gG....", "....gG..", "....gG..", ".l..gG..", "ll..gG.."] };
+  ICONES.pistao = { p: {"w": "#C49A6C", "W": "#A07A50", "k": "#5E5E5E", "s": "#8A8A8A", "S": "#6E6E6E"}, g: ["wwwwwwww", "WWWWWWWW", "kkkkkkkk", "sssSssss", "ssSkkSss", "sssSssss", "sSssssSs", "ssssssss"] };
+  ICONES.funil = { p: {"k": "#3A3A3A", "s": "#5E5E5E"}, g: ["kkkkkkkk", "kssssssk", "kssssssk", ".kssssk.", "..kssk..", "...kk...", "...kk...", "........"] };
+  ICONES.composteira = { p: {"t": "#8A5E36", "d": "#6B8E3A", "D": "#4E6E2A"}, g: ["tttttttt", "t.dddd.t", "tddDdddt", "tdddDddt", "tddddddt", "tddDdddt", "tddddddt", "tttttttt"] };
+  ICONES.ejetor = { p: {"s": "#8A8A8A", "S": "#6E6E6E", "k": "#222222"}, g: ["ssssssss", "sSSSSSSs", "sSkkkkSs", "sSkkkkSs", "sSkkkkSs", "sSSSSSSs", "sSSSSSSs", "ssssssss"] };
+  ICONES.abobora = { p: {"g": "#3E8E2B", "o": "#E8821E", "O": "#C9601E"}, g: ["..gg....", "ooOooOoo", "oOooOooO", "ooOooOoo", "oOooOooO", "ooOooOoo", "oOooOooO", "oooooooo"] };
+  ICONES.caule = { p: {"g": "#6EAE3A"}, g: ["........", "........", "...g....", "...gg...", "....g...", "...gg...", "...g....", "..ggg..."] };
+  ICONES.placa = { p: {"p": "#A07A50", "P": "#C49A6C"}, g: ["........", "........", "pppppppp", "pPPPPPPp", "pppppppp", "...pp...", "...pp...", "...pp..."] };
+  ICONES.ouro = { p: {"k": "#B8922E", "N": "#E3C15A", "n": "#FFF2A0"}, g: ["........", "..kkkkk.", ".kNNNNNk", "kNnNNNNk", "kNNNNnk.", "kkkkkk..", "........", "........"] };
+  ICONES.botas = { p: {"k": "#5E5E5E", "s": "#C9C9C9", "S": "#A8A8A8", "b": "#5DEBE0"}, g: ["........", ".kk..kk.", ".sk..ks.", ".sk..ks.", ".sSk.kSs", "ssbk.kbs", "kkkk.kkk", "........"] };
   // moldes de pixel art: "molde:chave=RRGGBB,..." troca as cores do molde para cada coisa
   var MOLDES = {
     encantado: { p: {"C": "#5E2614", "c": "#8E3B28", "g": "#C77DFF", "p": "#F2EBDD"}, g: ["CCCCCCC.", "CcgcccCp", "CccgccCp", "CgccgcCp", "CccccgCp", "CcgcccCp", "CcccccCp", "CCCCCCC."] },
