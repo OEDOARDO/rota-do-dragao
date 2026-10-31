@@ -559,6 +559,9 @@ details > summary::-webkit-details-marker { display: none; }
 .secao-cab h2::after { content: ""; position: absolute; left: 0; bottom: 0; width: 48px; height: 4px; background: var(--accent); box-shadow: 8px 0 0 var(--accent-fundo); }
 @media (prefers-reduced-motion: reduce) { .farm, .bioma, .card-seed, .curio, .lista-rec li, .como > summary::before, .receitas > summary::before { transition: none; } }
 
+.btn-jogo { background: var(--gold); color: #2A1E15; text-decoration: none; display: inline-flex; align-items: center; }
+.btn-jogo .px-mini { margin-right: 6px; }
+
 .toast {
   position: fixed; left: 50%; transform: translateX(-50%);
   bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
@@ -617,6 +620,7 @@ details > summary::-webkit-details-marker { display: none; }
       <div class="hero-acoes">
         <a class="btn btn-forte" href="#roteiro">Ver o roteiro</a>
         <button type="button" class="btn abrir-partida">Modo partida</button>
+        <a class="btn btn-jogo" href="jogo/"><span class="px px-mini" data-px="espada" aria-hidden="true"></span>Jogar o jogo</a>
         <a class="btn" href="#seeds">Ver seeds</a>
         <button type="button" class="btn" id="compartilhar">Compartilhar</button>
       </div>

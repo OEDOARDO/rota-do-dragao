@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Rota do Dragão: o jogo</title>
+<meta name="description" content="Aventura em pixel art: atravesse os Campos, o Abismo de Fogo e o Fim, junte os Olhos do Dragão e derrote o dragão.">
+<meta name="theme-color" content="#2F5320">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="../icone.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../icone-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&display=swap">
+<link rel="stylesheet" href="jogo.css">
+</head>
+<body>
+<canvas id="tela" aria-label="Tela do jogo"></canvas>
+
+<div id="hud" hidden>
+  <p id="hud-obj"></p>
+  <p id="hud-msg" role="status" hidden></p>
+  <div id="hud-dragao" hidden><span>Dragão</span><div class="barra"><div id="hud-dragao-vida"></div></div></div>
+</div>
+
+<div id="toque" hidden>
+  <div id="direcional" aria-hidden="true"><div id="direcional-bola"></div></div>
+  <div class="botoes">
+    <button type="button" class="bt bt-menu" id="bt-menu" aria-label="Menu">≡</button>
+    <button type="button" class="bt bt-item" id="bt-item" aria-label="Trocar item">⇄</button>
+    <button type="button" class="bt bt-b" id="bt-b" aria-label="Usar">B</button>
+    <button type="button" class="bt bt-a" id="bt-a" aria-label="Atacar">A</button>
+  </div>
+</div>
+
+<section class="tela" id="titulo">
+  <div class="caixa">
+    <h1>Rota do Dragão</h1>
+    <p class="sub">o jogo</p>
+    <div class="acoes">
+      <button type="button" class="bt-grande" id="t-novo">Novo jogo</button>
+      <button type="button" class="bt-grande" id="t-continuar" hidden>Continuar</button>
+      <button type="button" class="bt-grande sec" id="t-como">Como jogar</button>
+      <a class="bt-grande sec" href="../">Voltar ao guia</a>
+    </div>
+    <p class="rec" id="t-recorde"></p>
+  </div>
+</section>
+
+<section class="tela" id="como" hidden>
+  <div class="caixa texto">
+    <h2>Como jogar</h2>
+    <p><b>Objetivo:</b> atravessar os Campos e o Abismo de Fogo, fazer 6 Olhos do Dragão, abrir a Torre Antiga e derrotar o dragão no Fim. O objetivo atual aparece sempre no alto da tela.</p>
+    <h3>No celular</h3>
+    <p>Arraste o polegar no lado esquerdo para andar. <b>A</b> ataca e minera. <b>B</b> fala, usa portais e usa o item escolhido. <b>⇄</b> troca o item. <b>≡</b> abre o menu de receitas.</p>
+    <h3>No teclado</h3>
+    <p>Setas ou WASD andam. <b>J</b> ou Espaço atacam e mineram. <b>K</b> ou E usam. <b>Q</b> troca o item. <b>M</b> ou Esc abrem o menu.</p>
+    <h3>Dicas</h3>
+    <p>Bata nas árvores para pegar madeira e faça uma picareta no menu. Pedra com pintas bege é ferro. A lava queima: a poção de resistência ao fogo protege. Os cristais do Fim curam o dragão: destrua todos primeiro.</p>
+    <div class="acoes"><button type="button" class="bt-grande" id="como-voltar">Voltar</button></div>
+  </div>
+</section>
+
+<section class="tela" id="historia" hidden>
+  <div class="caixa texto">
+    <p id="historia-texto"></p>
+    <div class="acoes"><button type="button" class="bt-grande" id="historia-seguir">Continuar</button></div>
+  </div>
+</section>
+
+<section class="tela" id="menu" hidden>
+  <div class="caixa painel">
+    <div class="abas" role="tablist">
+      <button type="button" role="tab" data-aba="receitas" aria-selected="true">Receitas</button>
+      <button type="button" role="tab" data-aba="inventario" aria-selected="false">Mochila</button>
+      <button type="button" role="tab" data-aba="missoes" aria-selected="false">Missões</button>
+      <button type="button" role="tab" data-aba="opcoes" aria-selected="false">Opções</button>
+    </div>
+    <div class="aba-conteudo" id="menu-conteudo"></div>
+    <div class="acoes"><button type="button" class="bt-grande" id="menu-fechar">Voltar ao jogo</button></div>
+  </div>
+</section>
+
+<section class="tela" id="loja" hidden>
+  <div class="caixa painel">
+    <h2 id="loja-titulo">Loja</h2>
+    <p class="sub" id="loja-sub"></p>
+    <div class="aba-conteudo" id="loja-conteudo"></div>
+    <p class="log" id="loja-log" aria-live="polite"></p>
+    <div class="acoes"><button type="button" class="bt-grande" id="loja-fechar">Sair</button></div>
+  </div>
+</section>
+
+<section class="tela" id="vitoria" hidden>
+  <div class="caixa texto">
+    <h2>Você derrotou o dragão!</h2>
+    <p id="vitoria-texto"></p>
+    <div class="acoes">
+      <button type="button" class="bt-grande" id="vitoria-novo">Jogar de novo</button>
+      <a class="bt-grande sec" href="../">Voltar ao guia</a>
+    </div>
+  </div>
+</section>
+
+<script src="jogo.js"></script>
+</body>
+</html>

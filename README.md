@@ -8,6 +8,11 @@ Java e Bedrock, e pode ser instalado no celular como app (funciona sem internet)
 
 Site: **https://oedoardo.github.io/rota-do-dragao/**
 
+Jogo: **https://oedoardo.github.io/rota-do-dragao/jogo/**. Aventura original em pixel art, vista de cima:
+Campos, Abismo de Fogo e o Fim, com receitas, loja, escambo, 6 tipos de monstro e o dragão. Roda no
+navegador e no celular (controles de toque), pode ser instalado e funciona sem internet. Código em
+`jogo/` (sem bibliotecas); o progresso fica salvo no aparelho.
+
 ## Como funciona
 
 - O site inteiro é o `index.html`, sem etapa de build. O GitHub Pages publica a branch `main`.

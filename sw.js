@@ -1,7 +1,8 @@
 // Deixa o Rota do Dragão abrir sem internet e ser instalado no celular.
 // A página vem sempre da rede quando dá (para pegar as atualizações) e do cache quando não dá.
-var CACHE = "rota-do-dragao-v2";
-var ARQUIVOS = ["./", "./index.html", "./icone.svg", "./icone-192.png", "./icone-512.png", "./og.png", "./manifest.webmanifest"];
+var CACHE = "rota-do-dragao-v3";
+var ARQUIVOS = ["./", "./index.html", "./icone.svg", "./icone-192.png", "./icone-512.png", "./og.png", "./manifest.webmanifest",
+  "./jogo/", "./jogo/jogo.js", "./jogo/jogo.css", "./jogo/manifest.webmanifest"];
 
 self.addEventListener("install", function (e) {
   e.waitUntil(caches.open(CACHE).then(function (c) { return c.addAll(ARQUIVOS); }).then(function () { return self.skipWaiting(); }));
@@ -18,11 +19,13 @@ self.addEventListener("fetch", function (e) {
   if (req.method !== "GET" || new URL(req.url).origin !== self.location.origin) return;
   if (req.mode === "navigate") {
     // "no-cache" faz o navegador conferir com o GitHub se a página mudou, em vez de usar a cópia guardada
+    // cada página fica guardada com o próprio endereço (o guia e o jogo não se misturam)
     e.respondWith(fetch(req, { cache: "no-cache" }).then(function (r) {
-      var copia = r.clone();
-      caches.open(CACHE).then(function (c) { c.put("./index.html", copia); });
+      if (r.ok) { var copia = r.clone(); caches.open(CACHE).then(function (c) { c.put(req, copia); }); }
       return r;
-    }).catch(function () { return caches.match("./index.html"); }));
+    }).catch(function () {
+      return caches.match(req, { ignoreSearch: true }).then(function (r) { return r || caches.match("./index.html"); });
+    }));
     return;
   }
   e.respondWith(caches.match(req).then(function (salvo) {
