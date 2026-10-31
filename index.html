@@ -14,6 +14,8 @@
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="icone.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icone-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@500;700&display=swap">
@@ -416,6 +418,11 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .dim-painel { display: grid; gap: 16px; }
 .dim-painel .itens li::before { color: var(--dim); }
 
+/* poções */
+.pocao-passos { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 75ch; }
+.grade-mod { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); font-size: var(--fs-small); }
+.grade-mod p { background: var(--surface); border: 1px solid var(--line); padding: 10px 12px; }
+
 .toast {
   position: fixed; left: 50%; transform: translateX(-50%);
   bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
@@ -439,6 +446,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
       <a href="#iniciante">Iniciante</a>
       <a href="#roteiro">Roteiro</a>
       <a href="#dimensoes">Dimensões</a>
+      <a href="#pocoes">Poções</a>
       <a href="#seeds">Seeds</a>
       <a href="#biomas">Biomas</a>
       <a href="#depois">Itens</a>
@@ -472,6 +480,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
       <div class="hero-acoes">
         <a class="btn btn-forte" href="#roteiro">Ver o roteiro</a>
         <a class="btn" href="#seeds">Ver seeds</a>
+        <button type="button" class="btn" id="compartilhar">Compartilhar</button>
       </div>
       <p class="selo"><a href="#versao">Versão coberta</a> <b>Java 26.3</b> <b>Bedrock 26.50</b> conferido em 29/10/2026</p>
     </div>
@@ -711,6 +720,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
         <div class="cron-botoes">
           <button type="button" class="btn btn-forte" id="t-comecar">Começar</button>
           <button type="button" class="btn" id="t-proxima" disabled>Próxima etapa</button>
+          <button type="button" class="btn" id="t-voltar" disabled>Voltar etapa</button>
           <button type="button" class="btn" id="t-zerar">Zerar</button>
         </div>
         <ol class="splits" id="t-splits" aria-label="Tempo por etapa"></ol>
@@ -795,6 +805,54 @@ td:first-child { font-weight: 600; white-space: nowrap; }
         <li><div><h4>Reviver o dragão</h4><p>Com 4 cristais do End em volta do portal de saída, o dragão volta para uma revanche.</p></div></li>
         <li><div><h4>Voltar para casa</h4><p>O portal de saída no centro leva de volta ao seu ponto de renascer no Overworld.</p></div></li>
       </ol>
+    </div>
+  </div>
+</section>
+
+<section class="secao" id="pocoes" aria-labelledby="pocoes-t">
+  <div class="wrap">
+    <div class="secao-cab">
+      <p class="eyebrow">Poções</p>
+      <h2 id="pocoes-t">Guia de poções</h2>
+      <p class="lede">Toda poção começa igual: garrafa de água e verruga do Nether no suporte de poções, que viram a poção estranha. Depois entra o ingrediente da tabela.</p>
+    </div>
+    <ol class="pocao-passos">
+      <li><span class="rot">Suporte de poções:</span> 1 vara de blaze e 3 pedregulhos. Ele gasta pó de blaze como combustível.</li>
+      <li><span class="rot">Garrafas:</span> 3 vidros em V fazem 3 garrafas. Encha na água.</li>
+      <li><span class="rot">Poção estranha:</span> garrafas de água embaixo e verruga do Nether em cima.</li>
+      <li><span class="rot">Ingrediente:</span> coloque o da tabela em cima da poção estranha.</li>
+    </ol>
+    <div class="tabela-wrap">
+      <table>
+        <thead><tr><th scope="col">Poção</th><th scope="col">Ingrediente</th><th scope="col">Para que serve</th></tr></thead>
+        <tbody>
+          <tr><td>Velocidade</td><td>Açúcar</td><td>Anda e corre mais rápido.</td></tr>
+          <tr><td>Salto</td><td>Pé de coelho</td><td>Pula mais alto e cai sem tanto dano.</td></tr>
+          <tr><td>Força</td><td>Pó de blaze</td><td>Cada golpe dá mais dano.</td></tr>
+          <tr><td>Cura</td><td>Melancia reluzente</td><td>Recupera vida na hora.</td></tr>
+          <tr><td>Regeneração</td><td>Lágrima de ghast</td><td>Recupera vida aos poucos.</td></tr>
+          <tr><td>Resistência ao fogo</td><td>Creme de magma</td><td>Fogo e lava não machucam. Essencial no Nether.</td></tr>
+          <tr><td>Visão noturna</td><td>Cenoura dourada</td><td>Enxerga no escuro e debaixo d’água.</td></tr>
+          <tr><td>Invisibilidade</td><td>Poção de visão noturna + olho de aranha fermentado</td><td>Monstros quase não te veem (a armadura aparece).</td></tr>
+          <tr><td>Respiração aquática</td><td>Baiacu</td><td>Respira debaixo d’água.</td></tr>
+          <tr><td>Queda lenta</td><td>Membrana de phantom</td><td>Cai devagar, sem dano de queda.</td></tr>
+          <tr><td>Mestre tartaruga</td><td>Casco de tartaruga</td><td>Muita resistência, mas deixa você lento.</td></tr>
+          <tr><td>Veneno</td><td>Olho de aranha</td><td>Para jogar nos outros: tira vida aos poucos.</td></tr>
+          <tr><td>Fraqueza</td><td>Garrafa de água (sem verruga) + olho de aranha fermentado</td><td>Arremessável, junto com maçã dourada, cura aldeão zumbi.</td></tr>
+          <tr><td>Lentidão</td><td>Poção de velocidade + olho de aranha fermentado</td><td>Deixa o alvo lento.</td></tr>
+          <tr><td>Dano</td><td>Poção de cura + olho de aranha fermentado</td><td>Tira vida na hora do alvo.</td></tr>
+          <tr><td>Tecelagem (Weaving)</td><td>Teia</td><td>Quem morre com ela deixa teias em volta.</td></tr>
+          <tr><td>Gosma (Oozing)</td><td>Bloco de slime</td><td>Quem morre com ela solta slimes.</td></tr>
+          <tr><td>Infestação (Infested)</td><td>Pedra</td><td>Quem leva dano pode soltar traças.</td></tr>
+          <tr><td>Vento (Wind Charged)</td><td>Vara de brisa</td><td>Quem morre com ela solta uma rajada de vento.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grade-mod">
+      <p><span class="rot">Pó de redstone:</span> a poção dura mais.</p>
+      <p><span class="rot">Pó de pedra luminosa:</span> a poção fica mais forte (nível II) e dura menos.</p>
+      <p><span class="rot">Pólvora:</span> vira poção arremessável.</p>
+      <p><span class="rot">Bafo do dragão:</span> na arremessável, vira persistente e deixa uma nuvem no chão.</p>
     </div>
   </div>
 </section>
@@ -1314,6 +1372,30 @@ td:first-child { font-weight: 600; white-space: nowrap; }
         </ol></details>
       </article>
     </div>
+    <div class="secao-cab" id="aldeoes" style="margin-top: 12px;">
+      <h3>Profissões dos aldeões</h3>
+      <p class="lede">Um aldeão sem profissão escolhe uma quando acha o bloco de trabalho livre por perto. Use para montar o salão de troca. O aldeão de roupa verde (o bobo) nunca trabalha.</p>
+    </div>
+    <div class="tabela-wrap">
+      <table>
+        <thead><tr><th scope="col">Profissão</th><th scope="col">Bloco de trabalho</th><th scope="col">Por que vale</th></tr></thead>
+        <tbody>
+          <tr><td>Bibliotecário</td><td>Atril</td><td>Livros encantados, como o Remendo, e estantes.</td></tr>
+          <tr><td>Agricultor</td><td>Composteira</td><td>Compra trigo, abóbora e melancia: esmeralda fácil.</td></tr>
+          <tr><td>Flecheiro</td><td>Mesa de arco e flecha</td><td>Compra varetas, outra esmeralda fácil. Vende arcos e flechas.</td></tr>
+          <tr><td>Ferreiro de armaduras</td><td>Alto-forno</td><td>Armaduras de ferro e, no nível mestre, de diamante encantadas.</td></tr>
+          <tr><td>Ferreiro de ferramentas</td><td>Mesa de ferraria</td><td>Ferramentas, chegando às de diamante encantadas.</td></tr>
+          <tr><td>Armeiro</td><td>Rebolo</td><td>Espadas e machados, chegando aos de diamante encantados.</td></tr>
+          <tr><td>Clérigo</td><td>Suporte de poções</td><td>Redstone, lápis-lazúli, pedra luminosa e frascos de experiência.</td></tr>
+          <tr><td>Cartógrafo</td><td>Mesa de cartografia</td><td>Mapas de exploração que levam a estruturas.</td></tr>
+          <tr><td>Pescador</td><td>Barril</td><td>Compra peixe e vende varas de pesca encantadas.</td></tr>
+          <tr><td>Pastor</td><td>Tear</td><td>Compra lã e vende lã colorida, camas e estandartes.</td></tr>
+          <tr><td>Curtidor</td><td>Caldeirão</td><td>Compra couro e vende armadura de couro e selas.</td></tr>
+          <tr><td>Açougueiro</td><td>Defumador</td><td>Compra carne crua e vende carne cozida.</td></tr>
+          <tr><td>Pedreiro</td><td>Cortador de pedras</td><td>Compra argila e pedra e vende blocos decorativos.</td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
 
@@ -1830,6 +1912,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
   var elTempo = document.getElementById("t-tempo"), elAtual = document.getElementById("t-atual");
   var elSplits = document.getElementById("t-splits"), elRec = document.getElementById("t-recorde");
   var bComecar = document.getElementById("t-comecar"), bProx = document.getElementById("t-proxima"), bZerar = document.getElementById("t-zerar");
+  var bVoltar = document.getElementById("t-voltar");
   var artigos = document.querySelectorAll(".etapa");
   var tick = null;
 
@@ -1862,6 +1945,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
     elSplits.innerHTML = html;
     bComecar.textContent = t.inicio == null ? "Começar" : "Recomeçar";
     bProx.disabled = !rodando();
+    bVoltar.disabled = !rodando() || !t.splits.length;
     bProx.textContent = cur === ETAPAS.length - 1 ? "Zerou!" : "Próxima etapa";
     elRec.textContent = recorde ? fmt(recorde) : "nenhum ainda";
     artigos.forEach(function (a, i) { a.classList.toggle("is-atual", rodando() && i === cur); });
@@ -1883,6 +1967,12 @@ td:first-child { font-weight: 600; white-space: nowrap; }
       var total = t.fim - t.inicio;
       if (!recorde || total < recorde) { recorde = total; LS.set("rd-recorde", recorde); avisar("Recorde novo: " + fmt(total)); }
     }
+    LS.set("rd-timer", t); renderCron(); ligarTick();
+  });
+  // desfaz um "Próxima etapa" apertado sem querer (só com a run rodando)
+  bVoltar.addEventListener("click", function () {
+    if (!rodando() || !t.splits.length) return;
+    t.splits.pop();
     LS.set("rd-timer", t); renderCron(); ligarTick();
   });
   bZerar.addEventListener("click", function () {
@@ -2197,6 +2287,20 @@ td:first-child { font-weight: 600; white-space: nowrap; }
   document.addEventListener("keydown", function (e) {
     if (e.key === "/" && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) { e.preventDefault(); abrirBusca(); }
   });
+
+  // ---------- compartilhar ----------
+  var URL_SITE = "https://oedoardo.github.io/rota-do-dragao/";
+  document.getElementById("compartilhar").addEventListener("click", function () {
+    var dados = { title: "Rota do Dragão", text: "Guia para zerar o Minecraft rápido, com roteiro, seeds, farms e mais.", url: URL_SITE };
+    if (navigator.share) { navigator.share(dados).catch(function () {}); return; }
+    var mostrar = function () { avisar("Link do site: " + URL_SITE); };
+    try { navigator.clipboard.writeText(URL_SITE).then(function () { avisar("Link copiado"); }, mostrar); } catch (e) { mostrar(); }
+  });
+
+  // ---------- app instalável e uso sem internet ----------
+  if ("serviceWorker" in navigator && location.protocol === "https:") {
+    window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });
+  }
 
   // ---------- missões ----------
   var cumpridas = LS.get("rd-missoes", []);
