@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 <title>Rota do Dragão: o jogo</title>
-<meta name="description" content="Aventura em pixel art: atravesse os Campos, o Abismo de Fogo e o Fim, junte os Olhos do Dragão e derrote o dragão.">
+<meta name="description" content="Aventura em 3D: atravesse os Campos, o Abismo de Fogo e o Fim, junte os Olhos do Dragão e derrote o dragão.">
 <meta name="theme-color" content="#2F5320">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="../icone.svg" type="image/svg+xml">
@@ -16,6 +16,7 @@
 </head>
 <body>
 <canvas id="tela" aria-label="Tela do jogo"></canvas>
+<canvas id="hud2d" aria-hidden="true"></canvas>
 
 <div id="hud" hidden>
   <p id="hud-obj"></p>
@@ -52,9 +53,9 @@
     <h2>Como jogar</h2>
     <p><b>Objetivo:</b> atravessar os Campos e o Abismo de Fogo, fazer 6 Olhos do Dragão, abrir a Torre Antiga e derrotar o dragão no Fim. O objetivo atual aparece sempre no alto da tela.</p>
     <h3>No celular</h3>
-    <p>Arraste o polegar no lado esquerdo para andar. <b>A</b> ataca e minera. <b>B</b> fala, usa portais e usa o item escolhido. <b>⇄</b> troca o item. <b>≡</b> abre o menu de receitas.</p>
-    <h3>No teclado</h3>
-    <p>Setas ou WASD andam. <b>J</b> ou Espaço atacam e mineram. <b>K</b> ou E usam. <b>Q</b> troca o item. <b>M</b> ou Esc abrem o menu.</p>
+    <p>Arraste o polegar no lado esquerdo para andar. <b>A</b> ataca, corta e minera. <b>B</b> fala, usa portais e usa o item escolhido. <b>⇄</b> troca o item. <b>≡</b> abre o menu de receitas.</p>
+    <h3>No computador</h3>
+    <p><b>W A S D</b> andam. O personagem olha para onde está o <b>mouse</b>. <b>Clique esquerdo</b> quebra, corta e ataca (segure para continuar). <b>Clique direito</b> usa o item escolhido: atira com o arco onde você mira, come pão, toma poção. <b>E</b> fala com o mercador e usa portais, a porta da torre e a mesa. <b>Q</b> troca o item. <b>M</b> ou Esc abrem o menu.</p>
     <h3>Dicas</h3>
     <p>Bata nas árvores para pegar madeira e faça uma picareta no menu. Pedra com pintas bege é ferro. A lava queima: a poção de resistência ao fogo protege. Os cristais do Fim curam o dragão: destrua todos primeiro.</p>
     <div class="acoes"><button type="button" class="bt-grande" id="como-voltar">Voltar</button></div>
@@ -102,6 +103,6 @@
   </div>
 </section>
 
-<script src="jogo.js"></script>
+<script type="module" src="jogo.js"></script>
 </body>
 </html>

@@ -8,7 +8,8 @@
 html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg); overflow: hidden; touch-action: none;
   font-family: "Pixelify Sans", "Courier New", monospace; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
 [hidden] { display: none !important; }
-#tela { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; image-rendering: pixelated; image-rendering: crisp-edges; display: block; }
+#tela { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; display: block; cursor: none; }
+#hud2d { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; display: block; pointer-events: none; image-rendering: pixelated; image-rendering: crisp-edges; }
 
 /* HUD em texto */
 #hud { position: fixed; inset: 0; pointer-events: none; }
