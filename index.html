@@ -69,7 +69,7 @@ img { max-width: 100%; }
   --fs-cap: 0.78rem;
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 110px); }
+html { scroll-behavior: smooth; scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 150px); }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body {
   background: var(--bg); color: var(--fg);
@@ -116,7 +116,7 @@ code, .mono { font-family: var(--f-mono); font-size: 0.92em; }
   .busca-btn, .edicao { flex: none; }
 }
 /* tablet deitado e telas médias: os links vão para uma segunda linha, todos à vista */
-@media (min-width: 960px) and (max-width: 1439px) {
+@media (min-width: 1100px) and (max-width: 1439px) {
   .links { flex-wrap: wrap; overflow: visible; justify-content: space-between; gap: 2px; }
   .links a { padding: 6px 5px; font-size: 0.84rem; }
 }
@@ -484,6 +484,11 @@ kbd {
   background: var(--slot); border: 2px solid; border-color: var(--slot-hi) var(--slot-lo) var(--slot-lo) var(--slot-hi); padding: 6px 8px;
 }
 
+/* ícones em pixel nas abas da barra de cima, com o nome embaixo */
+.links a { display: inline-flex; flex-direction: column; align-items: center; gap: 3px; }
+.nav-ic { width: 22px; height: 22px; flex: none; }
+.nav-t { line-height: 1.1; }
+
 .toast {
   position: fixed; left: 50%; transform: translateX(-50%);
   bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
@@ -498,21 +503,22 @@ kbd {
   <div class="wrap">
     <a class="marca" href="#inicio" aria-label="Rota do Dragão, início"><span class="px" data-px="eye" aria-hidden="true"></span><span class="marca-t">Rota do Dragão</span></a>
     <div class="links">
-      <a href="#iniciante">Iniciante</a>
-      <a href="#roteiro">Roteiro</a>
-      <a href="#dimensoes">Dimensões</a>
-      <a href="#mobs">Mobs</a>
-      <a href="#pocoes">Poções</a>
-      <a href="#seeds">Seeds</a>
-      <a href="#biomas">Biomas</a>
-      <a href="#depois">Itens</a>
-      <a href="#farms">Farms</a>
-      <a href="#construcoes">Construções</a>
-      <a href="#redstone">Redstone</a>
-      <a href="#mods">Mods</a>
-      <a href="#missoes">Missões</a>
-      <a href="#versoes">Versões</a>
-      <a href="#curiosidades">Curiosidades</a>
+      <a href="#iniciante"><span class="px nav-ic" data-px="grama" aria-hidden="true"></span><span class="nav-t">Iniciante</span></a>
+      <a href="#roteiro"><span class="px nav-ic" data-px="mapa" aria-hidden="true"></span><span class="nav-t">Roteiro</span></a>
+      <a href="#dimensoes"><span class="px nav-ic" data-px="portal" aria-hidden="true"></span><span class="nav-t">Dimensões</span></a>
+      <a href="#estruturas"><span class="px nav-ic" data-px="bau" aria-hidden="true"></span><span class="nav-t">Estruturas</span></a>
+      <a href="#mobs"><span class="px nav-ic" data-px="creeper" aria-hidden="true"></span><span class="nav-t">Mobs</span></a>
+      <a href="#pocoes"><span class="px nav-ic" data-px="pocao" aria-hidden="true"></span><span class="nav-t">Poções</span></a>
+      <a href="#seeds"><span class="px nav-ic" data-px="semente" aria-hidden="true"></span><span class="nav-t">Seeds</span></a>
+      <a href="#biomas"><span class="px nav-ic" data-px="arvore" aria-hidden="true"></span><span class="nav-t">Biomas</span></a>
+      <a href="#depois"><span class="px nav-ic" data-px="espada" aria-hidden="true"></span><span class="nav-t">Itens</span></a>
+      <a href="#farms"><span class="px nav-ic" data-px="trigo" aria-hidden="true"></span><span class="nav-t">Farms</span></a>
+      <a href="#construcoes"><span class="px nav-ic" data-px="tijolo" aria-hidden="true"></span><span class="nav-t">Construções</span></a>
+      <a href="#redstone"><span class="px nav-ic" data-px="tocha" aria-hidden="true"></span><span class="nav-t">Redstone</span></a>
+      <a href="#mods"><span class="px nav-ic" data-px="mesa" aria-hidden="true"></span><span class="nav-t">Mods</span></a>
+      <a href="#missoes"><span class="px nav-ic" data-px="trofeu" aria-hidden="true"></span><span class="nav-t">Missões</span></a>
+      <a href="#versoes"><span class="px nav-ic" data-px="relogio" aria-hidden="true"></span><span class="nav-t">Versões</span></a>
+      <a href="#curiosidades"><span class="px nav-ic" data-px="livro" aria-hidden="true"></span><span class="nav-t">Curiosidades</span></a>
     </div>
     <button type="button" class="btn btn-mini busca-btn" id="busca-btn" aria-expanded="false" aria-controls="busca">Buscar</button>
     <div class="edicao" role="group" aria-label="Edição do jogo">
@@ -1526,6 +1532,214 @@ kbd {
       <p><span class="rot">Pó de pedra luminosa:</span> a poção fica mais forte (nível II) e dura menos.</p>
       <p><span class="rot">Pólvora:</span> vira poção arremessável.</p>
       <p><span class="rot">Bafo do dragão:</span> na arremessável, vira persistente e deixa uma nuvem no chão.</p>
+    </div>
+  </div>
+</section>
+
+<section class="secao" id="estruturas" aria-labelledby="estruturas-t">
+  <div class="wrap">
+    <div class="secao-cab">
+      <p class="eyebrow">Estruturas</p>
+      <h2 id="estruturas-t">Estruturas e minérios</h2>
+      <p class="lede">Tudo o que o jogo constrói sozinho pelo mundo: onde achar, o que tem dentro e o perigo de cada uma. E, no fim, onde fica cada minério.</p>
+    </div>
+    <div class="filtros" role="group" aria-label="Filtrar estruturas" data-filtro-alvo="#lista-estruturas">
+      <button type="button" data-filtro="todos" aria-pressed="true">Todas</button>
+      <button type="button" data-filtro="overworld" aria-pressed="false">Overworld</button>
+      <button type="button" data-filtro="nether" aria-pressed="false">Nether</button>
+      <button type="button" data-filtro="end" aria-pressed="false">End</button>
+    </div>
+    <div class="grade-cards" id="lista-estruturas">
+      <article class="bioma est" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Vila</h3><span class="id">Overworld</span></header>
+        <p><span class="rot">Onde:</span> Planícies, desertos, savanas, taigas, neve e prados.</p>
+        <p><span class="rot">Tem:</span> Aldeões para troca, camas, comida, fardos de feno e o baú do ferreiro.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> Ataques de saqueadores se você beber a garrafa sinistra.</p>
+      </article>
+      <article class="bioma est" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Portal em ruínas</h3><span class="id">Overworld</span></header>
+        <p><span class="rot">Onde:</span> Em qualquer lugar, até no Nether.</p>
+        <p><span class="rot">Tem:</span> Obsidiana, ouro, isqueiro e às vezes maçã dourada no baú.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> Às vezes fica perto de lava ou no meio do oceano.</p>
+      </article>
+      <article class="bioma est" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Naufrágio</h3><span class="id">Overworld</span></header>
+        <p><span class="rot">Onde:</span> Oceanos e praias.</p>
+        <p><span class="rot">Tem:</span> Mapa do tesouro, ferro, esmeraldas e comida nos baús.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> Afogados por perto.</p>
+      </article>
+      <article class="bioma est" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Tesouro enterrado</h3><span class="id">Overworld</span></header>
+        <p><span class="rot">Onde:</span> Praias, achado com o mapa do naufrágio.</p>
+        <p><span class="rot">Tem:</span> Coração do mar, sempre, e muitas vezes ferro e ouro.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> Nenhum, só precisa cavar no X do mapa.</p>
+      </article>
+      <article class="bioma est" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Ruínas oceânicas</h3><span class="id">Overworld</span></header>
+        <p><span class="rot">Onde:</span> Fundo do oceano.</p>
+        <p><span class="rot">Tem:</span> Baús com loot e, nas do oceano quente, areia suspeita com ovo de farejador.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> Afogados.</p>
+      </article>
+      <article class="bioma est" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Monumento oceânico</h3><span class="id">Overworld</span></header>
+        <p><span class="rot">Onde:</span> Oceano profundo.</p>
+        <p><span class="rot">Tem:</span> Esponjas, prismarinho e 8 blocos de ouro no centro.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> Guardiões e 3 guardiões anciões, que dão fadiga.</p>
+      </article>
+      <article class="bioma est" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Masmorra</h3><span class="id">Overworld</span></header>
+        <p><span class="rot">Onde:</span> No subsolo, em qualquer bioma.</p>
+        <p><span class="rot">Tem:</span> Gerador de zumbi, esqueleto ou aranha e 1 ou 2 baús com selas, discos e livros.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> Os mobs do gerador. Dá para virar farm de XP.</p>
+      </article>
+      <article class="bioma est" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Mina abandonada</h3><span class="id">Overworld</span></header>
+        <p><span class="rot">Onde:</span> No subsolo e à mostra nas badlands.</p>
+        <p><span class="rot">Tem:</span> Trilhos, baús em vagonetas e minérios por perto.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> Geradores de aranha de caverna, venenosa.</p>
+      </article>
+      <article class="bioma est" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Templo do deserto</h3><span class="id">Overworld</span></header>
+        <p><span class="rot">Onde:</span> Desertos.</p>
+        <p><span class="rot">Tem:</span> 4 baús escondidos embaixo, com ouro, diamantes e às vezes maçã dourada encantada.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> TNT embaixo de uma placa de pressão no meio do salão. Não pise.</p>
+      </article>
+      <article class="bioma est" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Templo da selva</h3><span class="id">Overworld</span></header>
+        <p><span class="rot">Onde:</span> Selvas.</p>
+        <p><span class="rot">Tem:</span> 2 baús com loot e um quebra-cabeça de alavancas.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> Armadilhas de flecha ativadas por linha.</p>
+      </article>
+      <article class="bioma est" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Cabana de bruxa</h3><span class="id">Overworld</span></header>
+        <p><span class="rot">Onde:</span> Pântanos.</p>
+        <p><span class="rot">Tem:</span> Um caldeirão e, às vezes, um gato preto.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> Bruxas nascem nela.</p>
+      </article>
+      <article class="bioma est" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Iglu</h3><span class="id">Overworld</span></header>
+        <p><span class="rot">Onde:</span> Biomas de neve.</p>
+        <p><span class="rot">Tem:</span> Às vezes um porão secreto embaixo do tapete, com suporte de poções e maçã dourada.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> O porão tem um aldeão e um aldeão zumbi presos: dá para curar o zumbi.</p>
+      </article>
+      <article class="bioma est" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Posto de saqueadores</h3><span class="id">Overworld</span></header>
+        <p><span class="rot">Onde:</span> Planícies, desertos, savanas e montanhas.</p>
+        <p><span class="rot">Tem:</span> Allays presos em jaulas, flechas e a garrafa sinistra do capitão.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> Muitos saqueadores com bestas.</p>
+      </article>
+      <article class="bioma est" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Mansão da floresta</h3><span class="id">Overworld</span></header>
+        <p><span class="rot">Onde:</span> Floresta escura, longe do spawn.</p>
+        <p><span class="rot">Tem:</span> Totem da imortalidade (dos evocadores), salas secretas e baús.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> Vingadores e evocadores. Uma das estruturas mais perigosas.</p>
+      </article>
+      <article class="bioma est" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Ruínas de trilha</h3><span class="id">Overworld</span></header>
+        <p><span class="rot">Onde:</span> Enterradas em florestas, taigas e selvas.</p>
+        <p><span class="rot">Tem:</span> Areia e cascalho suspeitos com cacos de cerâmica, moldes de enfeite e discos.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> Nenhum. É arqueologia: use o pincel.</p>
+      </article>
+      <article class="bioma est" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Geodo de ametista</h3><span class="id">Overworld</span></header>
+        <p><span class="rot">Onde:</span> No subsolo.</p>
+        <p><span class="rot">Tem:</span> Ametista, para a luneta e o vidro fumê.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> Nenhum.</p>
+      </article>
+      <article class="bioma est" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Fortaleza (stronghold)</h3><span class="id">Overworld</span></header>
+        <p><span class="rot">Onde:</span> No subsolo, achada com olhos do Ender.</p>
+        <p><span class="rot">Tem:</span> O portal do End, uma biblioteca e baús.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> Traças e o gerador de traças da sala do portal.</p>
+      </article>
+      <article class="bioma est" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Cidade antiga</h3><span class="id">Overworld</span></header>
+        <p><span class="rot">Onde:</span> Escuro profundo, bem fundo.</p>
+        <p><span class="rot">Tem:</span> Livro de Furtividade Ágil, fragmentos de eco e outros tesouros.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> O Warden aparece se os sensores forem ativados demais.</p>
+      </article>
+      <article class="bioma est" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Trial Chambers</h3><span class="id">Overworld</span></header>
+        <p><span class="rot">Onde:</span> No subsolo.</p>
+        <p><span class="rot">Tem:</span> Cofres com chaves de desafio: encantamentos, maçãs douradas e o núcleo pesado da maça.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> Geradores de desafio com breeze, bogged e outros.</p>
+      </article>
+      <article class="bioma est" data-grupo="overworld" data-dim="ow">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Acampamento abandonado</h3><span class="id">Overworld</span></header>
+        <p><span class="rot">Onde:</span> Áreas de floresta, desde a 26.3.</p>
+        <p><span class="rot">Tem:</span> Estrutura nova da 26.3, citada nas notas da versão.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> Ainda pouco documentado: explore com cuidado.</p>
+      </article>
+      <article class="bioma est" data-grupo="nether" data-dim="nether">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Fortaleza do Nether</h3><span class="id">Nether</span></header>
+        <p><span class="rot">Onde:</span> Nether.</p>
+        <p><span class="rot">Tem:</span> Varas de blaze, verruga do Nether, selas e crânios de esqueleto wither.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> Blazes, esqueletos wither e quedas na lava.</p>
+      </article>
+      <article class="bioma est" data-grupo="nether" data-dim="nether">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Bastião</h3><span class="id">Nether</span></header>
+        <p><span class="rot">Onde:</span> Nether (menos nos deltas de basalto).</p>
+        <p><span class="rot">Tem:</span> Muito ouro, molde de melhoria de netherite e o disco Pigstep.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> Piglins e piglins brutos. Abrir baús deixa todos bravos.</p>
+      </article>
+      <article class="bioma est" data-grupo="end" data-dim="end">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Cidade do End</h3><span class="id">End</span></header>
+        <p><span class="rot">Onde:</span> Ilhas externas do End.</p>
+        <p><span class="rot">Tem:</span> Baús com equipamento de diamante encantado e shulkers.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> Shulkers, que fazem você levitar.</p>
+      </article>
+      <article class="bioma est" data-grupo="end" data-dim="end">
+        <div class="faixa"></div>
+        <header><h3 class="h4">Navio do End</h3><span class="id">End</span></header>
+        <p><span class="rot">Onde:</span> Ao lado de algumas cidades do End.</p>
+        <p><span class="rot">Tem:</span> Élitros e a cabeça de dragão.</p>
+        <p class="cuidado"><span class="rot">Perigo:</span> Shulkers no navio.</p>
+      </article>
+    </div>
+    <div class="secao-cab sub-cab" id="minerios">
+      <h3>Minérios: onde achar cada um</h3>
+      <p class="lede">Aperte F3 no Java para ver em que camada (Y) você está. Desde a 1.18 o mundo vai da camada −64 até a 320.</p>
+    </div>
+    <div class="tabela-wrap" tabindex="0" role="region" aria-label="Tabela de minérios">
+      <table>
+        <thead><tr><th scope="col">Minério</th><th scope="col">Onde aparece mais</th><th scope="col">Picareta mínima</th><th scope="col">Para que serve</th></tr></thead>
+        <tbody>
+          <tr><td>Carvão</td><td>Perto da superfície e nas montanhas</td><td>Madeira</td><td>Combustível e tochas.</td></tr>
+          <tr><td>Cobre</td><td>Por volta da camada 48; muito nas cavernas de espeleotemas</td><td>Pedra</td><td>Para-raios, luneta, blocos de cobre e, desde a 1.21.9, ferramentas e armadura.</td></tr>
+          <tr><td>Ferro</td><td>Por volta da camada 16 e no alto das montanhas</td><td>Pedra</td><td>Balde, ferramentas, armadura, trilhos e funis.</td></tr>
+          <tr><td>Lápis-lazúli</td><td>Por volta da camada 0</td><td>Pedra</td><td>Encantar na mesa e corante azul.</td></tr>
+          <tr><td>Ouro</td><td>Por volta da camada −16; muito mais nas badlands</td><td>Ferro</td><td>Escambo com piglins, maçãs e cenouras douradas.</td></tr>
+          <tr><td>Redstone</td><td>Abaixo da camada 15, mais perto do fundo</td><td>Ferro</td><td>Circuitos, relógio, bússola e poções que duram mais.</td></tr>
+          <tr><td>Diamante</td><td>Perto da camada −58</td><td>Ferro</td><td>As melhores ferramentas antes da netherite e a mesa de encantamento.</td></tr>
+          <tr><td>Esmeralda</td><td>Só em biomas de montanha, no alto</td><td>Ferro</td><td>Trocas com aldeões e o bloco de esmeralda do sinalizador.</td></tr>
+          <tr><td>Quartzo do Nether</td><td>Em todo o Nether</td><td>Madeira</td><td>XP ao minerar, observador, comparador e blocos de quartzo.</td></tr>
+          <tr><td>Ouro do Nether</td><td>Em todo o Nether</td><td>Madeira</td><td>Pepitas de ouro. Minerar perto de piglins deixa eles bravos.</td></tr>
+          <tr><td>Detritos antigos</td><td>Nether, entre as camadas 8 e 22</td><td>Diamante</td><td>Fragmentos de netherite.</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
@@ -2905,7 +3119,23 @@ kbd {
     rod: { p: { y: "#F8D55C", o: "#E08A1E", d: "#8C4A0E" }, g: ["......yo", ".....yod", "....yod.", "...yod..", "..yod...", ".yod....", "yod.....", "od......"] },
     pearl: { p: { a: "#0B4D42", b: "#1E8C78", c: "#6FE6D0" }, g: ["..aaaa..", ".abbbba.", "abcbbbba", "abccbbba", "abbbbbba", "abbbbbba", ".abbbba.", "..aaaa.."] },
     eye: { p: { a: "#1F4D1F", g: "#6AAE3A", l: "#C6EE94", p: "#111111" }, g: ["..aaaa..", ".agggga.", "aglgggga", "aggppgga", "aggppgga", "agggggga", ".agggga.", "..aaaa.."] },
-    bucket: { p: { k: "#3E3E3E", s: "#B5B5B5", h: "#E2E2E2" }, g: ["..kkkk..", ".k....k.", "kkkkkkkk", "kshssssk", "kshssssk", ".kssssk.", ".kssssk.", "..kkkk.."] }
+    bucket: { p: { k: "#3E3E3E", s: "#B5B5B5", h: "#E2E2E2" }, g: ["..kkkk..", ".k....k.", "kkkkkkkk", "kshssssk", "kshssssk", ".kssssk.", ".kssssk.", "..kkkk.."] },
+    grama: { p: {"g": "#6CC04A", "G": "#3E8E2B", "d": "#8B5A2B", "D": "#6B4220"}, g: ["gggGgggG", "gGggggGg", "dGddGddG", "dddDdddd", "dDdddDdd", "ddddDddd", "dDdddddD", "dddDdddd"] },
+    mapa: { p: {"P": "#9C8350", "p": "#E8D8A8", "l": "#3E8E2B", "R": "#D93A2B"}, g: ["PPPPPPPP", "PlpppppP", "PplppppP", "PpplpppP", "PpppRpRP", "PppppRpP", "PpppRpRP", "PPPPPPPP"] },
+    portal: { p: {"o": "#1E0F2E", "v": "#7D35C4", "V": "#B57BEA"}, g: ["oooooooo", "ovvVvvvo", "oVvvvVvo", "ovvVvvVo", "ovVvvvvo", "oVvvVvvo", "ovvvvVvo", "oooooooo"] },
+    bau: { p: {"k": "#3A2410", "c": "#B8875A", "C": "#8A5E36", "l": "#D9D9D9"}, g: ["kkkkkkkk", "kcccccck", "kCCCCCCk", "kkkllkkk", "kcccllck", "kcccccck", "kCCCCCCk", "kkkkkkkk"] },
+    creeper: { p: {"g": "#5DBB4B", "G": "#3C8C2E", "k": "#111111"}, g: ["gGggGggg", "gkkggkkg", "gkkGgkkg", "gggkkggg", "ggkkkkGg", "ggkkkkgg", "ggkggkgg", "gGggggGg"] },
+    pocao: { p: {"k": "#7A4A2A", "c": "#BFE3F0", "p": "#E0408A", "P": "#FF8FC4"}, g: ["...kk...", "...cc...", "..cppc..", ".cPpppc.", ".cppppc.", ".cppppc.", "..cccc..", "........"] },
+    semente: { p: {"s": "#8BC34A", "S": "#4E7F23"}, g: ["........", ".s....S.", "..S.s...", "s...S.s.", ".S.s...S", "...S.s..", ".s...S..", "....s..."] },
+    arvore: { p: {"l": "#4CAF50", "L": "#2E7D32", "t": "#7B5230"}, g: ["..LllL..", ".LlLllL.", "LllllLlL", "lLlllllL", ".LllLlL.", "...tt...", "...tt...", "..tttt.."] },
+    espada: { p: {"d": "#7FF0F0", "D": "#2BB3B3", "h": "#7B5230"}, g: ["......Dd", ".....DdD", "....DdD.", ".h.DdD..", "..hdD...", "..hh....", ".h..h...", "h......."] },
+    trigo: { p: {"y": "#F0CF5E", "Y": "#B8922E", "g": "#6E9E3A", "d": "#8B5A2B"}, g: ["y..y..y.", "Yy.Yy.Yy", "yY.yY.yY", "Yy.Yy.Yy", ".g..g..g", ".g..g..g", ".g..g..g", "dddddddd"] },
+    tijolo: { p: {"b": "#B5523B", "B": "#8E3B28", "m": "#D8CFC0"}, g: ["bbbmbbbm", "BBBmBBBm", "mmmmmmmm", "bmbbbmbb", "BmBBBmBB", "mmmmmmmm", "bbbmbbbm", "BBBmBBBm"] },
+    tocha: { p: {"r": "#FF3B3B", "R": "#A01010", "s": "#7B5230"}, g: ["...rr...", "..rRRr..", "...RR...", "...ss...", "...ss...", "...ss...", "...ss...", "...ss..."] },
+    mesa: { p: {"T": "#7B5230", "t": "#C49A6C", "k": "#4A3018", "x": "#A8A8A8"}, g: ["TTTTTTTT", "TtktktkT", "TkkkkkkT", "TtktktkT", "TTTTTTTT", "TxTTTTxT", "TxTTTTxT", "TTTTTTTT"] },
+    trofeu: { p: {"y": "#F0CF5E", "Y": "#B8922E"}, g: [".yyyyyy.", "yyyyyyyy", "y.yYyy.y", ".yyYyyy.", "..yyyy..", "...yy...", "..YYYY..", ".YYYYYY."] },
+    relogio: { p: {"g": "#E3C15A", "w": "#F5E6B0", "k": "#333333"}, g: ["..gggg..", ".gwwwwg.", "gwwkwwwg", "gwwkwwwg", "gwwkkkwg", "gwwwwwwg", ".gwwwwg.", "..gggg.."] },
+    livro: { p: {"C": "#5E2614", "c": "#8E3B28", "q": "#F0CF5E", "p": "#F2EBDD"}, g: ["CCCCCCCp", "CcqqqcCp", "CcccqcCp", "CccqccCp", "CccqccCp", "CcccccCp", "CccqccCp", "CCCCCCCp"] }
   };
   function desenhar(el) {
     var ic = ICONES[el.getAttribute("data-px")];
