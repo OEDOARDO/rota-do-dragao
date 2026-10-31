@@ -110,13 +110,13 @@ code, .mono { font-family: var(--f-mono); font-size: 0.92em; }
 .links::-webkit-scrollbar { display: none; }
 .links a { color: var(--fg); text-decoration: none; font-size: var(--fs-small); font-weight: 500; padding: 6px 8px; white-space: nowrap; }
 .links a:hover { background: var(--grama); }
-@media (min-width: 1440px) {
+@media (min-width: 1920px) {
   .topo .wrap { flex-wrap: nowrap; }
   .links { order: 0; flex: 0 1 auto; margin-left: auto; }
   .busca-btn, .edicao { flex: none; }
 }
 /* tablet deitado e telas médias: os links vão para uma segunda linha, todos à vista */
-@media (min-width: 1100px) and (max-width: 1439px) {
+@media (min-width: 1100px) and (max-width: 1919px) {
   .links { flex-wrap: wrap; overflow: visible; justify-content: space-between; gap: 2px; }
   .links a { padding: 6px 5px; font-size: 0.84rem; }
 }
@@ -388,7 +388,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 
 /* busca, receitas e abas de dimensões */
 .busca-btn { margin-left: auto; }
-@media (min-width: 1440px) { .busca-btn { margin-left: 0; } }
+@media (min-width: 1920px) { .busca-btn { margin-left: 0; } }
 .busca { border-top: 1px solid #22401A; background: var(--grama-escura); }
 .busca .wrap { padding-block: 10px; display: grid; gap: 8px; }
 .busca .campo { width: 100%; }
@@ -494,6 +494,20 @@ kbd {
 td .px-mini { margin-right: 10px; }
 .itens .h4 .px-mini { width: 24px; height: 24px; }
 
+/* quiz e sorteador */
+.quiz { display: grid; gap: 14px; max-width: 760px; }
+.quiz-topo { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: var(--fs-small); color: var(--muted); }
+.quiz-topo b { color: var(--fg); font-family: var(--f-num); }
+.quiz-perg { font: 600 1.15rem/1.4 var(--f-body); }
+.quiz-op { display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+.quiz-op button { text-align: left; }
+.quiz-op button[disabled] { opacity: 1; cursor: default; }
+.quiz-op button.certa { background: var(--accent); color: var(--on-accent); }
+.quiz-op button.errada { background: #7A2E2E; color: #FFFFFF; }
+.quiz-msg { min-height: 1.5em; font-weight: 600; }
+.sorteio { display: grid; gap: 12px; max-width: 520px; }
+.sorteio-lista { margin: 0; padding-left: 20px; display: grid; gap: 6px; font: 600 1.05rem/1.4 var(--f-body); }
+
 .toast {
   position: fixed; left: 50%; transform: translateX(-50%);
   bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
@@ -523,6 +537,7 @@ td .px-mini { margin-right: 10px; }
       <a href="#mods"><span class="px nav-ic" data-px="mesa" aria-hidden="true"></span><span class="nav-t">Mods</span></a>
       <a href="#missoes"><span class="px nav-ic" data-px="trofeu" aria-hidden="true"></span><span class="nav-t">Missões</span></a>
       <a href="#versoes"><span class="px nav-ic" data-px="relogio" aria-hidden="true"></span><span class="nav-t">Versões</span></a>
+      <a href="#quiz"><span class="px nav-ic" data-px="quiz" aria-hidden="true"></span><span class="nav-t">Quiz</span></a>
       <a href="#curiosidades"><span class="px nav-ic" data-px="livro" aria-hidden="true"></span><span class="nav-t">Curiosidades</span></a>
     </div>
     <button type="button" class="btn btn-mini busca-btn" id="busca-btn" aria-expanded="false" aria-controls="busca">Buscar</button>
@@ -2220,7 +2235,7 @@ td .px-mini { margin-right: 10px; }
 
     <div class="grade-cards" id="lista-farms">
       <article class="farm" data-grupo="facil">
-        <header><h3 class="h4">Cana-de-açúcar automática</h3><span class="nivel nivel-facil">Fácil</span></header>
+        <header><h3 class="h4"><span class="px px-mini" data-px="trigo:y=9BD95A,Y=6EB23A,g=4E8F3A" aria-hidden="true"></span>Cana-de-açúcar automática</h3><span class="nivel nivel-facil">Fácil</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>papel para livros, mapas e foguetes.</dd></div>
           <div><dt>Onde</dt><dd>perto da base, em qualquer bioma, com água ao lado da terra.</dd></div>
@@ -2237,7 +2252,7 @@ td .px-mini { margin-right: 10px; }
         </ol></details>
       </article>
       <article class="farm" data-grupo="facil">
-        <header><h3 class="h4">Abóbora e melancia</h3><span class="nivel nivel-facil">Fácil</span></header>
+        <header><h3 class="h4"><span class="px px-mini" data-px="melancia" aria-hidden="true"></span>Abóbora e melancia</h3><span class="nivel nivel-facil">Fácil</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>comida e esmeraldas, porque o aldeão agricultor compra as duas.</dd></div>
           <div><dt>Onde</dt><dd>perto da base, em qualquer bioma.</dd></div>
@@ -2253,7 +2268,7 @@ td .px-mini { margin-right: 10px; }
         </ol></details>
       </article>
       <article class="farm" data-grupo="facil">
-        <header><h3 class="h4">Trigo e cenoura com aldeão</h3><span class="nivel nivel-facil">Fácil</span></header>
+        <header><h3 class="h4"><span class="px px-mini" data-px="trigo" aria-hidden="true"></span>Trigo e cenoura com aldeão</h3><span class="nivel nivel-facil">Fácil</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>comida e itens para trocar.</dd></div>
           <div><dt>Onde</dt><dd>num cercado com terra arada e uma composteira.</dd></div>
@@ -2269,7 +2284,7 @@ td .px-mini { margin-right: 10px; }
         </ol></details>
       </article>
       <article class="farm" data-grupo="facil">
-        <header><h3 class="h4">Frango assado automático</h3><span class="nivel nivel-facil">Fácil</span></header>
+        <header><h3 class="h4"><span class="px px-mini" data-px="carne:a=C98B5A,A=E0B07A" aria-hidden="true"></span>Frango assado automático</h3><span class="nivel nivel-facil">Fácil</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>comida pronta e penas para flechas.</dd></div>
           <div><dt>Onde</dt><dd>qualquer lugar perto da base.</dd></div>
@@ -2285,7 +2300,7 @@ td .px-mini { margin-right: 10px; }
         </ol></details>
       </article>
       <article class="farm" data-grupo="media">
-        <header><h3 class="h4">Ferro</h3><span class="nivel nivel-media">Média</span></header>
+        <header><h3 class="h4"><span class="px px-mini" data-px="lingote:k=8A8A8A,N=C9C9C9,n=EDEDED" aria-hidden="true"></span>Ferro</h3><span class="nivel nivel-media">Média</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>ferro sem fim para baldes, trilhos, funis e bigornas.</dd></div>
           <div><dt>Onde</dt><dd>longe de outras vilas, para não dividir os golens.</dd></div>
@@ -2302,7 +2317,7 @@ td .px-mini { margin-right: 10px; }
         </ol></details>
       </article>
       <article class="farm" data-grupo="media">
-        <header><h3 class="h4">Mobs (sala escura)</h3><span class="nivel nivel-media">Média</span></header>
+        <header><h3 class="h4"><span class="px px-mini" data-px="rosto:s=4E8F3A,S=3C7030,e=111111,m=2A4A20" aria-hidden="true"></span>Mobs (sala escura)</h3><span class="nivel nivel-media">Média</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>ossos (farinha de osso), flechas, pólvora, linha e XP.</dd></div>
           <div><dt>Onde</dt><dd>no alto, sobre o oceano. Longe de cavernas, os monstros surgem na farm e não lá embaixo.</dd></div>
@@ -2319,7 +2334,7 @@ td .px-mini { margin-right: 10px; }
         </ol></details>
       </article>
       <article class="farm" data-grupo="media">
-        <header><h3 class="h4">Salão de troca</h3><span class="nivel nivel-media">Média</span></header>
+        <header><h3 class="h4"><span class="px px-mini" data-px="rosto:s=C9935A,S=A8784A,e=2E6B3A,m=6B4220" aria-hidden="true"></span>Salão de troca</h3><span class="nivel nivel-media">Média</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>livros encantados como Remendo, esmeraldas e ferramentas de diamante encantadas.</dd></div>
           <div><dt>Onde</dt><dd>na base, com aldeões trazidos de uma vila.</dd></div>
@@ -2335,7 +2350,7 @@ td .px-mini { margin-right: 10px; }
         </ol></details>
       </article>
       <article class="farm" data-grupo="media">
-        <header><h3 class="h4">Slime</h3><span class="nivel nivel-media">Média</span></header>
+        <header><h3 class="h4"><span class="px px-mini" data-px="rosto:s=7ED957,S=5FB83E,e=2A5A1E,m=3E7A2A" aria-hidden="true"></span>Slime</h3><span class="nivel nivel-media">Média</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>bolas de slime para pistões aderentes, laços e blocos de slime.</dd></div>
           <div><dt>Onde</dt><dd>num slime chunk, abaixo da camada 40. Ache com o <a href="https://www.chunkbase.com/apps/slime-finder" target="_blank" rel="noopener">localizador de slime do Chunkbase</a>, que tem Java e Bedrock.</dd></div>
@@ -2351,7 +2366,7 @@ td .px-mini { margin-right: 10px; }
         </ol></details>
       </article>
       <article class="farm" data-grupo="avancada">
-        <header><h3 class="h4">XP de enderman</h3><span class="nivel nivel-avancada">Avançada</span></header>
+        <header><h3 class="h4"><span class="px px-mini" data-px="rosto:s=141414,S=1E1E1E,e=D98AFF,m=0A0A0A" aria-hidden="true"></span>XP de enderman</h3><span class="nivel nivel-avancada">Avançada</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>muita XP para encantar e consertar com Remendo, e pérolas.</dd></div>
           <div><dt>Onde</dt><dd>no End, com o dragão já derrotado.</dd></div>
@@ -2368,7 +2383,7 @@ td .px-mini { margin-right: 10px; }
         </ol></details>
       </article>
       <article class="farm" data-grupo="avancada">
-        <header><h3 class="h4">Ouro</h3><span class="nivel nivel-avancada">Avançada</span></header>
+        <header><h3 class="h4"><span class="px px-mini" data-px="lingote:k=B8922E,N=E3C15A,n=F5DA7A" aria-hidden="true"></span>Ouro</h3><span class="nivel nivel-avancada">Avançada</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>ouro e muita XP.</dd></div>
           <div><dt>Onde</dt><dd>no Nether.</dd></div>
@@ -2384,7 +2399,7 @@ td .px-mini { margin-right: 10px; }
         </ol></details>
       </article>
       <article class="farm" data-grupo="avancada">
-        <header><h3 class="h4">Guardião</h3><span class="nivel nivel-avancada">Avançada</span></header>
+        <header><h3 class="h4"><span class="px px-mini" data-px="rosto:s=5FA898,S=4A8A7A,e=E07A2E,m=2E5A50" aria-hidden="true"></span>Guardião</h3><span class="nivel nivel-avancada">Avançada</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>XP, prismarinho e peixe.</dd></div>
           <div><dt>Onde</dt><dd>num monumento oceânico, no oceano profundo.</dd></div>
@@ -2436,7 +2451,7 @@ td .px-mini { margin-right: 10px; }
     </div>
     <div class="grade-cards">
       <article class="farm">
-        <header><h3 class="h4">Abrigo da primeira noite</h3><span class="nivel nivel-facil">Fácil</span></header>
+        <header><h3 class="h4"><span class="px px-mini" data-px="bloco:t=8B5A2B,T=6B4220,d=8B5A2B,D=6B4220" aria-hidden="true"></span>Abrigo da primeira noite</h3><span class="nivel nivel-facil">Fácil</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>passar a primeira noite em segurança, sem gastar tempo.</dd></div>
           <div><dt>Material</dt><dd>o que você tiver: terra, pedra ou madeira, e uma porta ou blocos para tapar a entrada.</dd></div>
@@ -2450,7 +2465,7 @@ td .px-mini { margin-right: 10px; }
         </ol></details>
       </article>
       <article class="farm">
-        <header><h3 class="h4">Casa de madeira</h3><span class="nivel nivel-facil">Fácil</span></header>
+        <header><h3 class="h4"><span class="px px-mini" data-px="bloco:t=C49A6C,T=A07A50,d=C49A6C,D=A07A50" aria-hidden="true"></span>Casa de madeira</h3><span class="nivel nivel-facil">Fácil</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>a primeira base de verdade, bonita e rápida.</dd></div>
           <div><dt>Material</dt><dd>troncos, tábuas, escadas de madeira, lajes, vidro, porta e tochas ou lanternas.</dd></div>
@@ -2466,7 +2481,7 @@ td .px-mini { margin-right: 10px; }
         </ol></details>
       </article>
       <article class="farm">
-        <header><h3 class="h4">Casa de pedra e madeira</h3><span class="nivel nivel-media">Média</span></header>
+        <header><h3 class="h4"><span class="px px-mini" data-px="minerio:s=8A8A8A,S=6E6E6E,o=C49A6C,O=A07A50" aria-hidden="true"></span>Casa de pedra e madeira</h3><span class="nivel nivel-media">Média</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>uma base maior, com mais cara de casa de vila medieval.</dd></div>
           <div><dt>Material</dt><dd>pedregulho ou tijolos de pedra, troncos, tábuas, escadas, lajes, vidro e lanternas.</dd></div>
@@ -2481,7 +2496,7 @@ td .px-mini { margin-right: 10px; }
         </ol></details>
       </article>
       <article class="farm">
-        <header><h3 class="h4">Castelo</h3><span class="nivel nivel-avancada">Avançada</span></header>
+        <header><h3 class="h4"><span class="px px-mini" data-px="tijolo:b=9A9A9A,B=7E7E7E,m=5A5A5A" aria-hidden="true"></span>Castelo</h3><span class="nivel nivel-avancada">Avançada</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>um projeto grande para depois de zerar, com muralha, torres e pátio.</dd></div>
           <div><dt>Material</dt><dd>muitos tijolos de pedra (inclusive com musgo e rachados), pedregulho, lajes, escadas, grades de ferro, estandartes e lanternas. Comece juntando uns 20 baús de pedra.</dd></div>
@@ -2499,7 +2514,7 @@ td .px-mini { margin-right: 10px; }
         </ol></details>
       </article>
       <article class="farm">
-        <header><h3 class="h4">Portal do Nether decorado</h3><span class="nivel nivel-facil">Fácil</span></header>
+        <header><h3 class="h4"><span class="px px-mini" data-px="portal" aria-hidden="true"></span>Portal do Nether decorado</h3><span class="nivel nivel-facil">Fácil</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>deixar a entrada do Nether com cara de ruína antiga.</dd></div>
           <div><dt>Material</dt><dd>10 obsidianas, pedra-negra (lisa, rachada e com ouro), escadas e lajes de pedra-negra, lanternas de alma e netherrack.</dd></div>
@@ -2514,7 +2529,7 @@ td .px-mini { margin-right: 10px; }
         </ol></details>
       </article>
       <article class="farm">
-        <header><h3 class="h4">Torre de vigia</h3><span class="nivel nivel-media">Média</span></header>
+        <header><h3 class="h4"><span class="px px-mini" data-px="bloco:t=7B5230,T=5E3E22,d=C49A6C,D=A07A50" aria-hidden="true"></span>Torre de vigia</h3><span class="nivel nivel-media">Média</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>enxergar longe em volta da base e marcar o lugar de longe.</dd></div>
           <div><dt>Material</dt><dd>troncos, tábuas, pedregulho, escadas de mão, cercas, escadas de madeira e lanternas.</dd></div>
@@ -2529,7 +2544,7 @@ td .px-mini { margin-right: 10px; }
         </ol></details>
       </article>
       <article class="farm">
-        <header><h3 class="h4">Dicas que valem para toda construção</h3><span class="nivel nivel-facil">Para todas</span></header>
+        <header><h3 class="h4"><span class="px px-mini" data-px="mesa" aria-hidden="true"></span>Dicas que valem para toda construção</h3><span class="nivel nivel-facil">Para todas</span></header>
         <ul class="dicas">
           <li><span class="rot">Paleta:</span> escolha 3 ou 4 blocos que combinam (por exemplo pedra, carvalho escuro e abeto) e use só eles.</li>
           <li><span class="rot">Profundidade:</span> nada de parede chapada. Recue janelas, adiante colunas e use escadas e lajes nas bordas.</li>
@@ -2700,6 +2715,15 @@ td .px-mini { margin-right: 10px; }
         <p class="contador"><span id="m-feitas">0</span> de <span id="m-total">0</span></p>
       </div>
       <p class="lede">Para quando zerar ficar fácil. As primeiras são desafios de run; as outras são as conquistas mais difíceis do jogo. Toque numa missão para marcar como cumprida e abra “Como fazer” para ver o caminho.</p>
+    </div>
+
+    <div class="grupo-missoes" id="sorteador">
+      <h3>Sorteador de desafios</h3>
+      <p class="criterio">Quer variar a próxima run? Sorteie 2 regras e tente zerar respeitando as duas.</p>
+      <div class="painel sorteio">
+        <ul class="sorteio-lista" id="sorteio-lista"><li>Toque em Sortear.</li></ul>
+        <button type="button" class="btn btn-forte" id="sorteio-btn">Sortear desafio</button>
+      </div>
     </div>
 
     <div class="grupo-missoes">
@@ -2946,6 +2970,25 @@ td .px-mini { margin-right: 10px; }
   </div>
 </section>
 
+<section class="secao" id="quiz" aria-labelledby="quiz-t">
+  <div class="wrap">
+    <div class="secao-cab">
+      <p class="eyebrow">Quiz</p>
+      <h2 id="quiz-t">Quanto você sabe de Minecraft?</h2>
+      <p class="lede">10 perguntas sorteadas de um banco de 30. As respostas estão espalhadas pelo guia.</p>
+    </div>
+    <div class="painel quiz" id="quiz-caixa">
+      <div class="quiz-topo"><span id="quiz-prog">Pronto para começar?</span><span>Seu recorde: <b id="quiz-rec">nenhum</b></span></div>
+      <p class="quiz-perg" id="quiz-perg">Toque em Começar.</p>
+      <div class="quiz-op" id="quiz-op"></div>
+      <p class="quiz-msg" id="quiz-msg" aria-live="polite"></p>
+      <div class="quiz-acoes">
+        <button type="button" class="btn btn-forte" id="quiz-btn">Começar</button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="secao" id="curiosidades" aria-labelledby="curiosidades-t">
   <div class="wrap">
     <div class="secao-cab">
@@ -3142,6 +3185,7 @@ td .px-mini { margin-right: 10px; }
     relogio: { p: {"g": "#E3C15A", "w": "#F5E6B0", "k": "#333333"}, g: ["..gggg..", ".gwwwwg.", "gwwkwwwg", "gwwkwwwg", "gwwkkkwg", "gwwwwwwg", ".gwwwwg.", "..gggg.."] },
     livro: { p: {"C": "#5E2614", "c": "#8E3B28", "q": "#F0CF5E", "p": "#F2EBDD"}, g: ["CCCCCCCp", "CcqqqcCp", "CcccqcCp", "CccqccCp", "CccqccCp", "CcccccCp", "CccqccCp", "CCCCCCCp"] }
   };
+  ICONES.quiz = { p: { b: "#3E6B27", B: "#2F5320", q: "#F0CF5E" }, g: ["BBBBBBBB", "BbqqqqbB", "BqbbbqbB", "BbbbqqbB", "BbbqbbbB", "BbbbbbbB", "BbbqbbbB", "BBBBBBBB"] };
   // moldes de pixel art: "molde:chave=RRGGBB,..." troca as cores do molde para cada coisa
   var MOLDES = {
     encantado: { p: {"C": "#5E2614", "c": "#8E3B28", "g": "#C77DFF", "p": "#F2EBDD"}, g: ["CCCCCCC.", "CcgcccCp", "CccgccCp", "CgccgcCp", "CccccgCp", "CcgcccCp", "CcccccCp", "CCCCCCC."] },
@@ -3741,6 +3785,53 @@ td .px-mini { margin-right: 10px; }
   ptVoltar.addEventListener("click", function () { bVoltar.click(); });
   // a trava de tela cai quando o app vai para segundo plano: pede de novo ao voltar
   document.addEventListener("visibilitychange", function () { if (!document.hidden && !elPartida.hidden && !travaTela) manterAcesa(); });
+
+  // ---------- quiz ----------
+  var QUIZ = [["Quantos olhos do Ender o portal do End precisa para abrir, se nenhuma moldura vier pronta?", "12", "8", "10", "16"], ["Qual mob explode quando chega perto de você?", "Creeper", "Zumbi", "Enderman", "Esqueleto"], ["Em qual dimensão fica o bastião?", "Nether", "Overworld", "End", "Em todas"], ["Qual é a picareta mais fraca que consegue minerar diamante?", "Picareta de ferro", "Picareta de pedra", "Picareta de ouro", "Picareta de madeira"], ["Quanto tempo de verdade dura um dia no Minecraft?", "20 minutos", "10 minutos", "1 hora", "5 minutos"], ["O que você joga para o piglin fazer escambo?", "Barras de ouro", "Esmeraldas", "Diamantes", "Ferro"], ["Qual ingrediente faz a poção de resistência ao fogo?", "Creme de magma", "Pó de blaze", "Lágrima de ghast", "Açúcar"], ["Quantas obsidianas tem a moldura do portal do Nether sem os cantos?", "10", "14", "8", "12"], ["Cada bloco andado no Nether vale quantos blocos no Overworld?", "8", "4", "2", "16"], ["O que machuca o enderman?", "Água", "Fogo", "Luz", "Areia"], ["Qual mob deixa cair o totem da imortalidade?", "Evocador", "Bruxa", "Saqueador", "Vingador"], ["Qual mob é cego e acha você pelo barulho?", "Warden", "Enderman", "Phantom", "Guardião"], ["Em que ano saiu a versão 1.0 do Minecraft?", "2011", "2009", "2013", "2010"], ["Qual é o minério mais raro do jogo?", "Esmeralda", "Diamante", "Ouro", "Lápis-lazúli"], ["O que acontece se você tentar dormir numa cama no Nether?", "Ela explode", "Você dorme normal", "Nada acontece", "Vira dia"], ["Qual encantamento conserta o item com a XP que você pega?", "Remendo", "Inquebrável", "Eficiência", "Fortuna"], ["Qual comida enche mais a barra de fome de uma vez?", "Ensopado de coelho", "Bife", "Pão", "Maçã dourada"], ["Quantos crânios de esqueleto wither são precisos para invocar o Wither?", "3", "4", "2", "1"], ["Que nome numa etiqueta deixa o mob de cabeça para baixo?", "Dinnerbone", "Herobrine", "Notch", "Steve"], ["Qual empresa comprou a Mojang em 2014?", "Microsoft", "Sony", "Nintendo", "Google"], ["Onde ficam os élitros?", "No navio do End", "No bastião", "Na fortaleza", "No templo do deserto"], ["Com o que você doma um lobo?", "Osso", "Carne crua", "Peixe", "Trigo"], ["Quantos pedaços tem um bolo?", "7", "6", "8", "4"], ["Do que é feito o suporte de poções?", "1 vara de blaze e 3 pedregulhos", "3 barras de ferro", "Obsidiana e vidro", "Pó de blaze e madeira"], ["Perto de qual camada o diamante aparece mais?", "−58", "0", "16", "64"], ["Quando aparecem os phantoms?", "Depois de 3 noites sem dormir", "Na lua cheia", "Só no Nether", "Quando chove"], ["O que acontece com um aldeão atingido por um raio?", "Vira bruxa", "Vira zumbi", "Vira golem", "Nada"], ["Em qual bioma monstros não nascem naturalmente?", "Campos de cogumelos", "Deserto", "Planícies", "Floresta escura"], ["Quem criou o Minecraft?", "Markus Persson, o Notch", "Jeb", "C418", "Bill Gates"], ["Qual era o primeiro nome do Minecraft?", "Cave Game", "Block World", "Mine Land", "Craft Story"]];
+  var qPerg = document.getElementById("quiz-perg"), qOp = document.getElementById("quiz-op"), qMsg = document.getElementById("quiz-msg");
+  var qBtn = document.getElementById("quiz-btn"), qProg = document.getElementById("quiz-prog"), qRec = document.getElementById("quiz-rec");
+  var rodada = null, quizRec = LS.get("rd-quiz", null);
+  function embaralhar(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var x = a[i]; a[i] = a[j]; a[j] = x; } return a; }
+  function mostrarRec() { qRec.textContent = quizRec == null ? "nenhum" : quizRec + " de 10"; }
+  function mostrarPergunta() {
+    var q = rodada.lista[rodada.i];
+    qProg.textContent = "Pergunta " + (rodada.i + 1) + " de 10 · " + rodada.acertos + " acerto" + (rodada.acertos === 1 ? "" : "s");
+    qPerg.textContent = q[0]; qMsg.textContent = ""; qBtn.hidden = true;
+    qOp.innerHTML = embaralhar(q.slice(1)).map(function (op) { return '<button type="button" class="btn">' + esc(op) + "</button>"; }).join("");
+    var primeiro = qOp.querySelector("button"); if (primeiro) primeiro.focus();
+  }
+  qOp.addEventListener("click", function (e) {
+    var b = e.target.closest("button");
+    if (!b || !rodada || rodada.respondida) return;
+    rodada.respondida = true;
+    var certa = rodada.lista[rodada.i][1];
+    qOp.querySelectorAll("button").forEach(function (x) { x.disabled = true; if (x.textContent === certa) x.classList.add("certa"); });
+    if (b.textContent === certa) { rodada.acertos++; qMsg.textContent = "Acertou!"; }
+    else { b.classList.add("errada"); qMsg.textContent = "Errou. A resposta é: " + certa + "."; }
+    qBtn.textContent = rodada.i === 9 ? "Ver resultado" : "Próxima pergunta"; qBtn.hidden = false; qBtn.focus();
+  });
+  qBtn.addEventListener("click", function () {
+    if (!rodada || rodada.fim) {
+      rodada = { lista: embaralhar(QUIZ).slice(0, 10), i: 0, acertos: 0 };
+      mostrarPergunta(); return;
+    }
+    if (rodada.i < 9) { rodada.i++; rodada.respondida = false; mostrarPergunta(); return; }
+    rodada.fim = true;
+    var a = rodada.acertos, novo = quizRec == null || a > quizRec;
+    if (novo) { quizRec = a; LS.set("rd-quiz", a); mostrarRec(); }
+    qProg.textContent = "Fim da rodada";
+    qPerg.textContent = "Você acertou " + a + " de 10." + (a === 10 ? " Perfeito!" : a >= 7 ? " Mandou bem!" : a >= 4 ? " Dá para melhorar." : " Leia o guia e tente de novo.");
+    qOp.innerHTML = ""; qMsg.textContent = novo ? "Recorde novo!" : "";
+    qBtn.textContent = "Jogar de novo"; qBtn.focus();
+  });
+  mostrarRec();
+
+  // ---------- sorteador de desafios ----------
+  var DESAFIOS = ["Sem escudo", "Sem armadura de ferro", "Só machado como arma", "Sem dormir na cama", "Só comida de planta", "Sem barco", "Sem escambo com piglins", "Sem minerar diamante", "Sem abrir baús de estruturas", "Sem olhar as coordenadas (F3)", "Derrote o dragão só com arco", "Sem camas no dragão", "Zere em menos de 45 minutos", "Sem usar balde de água para cair", "Sem fazer portal novo no Nether", "Jogue numa seed aleatória, sem escolher"];
+  document.getElementById("sorteio-btn").addEventListener("click", function () {
+    var dois = embaralhar(DESAFIOS).slice(0, 2);
+    document.getElementById("sorteio-lista").innerHTML = dois.map(function (d) { return "<li>" + esc(d) + "</li>"; }).join("");
+  });
 
   // ---------- missões ----------
   var cumpridas = LS.get("rd-missoes", []);
