@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Rota do Dragão</title>
-<meta name="description" content="Guia para zerar o Minecraft rápido: roteiro com cronômetro, seeds, mural da comunidade, biomas, farms, construções, mods e missões difíceis.">
+<meta name="description" content="Guia para zerar o Minecraft rápido: dicas para iniciantes, roteiro com cronômetro, dimensões, seeds, mural da comunidade, biomas, farms, construções, mods e missões difíceis.">
 <meta name="theme-color" content="#2F5320">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Rota do Dragão">
-<meta property="og:description" content="Guia para zerar o Minecraft rápido: roteiro com cronômetro, seeds, mural da comunidade, melhores biomas, itens, farms e missões difíceis.">
+<meta property="og:description" content="Guia para zerar o Minecraft rápido: dicas para iniciantes, roteiro com cronômetro, dimensões, seeds, mural da comunidade, melhores biomas, itens, farms e missões difíceis.">
 <meta property="og:url" content="https://oedoardo.github.io/rota-do-dragao/">
 <meta property="og:image" content="https://oedoardo.github.io/rota-do-dragao/og.png">
 <meta property="og:locale" content="pt_BR">
@@ -384,6 +384,38 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 }
 .links a.ativo { background: var(--grama); box-shadow: inset 0 -3px 0 var(--accent-forte); }
 
+/* busca, receitas e abas de dimensões */
+.busca-btn { margin-left: auto; }
+@media (min-width: 860px) { .busca-btn { margin-left: 0; } }
+.busca { border-top: 1px solid #22401A; background: var(--grama-escura); }
+.busca .wrap { padding-block: 10px; display: grid; gap: 8px; }
+.busca .campo { width: 100%; }
+.busca-res { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; max-height: 50vh; overflow: auto; }
+.busca-res:empty { display: none; }
+.busca-res a { display: flex; justify-content: space-between; gap: 12px; padding: 8px 10px; background: var(--surface); color: var(--fg); text-decoration: none; }
+.busca-res a:hover, .busca-res a:focus-visible { background: var(--surface-2); }
+.busca-res small { color: var(--muted); white-space: nowrap; }
+.busca-res .vazio { padding: 8px 10px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.realce { animation: realce 1.6s ease-out; }
+@keyframes realce { from { box-shadow: 0 0 0 4px var(--accent-forte); } to { box-shadow: 0 0 0 4px transparent; } }
+.receitas { background: var(--surface); border: 1px solid var(--line); padding: 14px 18px; }
+.receitas summary { cursor: pointer; font: 700 1.2rem/1.2 var(--f-display); }
+.receitas summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.receitas > .criterio { margin-top: 8px; }
+.lista-rec { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+.lista-rec li { background: var(--bg); border: 1px solid var(--line); padding: 10px 12px; display: grid; gap: 4px; font-size: var(--fs-small); align-content: start; }
+.lista-rec h4 { font-size: 1rem; }
+.dim-abas { display: flex; flex-wrap: wrap; gap: 6px; border-bottom: 2px solid var(--line); }
+.dim-abas button {
+  font: 700 1.05rem/1 var(--f-display); padding: 12px 18px; cursor: pointer; color: var(--fg);
+  background: var(--surface); border: 1px solid var(--line); border-bottom: 0; border-top: 4px solid var(--dim);
+}
+.dim-abas button[aria-selected="true"] { background: var(--surface-2); color: var(--dim); }
+.dim-abas button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.dim-painel { display: grid; gap: 16px; }
+.dim-painel .itens li::before { color: var(--dim); }
+
 .toast {
   position: fixed; left: 50%; transform: translateX(-50%);
   bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
@@ -404,7 +436,9 @@ td:first-child { font-weight: 600; white-space: nowrap; }
   <div class="wrap">
     <a class="marca" href="#inicio" aria-label="Rota do Dragão, início"><span class="px" data-px="eye" aria-hidden="true"></span><span class="marca-t">Rota do Dragão</span></a>
     <div class="links">
+      <a href="#iniciante">Iniciante</a>
       <a href="#roteiro">Roteiro</a>
+      <a href="#dimensoes">Dimensões</a>
       <a href="#seeds">Seeds</a>
       <a href="#biomas">Biomas</a>
       <a href="#depois">Itens</a>
@@ -412,11 +446,18 @@ td:first-child { font-weight: 600; white-space: nowrap; }
       <a href="#construcoes">Construções</a>
       <a href="#mods">Mods</a>
       <a href="#missoes">Missões</a>
-      <a href="#versao">Versão</a>
     </div>
+    <button type="button" class="btn btn-mini busca-btn" id="busca-btn" aria-expanded="false" aria-controls="busca">Buscar</button>
     <div class="edicao" role="group" aria-label="Edição do jogo">
       <button type="button" id="ed-java" data-ed="java" aria-pressed="true">Java</button>
       <button type="button" id="ed-bedrock" data-ed="bedrock" aria-pressed="false">Bedrock</button>
+    </div>
+  </div>
+  <div class="busca" id="busca" hidden>
+    <div class="wrap">
+      <label class="sr" for="busca-campo">Buscar no guia</label>
+      <input class="campo" id="busca-campo" type="search" autocomplete="off" placeholder="Buscar: bioma, farm, missão, receita…">
+      <ul class="busca-res" id="busca-res" aria-live="polite"></ul>
     </div>
   </div>
 </nav>
@@ -432,7 +473,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
         <a class="btn btn-forte" href="#roteiro">Ver o roteiro</a>
         <a class="btn" href="#seeds">Ver seeds</a>
       </div>
-      <p class="selo">Versão coberta <b>Java 26.3</b> <b>Bedrock 26.50</b> conferido em 29/10/2026</p>
+      <p class="selo"><a href="#versao">Versão coberta</a> <b>Java 26.3</b> <b>Bedrock 26.50</b> conferido em 29/10/2026</p>
     </div>
     <div class="painel inv">
       <p class="painel-titulo">Meta de itens</p>
@@ -470,6 +511,30 @@ td:first-child { font-weight: 600; white-space: nowrap; }
         <li><strong>Atualização automática</strong><span>O guia é revisado toda semana. Quando sair versão nova, esta seção, as seeds e o que mais mudar são atualizados.</span></li>
       </ul>
     </div>
+  </div>
+</section>
+
+<section class="secao" id="iniciante" aria-labelledby="iniciante-t">
+  <div class="wrap">
+    <div class="secao-cab">
+      <p class="eyebrow">Iniciante</p>
+      <h2 id="iniciante-t">Dicas para quem está começando</h2>
+      <p class="lede">O básico que ninguém explica. Leia antes de seguir o roteiro.</p>
+    </div>
+    <ol class="itens">
+      <li><div><h4>O primeiro dia</h4><p>O dia no Minecraft dura 20 minutos de verdade, e a noite chega rápido. Antes de escurecer, junte madeira, faça as ferramentas de pedra, ache comida e prepare um abrigo.</p></div></li>
+      <li><div><h4>A cama é o seu ponto de volta</h4><p>Dormir numa cama pula a noite e marca ali o lugar onde você renasce. Se morrer, volta para a cama, não para o começo do mundo.</p></div></li>
+      <li><div><h4>Nunca cave reto</h4><p>Cavar reto para baixo pode te jogar na lava ou num buraco. Cavar reto para cima pode derrubar areia ou cascalho na sua cabeça. Cave em escada.</p></div></li>
+      <li><div><h4>A ordem das ferramentas</h4><p>Madeira, pedra, ferro, diamante e netherite. O diamante só sai com picareta de ferro ou melhor, e a obsidiana só com picareta de diamante.</p></div></li>
+      <li><div><h4>Monstros que pedem atenção</h4><p>Ouviu um chiado? É o creeper prestes a explodir: corra para trás. Não olhe nos olhos do enderman, e se ele vier, entre na água, que machuca ele.</p></div></li>
+      <li><div><h4>Comida e vida</h4><p>Com a barra de fome cheia, a vida volta sozinha. Carne cozida enche bem mais que crua. Leve sempre comida no inventário.</p></div></li>
+      <li><div><h4>Anote onde fica a base</h4><p>No Java, aperte F3 para ver as coordenadas. No Bedrock, ligue “Mostrar coordenadas” nas opções do mundo. Anote a da base e a dos portais.</p></div></li>
+      <li><div><h4>Se morrer, corra</h4><p>Os itens ficam no chão onde você morreu por 5 minutos (com aquela área carregada). Depois somem.</p></div></li>
+      <li><div><h4>Balde de água salva vidas</h4><p>Apaga fogo em você, transforma lava em pedra e, colocado no chão na hora certa, anula a queda.</p></div></li>
+      <li><div><h4>Encantar</h4><p>A mesa de encantamento leva 1 livro, 2 diamantes e 4 obsidianas. Com 15 estantes em volta, deixando 1 bloco de ar entre a mesa e as estantes, você chega ao nível 30.</p></div></li>
+      <li><div><h4>Poções</h4><p>O suporte de poções leva 1 vara de blaze e 3 pedregulhos. Quase toda poção começa com garrafa de água e verruga do Nether, que vem da fortaleza do Nether.</p></div></li>
+      <li><div><h4>Dificuldade</h4><p>Para aprender, comece no Fácil ou no Normal. No Pacífico não nascem monstros, mas a fome também não aparece e não dá para zerar do mesmo jeito.</p></div></li>
+    </ol>
   </div>
 </section>
 
@@ -651,6 +716,85 @@ td:first-child { font-weight: 600; white-space: nowrap; }
         <ol class="splits" id="t-splits" aria-label="Tempo por etapa"></ol>
         <p class="recorde">Seu recorde: <b id="t-recorde">nenhum ainda</b></p>
       </aside>
+    </div>
+    <details class="receitas" id="receitas">
+      <summary>Receitas da run</summary>
+      <p class="criterio">Tudo o que você precisa fabricar para zerar, na ordem em que aparece.</p>
+      <ul class="lista-rec">
+        <li><h4>Mesa de trabalho</h4><p><span class="rot">Leva:</span> 4 tábuas.</p><p>Um quadrado 2 × 2 no inventário.</p></li>
+        <li><h4>Varetas</h4><p><span class="rot">Leva:</span> 2 tábuas.</p><p>Uma em cima da outra. Saem 4 varetas.</p></li>
+        <li><h4>Picareta de pedra</h4><p><span class="rot">Leva:</span> 3 pedregulhos e 2 varetas.</p><p>Pedregulhos na fileira de cima, varetas descendo pelo meio.</p></li>
+        <li><h4>Fornalha</h4><p><span class="rot">Leva:</span> 8 pedregulhos.</p><p>Em volta da mesa toda, com o centro vazio.</p></li>
+        <li><h4>Balde</h4><p><span class="rot">Leva:</span> 3 barras de ferro.</p><p>Em formato de V.</p></li>
+        <li><h4>Isqueiro</h4><p><span class="rot">Leva:</span> 1 barra de ferro e 1 sílex.</p><p>Lado a lado, na diagonal.</p></li>
+        <li><h4>Cama</h4><p><span class="rot">Leva:</span> 3 lãs e 3 tábuas.</p><p>Lãs da mesma cor em cima, tábuas embaixo.</p></li>
+        <li><h4>Escudo</h4><p><span class="rot">Leva:</span> 6 tábuas e 1 barra de ferro.</p><p>Tábuas em forma de Y e o ferro no meio de cima.</p></li>
+        <li><h4>Arco</h4><p><span class="rot">Leva:</span> 3 varetas e 3 linhas.</p><p>Varetas formando a curva, linhas na coluna do lado.</p></li>
+        <li><h4>Flechas</h4><p><span class="rot">Leva:</span> 1 sílex, 1 vareta e 1 pena.</p><p>Um em cima do outro, nessa ordem. Saem 4 flechas.</p></li>
+        <li><h4>Barco</h4><p><span class="rot">Leva:</span> 5 tábuas.</p><p>Em forma de U. No Bedrock, leva também uma pá de madeira no meio.</p></li>
+        <li><h4>Pão</h4><p><span class="rot">Leva:</span> 3 trigos.</p><p>Em fileira. 1 fardo de feno vira 9 trigos.</p></li>
+        <li><h4>Pó de blaze</h4><p><span class="rot">Leva:</span> 1 vara de blaze.</p><p>Sozinha na mesa. Saem 2 pós.</p></li>
+        <li><h4>Olho do Ender</h4><p><span class="rot">Leva:</span> 1 pó de blaze e 1 pérola do Ender.</p><p>Em qualquer posição.</p></li>
+      </ul>
+    </details>
+  </div>
+</section>
+
+<section class="secao" id="dimensoes" aria-labelledby="dimensoes-t">
+  <div class="wrap">
+    <div class="secao-cab">
+      <p class="eyebrow">Dimensões</p>
+      <h2 id="dimensoes-t">O melhor de cada dimensão</h2>
+      <p class="lede">O que vale a pena fazer no Overworld, no Nether e no End, além de zerar.</p>
+    </div>
+    <div class="dim-abas" role="tablist" aria-label="Dimensões">
+      <button type="button" role="tab" id="tab-overworld" aria-controls="dim-overworld" aria-selected="true" data-dim="ow">Overworld</button>
+      <button type="button" role="tab" id="tab-nether" aria-controls="dim-nether" aria-selected="false" tabindex="-1" data-dim="nether">Nether</button>
+      <button type="button" role="tab" id="tab-end" aria-controls="dim-end" aria-selected="false" tabindex="-1" data-dim="end">The End</button>
+    </div>
+    <div class="dim-painel" role="tabpanel" id="dim-overworld" aria-labelledby="tab-overworld" data-dim="ow">
+      <p class="lede">O mundo de cima, onde tudo começa. Tem as estruturas, os animais e os minérios.</p>
+      <ol class="itens">
+        <li><div><h4>Vilas</h4><p>Troque com os aldeões por esmeraldas, livros encantados e equipamento. A vila também dá camas, comida e ferro no baú do ferreiro.</p></div></li>
+        <li><div><h4>Diamantes</h4><p>Desça perto da camada −58: é onde o diamante mais aparece. Minere em túneis compridos e leve picareta de ferro ou melhor.</p></div></li>
+        <li><div><h4>Trial Chambers</h4><p>Câmaras subterrâneas de cobre e tufo. As chaves de desafio abrem cofres com encantamentos e o núcleo pesado da maça.</p></div></li>
+        <li><div><h4>Cidade antiga</h4><p>No escuro profundo, guarda o livro de Furtividade Ágil e fragmentos de eco. Ande agachado: barulho chama o Warden.</p></div></li>
+        <li><div><h4>Monumento oceânico</h4><p>Esponjas, prismarinho e 8 blocos de ouro escondidos no centro. Leve poção de respiração e leite contra a fadiga.</p></div></li>
+        <li><div><h4>Naufrágios e tesouro</h4><p>O naufrágio traz o mapa do tesouro enterrado, e o tesouro sempre tem o coração do mar, que faz o conduíte.</p></div></li>
+        <li><div><h4>Mansão da floresta</h4><p>Os evocadores derrubam o totem da imortalidade. É grande e perigosa: vá preparado.</p></div></li>
+        <li><div><h4>Domar animais</h4><p>Lobo com osso, gato com bacalhau ou salmão crus, cavalo montando até ele aceitar, papagaio com sementes.</p></div></li>
+        <li><div><h4>Pescar</h4><p>Com Sorte do Mar e Isca na vara, a pesca dá livros encantados, selas, arcos e etiquetas.</p></div></li>
+        <li><div><h4>O que há de novo</h4><p>Na 26.3 chegou um bioma de floresta com álamos e acampamentos abandonados nas florestas. Vale explorar.</p></div></li>
+      </ol>
+    </div>
+    <div class="dim-painel" role="tabpanel" id="dim-nether" aria-labelledby="tab-nether" data-dim="nether" hidden>
+      <p class="lede">A dimensão de fogo. Perigosa, mas cheia de recursos que só existem ali.</p>
+      <ol class="itens">
+        <li><div><h4>Bastião</h4><p>Escambo com piglins (pérolas, resistência ao fogo, obsidiana chorona), muito ouro e o molde de melhoria de netherite nos baús.</p></div></li>
+        <li><div><h4>Fortaleza do Nether</h4><p>Varas de blaze para os olhos do Ender e o suporte de poções, verruga do Nether para as poções e crânios de esqueleto wither para invocar o Wither.</p></div></li>
+        <li><div><h4>Netherite</h4><p>Detritos antigos perto da camada 15. Camas e TNT explodem a rocha e revelam vários de uma vez. Camas explodem no Nether: cuidado com você mesmo.</p></div></li>
+        <li><div><h4>Viajar rápido</h4><p>Cada bloco andado no Nether vale 8 no Overworld. Ligue suas bases com portais e um túnel no Nether. Use o conversor do roteiro (etapa 6).</p></div></li>
+        <li><div><h4>Andar na lava</h4><p>Coloque sela num lavagante e guie com uma vara com fungo distorcido: ele atravessa mares de lava.</p></div></li>
+        <li><div><h4>Quartzo</h4><p>Minerar quartzo dá XP e blocos de construção bonitos. Também é ingrediente de observador e comparador.</p></div></li>
+        <li><div><h4>Lágrima de ghast</h4><p>Faz poção de regeneração e os cristais do End para reviver o dragão. Mate o ghast sobre chão firme para a lágrima não cair na lava.</p></div></li>
+        <li><div><h4>Resistência ao fogo</h4><p>Verruga do Nether e creme de magma. O creme sai dos cubos de magma, comuns nos deltas de basalto.</p></div></li>
+        <li><div><h4>Cuidado</h4><p>Bússola e relógio ficam girando sem rumo no Nether, e fogo em netherrack nunca apaga.</p></div></li>
+      </ol>
+    </div>
+    <div class="dim-painel" role="tabpanel" id="dim-end" aria-labelledby="tab-end" data-dim="end" hidden>
+      <p class="lede">A dimensão do dragão. Depois de vencer, abre o caminho para os melhores itens do jogo.</p>
+      <ol class="itens">
+        <li><div><h4>Derrotar o dragão</h4><p>Siga as etapas 8 e 9 do roteiro: cristais primeiro, depois o dragão.</p></div></li>
+        <li><div><h4>Bafo do dragão</h4><p>Durante a luta, use garrafas de vidro na nuvem roxa do bafo. Ele faz poções persistentes, que deixam uma nuvem de efeito no chão.</p></div></li>
+        <li><div><h4>Ovo do dragão</h4><p>O troféu da vitória. Bater nele faz ele teleportar para perto, então pense antes de mexer.</p></div></li>
+        <li><div><h4>Portal de passagem</h4><p>Depois do dragão, um portal pequeno aparece na borda da ilha. Jogue uma pérola nele para ir às ilhas externas.</p></div></li>
+        <li><div><h4>Cidades do End</h4><p>Baús com equipamento de diamante encantado e shulkers, cujas cascas fazem as caixas de shulker.</p></div></li>
+        <li><div><h4>Navio do End</h4><p>Fica ao lado de algumas cidades e guarda os élitros e a cabeça de dragão.</p></div></li>
+        <li><div><h4>Fruta do coro</h4><p>Comer teleporta você alguns blocos. Cozida, vira fruta do coro estourada, que faz os blocos de purpur.</p></div></li>
+        <li><div><h4>Farm de XP</h4><p>Endermen nascem por toda parte no End. Uma farm de enderman dá XP sem fim (veja em Farms).</p></div></li>
+        <li><div><h4>Reviver o dragão</h4><p>Com 4 cristais do End em volta do portal de saída, o dragão volta para uma revanche.</p></div></li>
+        <li><div><h4>Voltar para casa</h4><p>O portal de saída no centro leva de volta ao seu ponto de renascer no Overworld.</p></div></li>
+      </ol>
     </div>
   </div>
 </section>
@@ -1242,6 +1386,36 @@ td:first-child { font-weight: 600; white-space: nowrap; }
           <li>No pátio, construa a torre principal (torre de menagem), mais alta que todas, com o salão, o quarto e os baús.</li>
           <li>Em volta da muralha, cave um fosso de 3 blocos e encha de água. Uma ponte de madeira leva ao portão.</li>
           <li>Finalize com estandartes nas torres, lanternas nas paredes e escadas de cabeça para baixo embaixo das ameias.</li>
+        </ol></details>
+      </article>
+      <article class="farm">
+        <header><h4>Portal do Nether decorado</h4><span class="nivel nivel-facil">Fácil</span></header>
+        <dl>
+          <div><dt>Serve para</dt><dd>deixar a entrada do Nether com cara de ruína antiga.</dd></div>
+          <div><dt>Material</dt><dd>10 obsidianas, pedra-negra (lisa, rachada e com ouro), escadas e lajes de pedra-negra, lanternas de alma e netherrack.</dd></div>
+        </dl>
+        <details class="como"><summary>Passo a passo</summary><ol>
+          <li>Monte a moldura do portal: 4 de largura por 5 de altura, com obsidiana. Os cantos são opcionais.</li>
+          <li>Em volta da moldura, faça uma borda irregular de pedra-negra, misturando a lisa, a rachada e a com ouro, como nos portais em ruínas.</li>
+          <li>Faça a base um degrau mais alta, com escadas de pedra-negra em volta, para o portal ganhar destaque.</li>
+          <li>Nos dois lados, suba pilares quebrados de alturas diferentes.</li>
+          <li>Coloque netherrack nos cantos e acenda: fogo em netherrack nunca apaga.</li>
+          <li>Pendure lanternas de alma nos pilares e acenda o portal com o isqueiro.</li>
+        </ol></details>
+      </article>
+      <article class="farm">
+        <header><h4>Torre de vigia</h4><span class="nivel nivel-media">Média</span></header>
+        <dl>
+          <div><dt>Serve para</dt><dd>enxergar longe em volta da base e marcar o lugar de longe.</dd></div>
+          <div><dt>Material</dt><dd>troncos, tábuas, pedregulho, escadas de mão, cercas, escadas de madeira e lanternas.</dd></div>
+        </dl>
+        <details class="como"><summary>Passo a passo</summary><ol>
+          <li>Faça uma base quadrada de 5 por 5 com pedregulho, 3 blocos de altura.</li>
+          <li>Por cima, suba com troncos nos 4 cantos e tábuas nas paredes, até uns 15 blocos de altura.</li>
+          <li>Por dentro, coloque escadas de mão numa parede, do chão até o topo.</li>
+          <li>No topo, faça uma plataforma de 7 por 7, sobrando 1 bloco para cada lado da torre, com cercas na beirada.</li>
+          <li>Faça um telhado pontudo com escadas de madeira, deixando a plataforma aberta para olhar em volta.</li>
+          <li>Pendure lanternas embaixo do telhado: de noite a torre aparece de longe.</li>
         </ol></details>
       </article>
       <article class="farm">
@@ -1933,6 +2107,96 @@ td:first-child { font-weight: 600; white-space: nowrap; }
   }
   window.addEventListener("scroll", function () { if (!agendado) { agendado = true; requestAnimationFrame(aoRolar); } }, { passive: true });
   aoRolar();
+
+  // ---------- abas das dimensões ----------
+  var abas = Array.prototype.slice.call(document.querySelectorAll('.dim-abas [role="tab"]'));
+  function abrirAba(aba, focar) {
+    abas.forEach(function (t) {
+      var sel = t === aba;
+      t.setAttribute("aria-selected", String(sel));
+      t.tabIndex = sel ? 0 : -1;
+      document.getElementById(t.getAttribute("aria-controls")).hidden = !sel;
+    });
+    if (focar) aba.focus();
+    LS.set("rd-dim", aba.id);
+  }
+  abas.forEach(function (t, i) {
+    t.addEventListener("click", function () { abrirAba(t, false); });
+    t.addEventListener("keydown", function (e) {
+      var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (d) { e.preventDefault(); abrirAba(abas[(i + d + abas.length) % abas.length], true); }
+    });
+  });
+  var abaSalva = document.getElementById(LS.get("rd-dim", ""));
+  if (abaSalva && abas.indexOf(abaSalva) !== -1) abrirAba(abaSalva, false);
+
+  // ---------- busca no guia ----------
+  var bBusca = document.getElementById("busca-btn"), elBusca = document.getElementById("busca");
+  var inBusca = document.getElementById("busca-campo"), elBuscaRes = document.getElementById("busca-res");
+  var indice = null;
+  function semAcento(t) { return t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
+  function montarIndice() {
+    indice = [];
+    var n = 0;
+    document.querySelectorAll("body > section[id]").forEach(function (sec) {
+      var nomeSec = (sec.querySelector(".eyebrow") || sec.querySelector("h2") || {}).textContent || "";
+      sec.querySelectorAll(".etapa h3, .itens h4, .farm h4, .bioma h4, .lista-rec h4, .card-seed .num, .missao-t, tbody td:first-child").forEach(function (h) {
+        var alvo = h.closest("article, li, tr, .missao-card") || h;
+        if (!alvo.id) alvo.id = "b-" + (++n);
+        var texto = h.textContent.trim();
+        indice.push({ id: alvo.id, texto: texto, onde: nomeSec.trim(), chave: semAcento(texto), corpo: semAcento(alvo.textContent) });
+      });
+    });
+  }
+  function buscar() {
+    var q = semAcento(inBusca.value.trim());
+    if (q.length < 2) { elBuscaRes.innerHTML = ""; return; }
+    if (!indice) montarIndice();
+    var termos = q.split(/\s+/);
+    var achou = indice.map(function (it) {
+      var pts = 0;
+      for (var i = 0; i < termos.length; i++) {
+        if (it.chave.indexOf(termos[i]) !== -1) pts += 3;
+        else if (it.corpo.indexOf(termos[i]) !== -1) pts += 1;
+        else return null;
+      }
+      return { it: it, pts: pts };
+    }).filter(Boolean).sort(function (a, b) { return b.pts - a.pts; }).slice(0, 8);
+    elBuscaRes.innerHTML = achou.length ? achou.map(function (r) {
+      return '<li><a href="#' + r.it.id + '" data-ir="' + r.it.id + '"><span>' + esc(r.it.texto) + "</span><small>" + esc(r.it.onde) + "</small></a></li>";
+    }).join("") : '<li class="vazio">Nada encontrado. Tente outra palavra.</li>';
+  }
+  function irPara(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var painelDim = el.closest(".dim-painel");
+    if (painelDim && painelDim.hidden) abrirAba(document.querySelector('[aria-controls="' + painelDim.id + '"]'), false);
+    var rec = el.closest("details.receitas");
+    if (rec) rec.open = true;
+    if (el.hidden && el.parentNode && el.parentNode.id) {
+      var todos = document.querySelector('.filtros[data-filtro-alvo="#' + el.parentNode.id + '"] [data-filtro="todos"]');
+      if (todos) todos.click();
+    }
+    fecharBusca();
+    el.scrollIntoView({ block: "center" });
+    el.classList.remove("realce"); void el.offsetWidth; el.classList.add("realce");
+  }
+  function abrirBusca() { elBusca.hidden = false; bBusca.setAttribute("aria-expanded", "true"); inBusca.focus(); inBusca.select(); }
+  function fecharBusca() { elBusca.hidden = true; bBusca.setAttribute("aria-expanded", "false"); }
+  bBusca.addEventListener("click", function () { if (elBusca.hidden) abrirBusca(); else fecharBusca(); });
+  inBusca.addEventListener("input", buscar);
+  inBusca.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") { fecharBusca(); bBusca.focus(); }
+    if (e.key === "Enter") { var a = elBuscaRes.querySelector("a[data-ir]"); if (a) { e.preventDefault(); irPara(a.getAttribute("data-ir")); } }
+  });
+  elBuscaRes.addEventListener("click", function (e) {
+    var a = e.target.closest("a[data-ir]");
+    if (!a) return;
+    e.preventDefault(); irPara(a.getAttribute("data-ir"));
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "/" && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) { e.preventDefault(); abrirBusca(); }
+  });
 
   // ---------- missões ----------
   var cumpridas = LS.get("rd-missoes", []);
