@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
@@ -88,7 +88,7 @@ body::before {
 h1, h2, h3, h4 { text-wrap: balance; margin: 0; }
 h2 { font-family: var(--f-display); font-weight: 700; font-size: var(--fs-h2); line-height: 1.1; letter-spacing: 0.01em; }
 h3 { font-size: var(--fs-h3); font-weight: 600; line-height: 1.3; }
-h4 { font-size: 1.05rem; font-weight: 600; line-height: 1.3; }
+h4, .h4 { font-size: 1.05rem; font-weight: 600; line-height: 1.3; }
 p { margin: 0; }
 a { color: var(--accent); text-underline-offset: 3px; }
 code, .mono { font-family: var(--f-mono); font-size: 0.92em; }
@@ -116,8 +116,9 @@ code, .mono { font-family: var(--f-mono); font-size: 0.92em; }
   .busca-btn, .edicao { flex: none; }
 }
 /* tablet deitado e telas médias: os links vão para uma segunda linha, todos à vista */
-@media (min-width: 900px) and (max-width: 1439px) {
-  .links { flex-wrap: wrap; overflow: visible; justify-content: space-between; }
+@media (min-width: 960px) and (max-width: 1439px) {
+  .links { flex-wrap: wrap; overflow: visible; justify-content: space-between; gap: 2px; }
+  .links a { padding: 6px 5px; font-size: 0.84rem; }
 }
 /* quando os links rolam de lado (celular), a borda direita esmaece para mostrar que tem mais */
 .links.tem-mais { -webkit-mask-image: linear-gradient(to right, #000 82%, transparent); mask-image: linear-gradient(to right, #000 82%, transparent); }
@@ -138,17 +139,6 @@ code, .mono { font-family: var(--f-mono); font-size: 0.92em; }
   padding: 18px;
 }
 .painel-titulo { font-family: var(--f-display); font-weight: 700; font-size: 1.25rem; margin-bottom: 12px; }
-.slot {
-  position: relative; display: grid; place-items: center;
-  width: 64px; height: 64px; background: var(--slot);
-  border: 3px solid; border-color: var(--slot-lo) var(--slot-hi) var(--slot-hi) var(--slot-lo);
-}
-.slot .px { width: 40px; height: 40px; }
-.qtd {
-  position: absolute; right: 3px; bottom: 0;
-  font: 700 1rem/1 var(--f-num); color: #FFFFFF; text-shadow: 2px 2px 0 #2A2A2A;
-  font-variant-numeric: tabular-nums;
-}
 .px { display: inline-block; image-rendering: pixelated; }
 .px svg { width: 100%; height: 100%; display: block; shape-rendering: crispEdges; }
 
@@ -202,6 +192,7 @@ code, .mono { font-family: var(--f-mono); font-size: 0.92em; }
 .secao { border-top: 1px solid var(--line); }
 .secao > .wrap { padding-block: 56px; display: grid; gap: 28px; }
 .secao-cab { display: grid; gap: 10px; }
+.sub-cab { margin-top: 12px; }
 
 /* versão */
 .versao-grade { display: grid; gap: 24px; }
@@ -285,8 +276,6 @@ code, .mono { font-family: var(--f-mono); font-size: 0.92em; }
 .mural-cab h3 { font-family: var(--f-display); font-weight: 700; font-size: 1.6rem; }
 .lista-mural { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); }
 .lista-mural .vazio { grid-column: 1 / -1; }
-.colar { display: grid; gap: 8px; background: var(--surface); border: 1px solid var(--line); padding: 16px; }
-.colar textarea { width: 100%; resize: vertical; font-size: 0.9rem; line-height: 1.4; }
 .sub { display: grid; gap: 12px; }
 
 /* tabela de objetivos */
@@ -331,7 +320,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 @media (min-width: 860px) { .itens { grid-template-columns: 1fr 1fr; column-gap: 40px; } }
 .itens li { counter-increment: item; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--line); }
 .itens li::before { content: counter(item); font: 700 1.5rem/1 var(--f-num); color: var(--accent); }
-.itens h4 { font-size: 1.08rem; }
+.itens .h4 { font-size: 1.08rem; }
 .itens p { font-size: var(--fs-small); margin-top: 4px; max-width: 62ch; }
 .itens p .rot { color: var(--accent-forte); }
 
@@ -418,7 +407,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .receitas > .criterio { margin-top: 8px; }
 .lista-rec { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
 .lista-rec li { background: var(--bg); border: 1px solid var(--line); padding: 10px 12px; display: grid; gap: 4px; font-size: var(--fs-small); align-content: start; }
-.lista-rec h4 { font-size: 1rem; }
+.lista-rec .h4 { font-size: 1rem; }
 .dim-abas { display: flex; flex-wrap: wrap; gap: 6px; border-bottom: 2px solid var(--line); }
 .dim-abas button {
   font: 700 1.05rem/1 var(--f-display); padding: 12px 18px; cursor: pointer; color: var(--fg);
@@ -460,7 +449,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .linha-tempo { list-style: none; margin: 0; padding: 0 0 0 18px; display: grid; gap: 0; border-left: 3px solid var(--line); }
 .linha-tempo li { position: relative; display: grid; grid-template-columns: 7.5em minmax(0, 1fr); gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--line); }
 .linha-tempo li::before { content: ""; position: absolute; left: -26px; top: 18px; width: 13px; height: 13px; background: var(--accent); border: 3px solid var(--bg); }
-.linha-tempo h4 { font-size: 1.02rem; }
+.linha-tempo .h4 { font-size: 1.02rem; }
 .linha-tempo p { font-size: var(--fs-small); margin-top: 2px; }
 .ver-data { font: 600 var(--fs-small)/1.6 var(--f-num); color: var(--muted); }
 @media (max-width: 520px) { .linha-tempo li { grid-template-columns: 1fr; gap: 2px; } }
@@ -483,6 +472,18 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .partida-botoes .btn { padding: 18px 14px; font-size: 1.05rem; }
 body.em-partida { overflow: hidden; }
 
+.pular { position: absolute; left: 12px; top: -60px; z-index: 40; background: var(--accent); color: var(--on-accent); padding: 10px 14px; font-weight: 600; text-decoration: none; }
+.pular:focus { top: 12px; }
+
+/* atalhos */
+.atalhos { margin: 0; display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.atalhos div { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: center; background: var(--surface); border: 1px solid var(--line); padding: 10px 12px; }
+.atalhos dd { margin: 0; font-size: var(--fs-small); }
+kbd {
+  display: inline-block; font: 600 0.82rem/1 var(--f-mono); color: var(--fg); white-space: nowrap;
+  background: var(--slot); border: 2px solid; border-color: var(--slot-hi) var(--slot-lo) var(--slot-lo) var(--slot-hi); padding: 6px 8px;
+}
+
 .toast {
   position: fixed; left: 50%; transform: translateX(-50%);
   bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
@@ -492,6 +493,7 @@ body.em-partida { overflow: hidden; }
 </style>
 </head>
 <body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
 <nav class="topo" aria-label="Seções">
   <div class="wrap">
     <a class="marca" href="#inicio" aria-label="Rota do Dragão, início"><span class="px" data-px="eye" aria-hidden="true"></span><span class="marca-t">Rota do Dragão</span></a>
@@ -506,6 +508,7 @@ body.em-partida { overflow: hidden; }
       <a href="#depois">Itens</a>
       <a href="#farms">Farms</a>
       <a href="#construcoes">Construções</a>
+      <a href="#redstone">Redstone</a>
       <a href="#mods">Mods</a>
       <a href="#missoes">Missões</a>
       <a href="#versoes">Versões</a>
@@ -561,13 +564,15 @@ body.em-partida { overflow: hidden; }
         <li data-dim="ow"><span class="rota-dim">Overworld</span><span class="rota-n">6–7</span><span class="rota-o">olhos e fortaleza</span></li>
         <li data-dim="end"><span class="rota-dim">End</span><span class="rota-n">8–9</span><span class="rota-o">dragão</span></li>
       </ol>
-      <div class="progresso" aria-label="Seu progresso">
+      <div class="progresso" role="group" aria-label="Seu progresso">
         <p><a href="#roteiro"><b id="prog-hero">0</b> de 9 etapas do roteiro</a></p>
         <p><a href="#missoes"><b id="prog-m">0</b> de <span id="prog-m-total">20</span> missões cumpridas</a></p>
       </div>
     </div>
   </div>
 </header>
+
+<main id="conteudo">
 
 <section class="secao" id="versao" aria-labelledby="versao-t">
   <div class="wrap">
@@ -596,24 +601,24 @@ body.em-partida { overflow: hidden; }
       <p class="lede">O básico que ninguém explica. Leia antes de seguir o roteiro.</p>
     </div>
     <ol class="itens">
-      <li><div><h4>O primeiro dia</h4><p>O dia no Minecraft dura 20 minutos de verdade, e a noite chega rápido. Antes de escurecer, junte madeira, faça as ferramentas de pedra, ache comida e prepare um abrigo.</p></div></li>
-      <li><div><h4>A cama é o seu ponto de volta</h4><p>Dormir numa cama pula a noite e marca ali o lugar onde você renasce. Se morrer, volta para a cama, não para o começo do mundo.</p></div></li>
-      <li><div><h4>Nunca cave reto</h4><p>Cavar reto para baixo pode te jogar na lava ou num buraco. Cavar reto para cima pode derrubar areia ou cascalho na sua cabeça. Cave em escada.</p></div></li>
-      <li><div><h4>A ordem das ferramentas</h4><p>Madeira, pedra, ferro, diamante e netherite. O diamante só sai com picareta de ferro ou melhor, e a obsidiana só com picareta de diamante.</p></div></li>
-      <li><div><h4>Monstros que pedem atenção</h4><p>Ouviu um chiado? É o creeper prestes a explodir: corra para trás. Não olhe nos olhos do enderman, e se ele vier, entre na água, que machuca ele.</p></div></li>
-      <li><div><h4>Comida e vida</h4><p>Com a barra de fome cheia, a vida volta sozinha. Carne cozida enche bem mais que crua. Leve sempre comida no inventário.</p></div></li>
-      <li><div><h4>Anote onde fica a base</h4><p>No Java, aperte F3 para ver as coordenadas. No Bedrock, ligue “Mostrar coordenadas” nas opções do mundo. Anote a da base e a dos portais.</p></div></li>
-      <li><div><h4>Se morrer, corra</h4><p>Os itens ficam no chão onde você morreu por 5 minutos (com aquela área carregada). Depois somem.</p></div></li>
-      <li><div><h4>Balde de água salva vidas</h4><p>Apaga fogo em você, transforma lava em pedra e, colocado no chão na hora certa, anula a queda.</p></div></li>
-      <li><div><h4>Encantar</h4><p>A mesa de encantamento leva 1 livro, 2 diamantes e 4 obsidianas. Com 15 estantes em volta, deixando 1 bloco de ar entre a mesa e as estantes, você chega ao nível 30.</p></div></li>
-      <li><div><h4>Poções</h4><p>O suporte de poções leva 1 vara de blaze e 3 pedregulhos. Quase toda poção começa com garrafa de água e verruga do Nether, que vem da fortaleza do Nether.</p></div></li>
-      <li><div><h4>Dificuldade</h4><p>Para aprender, comece no Fácil ou no Normal. No Pacífico não nascem monstros, mas a fome também não aparece e não dá para zerar do mesmo jeito.</p></div></li>
+      <li><div><h3 class="h4">O primeiro dia</h3><p>O dia no Minecraft dura 20 minutos de verdade, e a noite chega rápido. Antes de escurecer, junte madeira, faça as ferramentas de pedra, ache comida e prepare um abrigo.</p></div></li>
+      <li><div><h3 class="h4">A cama é o seu ponto de volta</h3><p>Dormir numa cama pula a noite e marca ali o lugar onde você renasce. Se morrer, volta para a cama, não para o começo do mundo.</p></div></li>
+      <li><div><h3 class="h4">Nunca cave reto</h3><p>Cavar reto para baixo pode te jogar na lava ou num buraco. Cavar reto para cima pode derrubar areia ou cascalho na sua cabeça. Cave em escada.</p></div></li>
+      <li><div><h3 class="h4">A ordem das ferramentas</h3><p>Madeira, pedra, ferro, diamante e netherite. O diamante só sai com picareta de ferro ou melhor, e a obsidiana só com picareta de diamante.</p></div></li>
+      <li><div><h3 class="h4">Monstros que pedem atenção</h3><p>Ouviu um chiado? É o creeper prestes a explodir: corra para trás. Não olhe nos olhos do enderman, e se ele vier, entre na água, que machuca ele.</p></div></li>
+      <li><div><h3 class="h4">Comida e vida</h3><p>Com a barra de fome cheia, a vida volta sozinha. Carne cozida enche bem mais que crua. Leve sempre comida no inventário.</p></div></li>
+      <li><div><h3 class="h4">Anote onde fica a base</h3><p>No Java, aperte F3 para ver as coordenadas. No Bedrock, ligue “Mostrar coordenadas” nas opções do mundo. Anote a da base e a dos portais.</p></div></li>
+      <li><div><h3 class="h4">Se morrer, corra</h3><p>Os itens ficam no chão onde você morreu por 5 minutos (com aquela área carregada). Depois somem.</p></div></li>
+      <li><div><h3 class="h4">Balde de água salva vidas</h3><p>Apaga fogo em você, transforma lava em pedra e, colocado no chão na hora certa, anula a queda.</p></div></li>
+      <li><div><h3 class="h4">Encantar</h3><p>A mesa de encantamento leva 1 livro, 2 diamantes e 4 obsidianas. Com 15 estantes em volta, deixando 1 bloco de ar entre a mesa e as estantes, você chega ao nível 30.</p></div></li>
+      <li><div><h3 class="h4">Poções</h3><p>O suporte de poções leva 1 vara de blaze e 3 pedregulhos. Quase toda poção começa com garrafa de água e verruga do Nether, que vem da fortaleza do Nether.</p></div></li>
+      <li><div><h3 class="h4">Dificuldade</h3><p>Para aprender, comece no Fácil ou no Normal. No Pacífico não nascem monstros, mas a fome também não aparece e não dá para zerar do mesmo jeito.</p></div></li>
     </ol>
-    <div class="secao-cab" id="comidas" style="margin-top: 12px;">
+    <div class="secao-cab sub-cab" id="comidas">
       <h3>Tabela de comidas</h3>
       <p class="lede">Quanto cada comida enche a barra de fome. A barra tem 20 pontos, ou 10 coxinhas: cada coxinha vale 2 pontos. Os valores principais foram conferidos em guias de comida do jogo (veja o rodapé).</p>
     </div>
-    <div class="tabela-wrap">
+    <div class="tabela-wrap" tabindex="0" role="region" aria-label="Tabela de comidas">
       <table>
         <thead><tr><th scope="col">Comida</th><th scope="col">Enche</th><th scope="col">Observação</th></tr></thead>
         <tbody>
@@ -672,6 +677,32 @@ body.em-partida { overflow: hidden; }
       <div><dt>Clutch</dt><dd>Salvar-se de uma queda no último segundo, como colocar água no chão antes de cair.</dd></div>
       <div><dt>Redstone</dt><dd>O pó vermelho que funciona como fio elétrico no jogo e liga pistões, portas e máquinas.</dd></div>
       <div><dt>Hardcore</dt><dd>Modo com uma vida só: se morrer, o mundo acaba.</dd></div>
+    </dl>
+    <div class="secao-cab sub-cab" id="atalhos">
+      <h3>Atalhos de teclado</h3>
+      <p class="lede">Os atalhos do Java no PC. No Bedrock com teclado, E, Q, Shift, Ctrl e F5 funcionam igual, mas as combinações com F3 não existem.</p>
+    </div>
+    <dl class="atalhos">
+      <div><dt><kbd>E</kbd></dt><dd>Abre o inventário.</dd></div>
+      <div><dt><kbd>Q</kbd></dt><dd>Joga o item da mão. Com Ctrl, joga a pilha inteira.</dd></div>
+      <div><dt><kbd>F</kbd></dt><dd>Troca o item entre a mão principal e a segunda mão.</dd></div>
+      <div><dt><kbd>1 a 9</kbd></dt><dd>Escolhe o espaço da barra de itens.</dd></div>
+      <div><dt><kbd>Shift</kbd></dt><dd>Agacha. Agachado, você não cai da beirada dos blocos.</dd></div>
+      <div><dt><kbd>Ctrl</kbd></dt><dd>Corre. Apertar W duas vezes rápido também funciona.</dd></div>
+      <div><dt><kbd>Botão do meio do mouse</kbd></dt><dd>Seleciona o bloco que você está olhando, se ele estiver no inventário.</dd></div>
+      <div><dt><kbd>Shift + clique</kbd></dt><dd>Passa o item direto entre o inventário e o baú.</dd></div>
+      <div><dt><kbd>Clique duplo</kbd></dt><dd>Junta todos os itens iguais numa pilha só.</dd></div>
+      <div><dt><kbd>T</kbd></dt><dd>Abre o chat.</dd></div>
+      <div><dt><kbd>Tab</kbd></dt><dd>Mostra quem está no servidor.</dd></div>
+      <div><dt><kbd>F1</kbd></dt><dd>Esconde a interface, para tirar prints bonitos.</dd></div>
+      <div><dt><kbd>F2</kbd></dt><dd>Tira um print da tela.</dd></div>
+      <div><dt><kbd>F5</kbd></dt><dd>Muda a câmera: primeira pessoa, por trás e pela frente.</dd></div>
+      <div><dt><kbd>F11</kbd></dt><dd>Tela cheia.</dd></div>
+      <div><dt><kbd>F3</kbd></dt><dd>Mostra coordenadas, bioma, direção e mais.</dd></div>
+      <div><dt><kbd>F3 + G</kbd></dt><dd>Mostra as bordas dos chunks. Ótimo para farms e slime chunks.</dd></div>
+      <div><dt><kbd>F3 + B</kbd></dt><dd>Mostra as caixas de colisão dos mobs e para onde eles olham.</dd></div>
+      <div><dt><kbd>F3 + H</kbd></dt><dd>Mostra a durabilidade e detalhes dos itens.</dd></div>
+      <div><dt><kbd>F3 + D</kbd></dt><dd>Limpa o chat.</dd></div>
     </dl>
   </div>
 </section>
@@ -831,7 +862,7 @@ body.em-partida { overflow: hidden; }
 
       </div>
 
-      <aside class="painel cronometro" aria-labelledby="cron-t">
+      <div class="painel cronometro" role="region" aria-labelledby="cron-t">
         <p class="painel-titulo" id="cron-t">Cronômetro da run</p>
         <p class="tempo" id="t-tempo" aria-live="off">0:00.0</p>
         <p class="atual" id="t-atual">Toque em Começar quando entrar no mundo.</p>
@@ -844,26 +875,26 @@ body.em-partida { overflow: hidden; }
         </div>
         <ol class="splits" id="t-splits" aria-label="Tempo por etapa"></ol>
         <p class="recorde">Seu recorde: <b id="t-recorde">nenhum ainda</b></p>
-      </aside>
+      </div>
     </div>
     <details class="receitas" id="receitas">
       <summary>Receitas da run</summary>
       <p class="criterio">Tudo o que você precisa fabricar para zerar, na ordem em que aparece.</p>
       <ul class="lista-rec">
-        <li><h4>Mesa de trabalho</h4><p><span class="rot">Leva:</span> 4 tábuas.</p><p>Um quadrado 2 × 2 no inventário.</p></li>
-        <li><h4>Varetas</h4><p><span class="rot">Leva:</span> 2 tábuas.</p><p>Uma em cima da outra. Saem 4 varetas.</p></li>
-        <li><h4>Picareta de pedra</h4><p><span class="rot">Leva:</span> 3 pedregulhos e 2 varetas.</p><p>Pedregulhos na fileira de cima, varetas descendo pelo meio.</p></li>
-        <li><h4>Fornalha</h4><p><span class="rot">Leva:</span> 8 pedregulhos.</p><p>Em volta da mesa toda, com o centro vazio.</p></li>
-        <li><h4>Balde</h4><p><span class="rot">Leva:</span> 3 barras de ferro.</p><p>Em formato de V.</p></li>
-        <li><h4>Isqueiro</h4><p><span class="rot">Leva:</span> 1 barra de ferro e 1 sílex.</p><p>Lado a lado, na diagonal.</p></li>
-        <li><h4>Cama</h4><p><span class="rot">Leva:</span> 3 lãs e 3 tábuas.</p><p>Lãs da mesma cor em cima, tábuas embaixo.</p></li>
-        <li><h4>Escudo</h4><p><span class="rot">Leva:</span> 6 tábuas e 1 barra de ferro.</p><p>Tábuas em forma de Y e o ferro no meio de cima.</p></li>
-        <li><h4>Arco</h4><p><span class="rot">Leva:</span> 3 varetas e 3 linhas.</p><p>Varetas formando a curva, linhas na coluna do lado.</p></li>
-        <li><h4>Flechas</h4><p><span class="rot">Leva:</span> 1 sílex, 1 vareta e 1 pena.</p><p>Um em cima do outro, nessa ordem. Saem 4 flechas.</p></li>
-        <li><h4>Barco</h4><p><span class="rot">Leva:</span> 5 tábuas.</p><p>Em forma de U. No Bedrock, leva também uma pá de madeira no meio.</p></li>
-        <li><h4>Pão</h4><p><span class="rot">Leva:</span> 3 trigos.</p><p>Em fileira. 1 fardo de feno vira 9 trigos.</p></li>
-        <li><h4>Pó de blaze</h4><p><span class="rot">Leva:</span> 1 vara de blaze.</p><p>Sozinha na mesa. Saem 2 pós.</p></li>
-        <li><h4>Olho do Ender</h4><p><span class="rot">Leva:</span> 1 pó de blaze e 1 pérola do Ender.</p><p>Em qualquer posição.</p></li>
+        <li><h3 class="h4">Mesa de trabalho</h3><p><span class="rot">Leva:</span> 4 tábuas.</p><p>Um quadrado 2 × 2 no inventário.</p></li>
+        <li><h3 class="h4">Varetas</h3><p><span class="rot">Leva:</span> 2 tábuas.</p><p>Uma em cima da outra. Saem 4 varetas.</p></li>
+        <li><h3 class="h4">Picareta de pedra</h3><p><span class="rot">Leva:</span> 3 pedregulhos e 2 varetas.</p><p>Pedregulhos na fileira de cima, varetas descendo pelo meio.</p></li>
+        <li><h3 class="h4">Fornalha</h3><p><span class="rot">Leva:</span> 8 pedregulhos.</p><p>Em volta da mesa toda, com o centro vazio.</p></li>
+        <li><h3 class="h4">Balde</h3><p><span class="rot">Leva:</span> 3 barras de ferro.</p><p>Em formato de V.</p></li>
+        <li><h3 class="h4">Isqueiro</h3><p><span class="rot">Leva:</span> 1 barra de ferro e 1 sílex.</p><p>Lado a lado, na diagonal.</p></li>
+        <li><h3 class="h4">Cama</h3><p><span class="rot">Leva:</span> 3 lãs e 3 tábuas.</p><p>Lãs da mesma cor em cima, tábuas embaixo.</p></li>
+        <li><h3 class="h4">Escudo</h3><p><span class="rot">Leva:</span> 6 tábuas e 1 barra de ferro.</p><p>Tábuas em forma de Y e o ferro no meio de cima.</p></li>
+        <li><h3 class="h4">Arco</h3><p><span class="rot">Leva:</span> 3 varetas e 3 linhas.</p><p>Varetas formando a curva, linhas na coluna do lado.</p></li>
+        <li><h3 class="h4">Flechas</h3><p><span class="rot">Leva:</span> 1 sílex, 1 vareta e 1 pena.</p><p>Um em cima do outro, nessa ordem. Saem 4 flechas.</p></li>
+        <li><h3 class="h4">Barco</h3><p><span class="rot">Leva:</span> 5 tábuas.</p><p>Em forma de U. No Bedrock, leva também uma pá de madeira no meio.</p></li>
+        <li><h3 class="h4">Pão</h3><p><span class="rot">Leva:</span> 3 trigos.</p><p>Em fileira. 1 fardo de feno vira 9 trigos.</p></li>
+        <li><h3 class="h4">Pó de blaze</h3><p><span class="rot">Leva:</span> 1 vara de blaze.</p><p>Sozinha na mesa. Saem 2 pós.</p></li>
+        <li><h3 class="h4">Olho do Ender</h3><p><span class="rot">Leva:</span> 1 pó de blaze e 1 pérola do Ender.</p><p>Em qualquer posição.</p></li>
       </ul>
     </details>
   </div>
@@ -884,45 +915,45 @@ body.em-partida { overflow: hidden; }
     <div class="dim-painel" role="tabpanel" id="dim-overworld" aria-labelledby="tab-overworld" data-dim="ow">
       <p class="lede">O mundo de cima, onde tudo começa. Tem as estruturas, os animais e os minérios.</p>
       <ol class="itens">
-        <li><div><h4>Vilas</h4><p>Troque com os aldeões por esmeraldas, livros encantados e equipamento. A vila também dá camas, comida e ferro no baú do ferreiro.</p></div></li>
-        <li><div><h4>Diamantes</h4><p>Desça perto da camada −58: é onde o diamante mais aparece. Minere em túneis compridos e leve picareta de ferro ou melhor.</p></div></li>
-        <li><div><h4>Trial Chambers</h4><p>Câmaras subterrâneas de cobre e tufo. As chaves de desafio abrem cofres com encantamentos e o núcleo pesado da maça.</p></div></li>
-        <li><div><h4>Cidade antiga</h4><p>No escuro profundo, guarda o livro de Furtividade Ágil e fragmentos de eco. Ande agachado: barulho chama o Warden.</p></div></li>
-        <li><div><h4>Monumento oceânico</h4><p>Esponjas, prismarinho e 8 blocos de ouro escondidos no centro. Leve poção de respiração e leite contra a fadiga.</p></div></li>
-        <li><div><h4>Naufrágios e tesouro</h4><p>O naufrágio traz o mapa do tesouro enterrado, e o tesouro sempre tem o coração do mar, que faz o conduíte.</p></div></li>
-        <li><div><h4>Mansão da floresta</h4><p>Os evocadores derrubam o totem da imortalidade. É grande e perigosa: vá preparado.</p></div></li>
-        <li><div><h4>Domar animais</h4><p>Lobo com osso, gato com bacalhau ou salmão crus, cavalo montando até ele aceitar, papagaio com sementes.</p></div></li>
-        <li><div><h4>Pescar</h4><p>Com Sorte do Mar e Isca na vara, a pesca dá livros encantados, selas, arcos e etiquetas.</p></div></li>
-        <li><div><h4>O que há de novo</h4><p>Na 26.3 chegou um bioma de floresta com álamos e acampamentos abandonados nas florestas. Vale explorar.</p></div></li>
+        <li><div><h3 class="h4">Vilas</h3><p>Troque com os aldeões por esmeraldas, livros encantados e equipamento. A vila também dá camas, comida e ferro no baú do ferreiro.</p></div></li>
+        <li><div><h3 class="h4">Diamantes</h3><p>Desça perto da camada −58: é onde o diamante mais aparece. Minere em túneis compridos e leve picareta de ferro ou melhor.</p></div></li>
+        <li><div><h3 class="h4">Trial Chambers</h3><p>Câmaras subterrâneas de cobre e tufo. As chaves de desafio abrem cofres com encantamentos e o núcleo pesado da maça.</p></div></li>
+        <li><div><h3 class="h4">Cidade antiga</h3><p>No escuro profundo, guarda o livro de Furtividade Ágil e fragmentos de eco. Ande agachado: barulho chama o Warden.</p></div></li>
+        <li><div><h3 class="h4">Monumento oceânico</h3><p>Esponjas, prismarinho e 8 blocos de ouro escondidos no centro. Leve poção de respiração e leite contra a fadiga.</p></div></li>
+        <li><div><h3 class="h4">Naufrágios e tesouro</h3><p>O naufrágio traz o mapa do tesouro enterrado, e o tesouro sempre tem o coração do mar, que faz o conduíte.</p></div></li>
+        <li><div><h3 class="h4">Mansão da floresta</h3><p>Os evocadores derrubam o totem da imortalidade. É grande e perigosa: vá preparado.</p></div></li>
+        <li><div><h3 class="h4">Domar animais</h3><p>Lobo com osso, gato com bacalhau ou salmão crus, cavalo montando até ele aceitar, papagaio com sementes.</p></div></li>
+        <li><div><h3 class="h4">Pescar</h3><p>Com Sorte do Mar e Isca na vara, a pesca dá livros encantados, selas, arcos e etiquetas.</p></div></li>
+        <li><div><h3 class="h4">O que há de novo</h3><p>Na 26.3 chegou um bioma de floresta com álamos e acampamentos abandonados nas florestas. Vale explorar.</p></div></li>
       </ol>
     </div>
     <div class="dim-painel" role="tabpanel" id="dim-nether" aria-labelledby="tab-nether" data-dim="nether" hidden>
       <p class="lede">A dimensão de fogo. Perigosa, mas cheia de recursos que só existem ali.</p>
       <ol class="itens">
-        <li><div><h4>Bastião</h4><p>Escambo com piglins (pérolas, resistência ao fogo, obsidiana chorona), muito ouro e o molde de melhoria de netherite nos baús.</p></div></li>
-        <li><div><h4>Fortaleza do Nether</h4><p>Varas de blaze para os olhos do Ender e o suporte de poções, verruga do Nether para as poções e crânios de esqueleto wither para invocar o Wither.</p></div></li>
-        <li><div><h4>Netherite</h4><p>Detritos antigos perto da camada 15. Camas e TNT explodem a rocha e revelam vários de uma vez. Camas explodem no Nether: cuidado com você mesmo.</p></div></li>
-        <li><div><h4>Viajar rápido</h4><p>Cada bloco andado no Nether vale 8 no Overworld. Ligue suas bases com portais e um túnel no Nether. Use o conversor do roteiro (etapa 6).</p></div></li>
-        <li><div><h4>Andar na lava</h4><p>Coloque sela num lavagante e guie com uma vara com fungo distorcido: ele atravessa mares de lava.</p></div></li>
-        <li><div><h4>Quartzo</h4><p>Minerar quartzo dá XP e blocos de construção bonitos. Também é ingrediente de observador e comparador.</p></div></li>
-        <li><div><h4>Lágrima de ghast</h4><p>Faz poção de regeneração e os cristais do End para reviver o dragão. Mate o ghast sobre chão firme para a lágrima não cair na lava.</p></div></li>
-        <li><div><h4>Resistência ao fogo</h4><p>Verruga do Nether e creme de magma. O creme sai dos cubos de magma, comuns nos deltas de basalto.</p></div></li>
-        <li><div><h4>Cuidado</h4><p>Bússola e relógio ficam girando sem rumo no Nether, e fogo em netherrack nunca apaga.</p></div></li>
+        <li><div><h3 class="h4">Bastião</h3><p>Escambo com piglins (pérolas, resistência ao fogo, obsidiana chorona), muito ouro e o molde de melhoria de netherite nos baús.</p></div></li>
+        <li><div><h3 class="h4">Fortaleza do Nether</h3><p>Varas de blaze para os olhos do Ender e o suporte de poções, verruga do Nether para as poções e crânios de esqueleto wither para invocar o Wither.</p></div></li>
+        <li><div><h3 class="h4">Netherite</h3><p>Detritos antigos perto da camada 15. Camas e TNT explodem a rocha e revelam vários de uma vez. Camas explodem no Nether: cuidado com você mesmo.</p></div></li>
+        <li><div><h3 class="h4">Viajar rápido</h3><p>Cada bloco andado no Nether vale 8 no Overworld. Ligue suas bases com portais e um túnel no Nether. Use o conversor do roteiro (etapa 6).</p></div></li>
+        <li><div><h3 class="h4">Andar na lava</h3><p>Coloque sela num lavagante e guie com uma vara com fungo distorcido: ele atravessa mares de lava.</p></div></li>
+        <li><div><h3 class="h4">Quartzo</h3><p>Minerar quartzo dá XP e blocos de construção bonitos. Também é ingrediente de observador e comparador.</p></div></li>
+        <li><div><h3 class="h4">Lágrima de ghast</h3><p>Faz poção de regeneração e os cristais do End para reviver o dragão. Mate o ghast sobre chão firme para a lágrima não cair na lava.</p></div></li>
+        <li><div><h3 class="h4">Resistência ao fogo</h3><p>Verruga do Nether e creme de magma. O creme sai dos cubos de magma, comuns nos deltas de basalto.</p></div></li>
+        <li><div><h3 class="h4">Cuidado</h3><p>Bússola e relógio ficam girando sem rumo no Nether, e fogo em netherrack nunca apaga.</p></div></li>
       </ol>
     </div>
     <div class="dim-painel" role="tabpanel" id="dim-end" aria-labelledby="tab-end" data-dim="end" hidden>
       <p class="lede">A dimensão do dragão. Depois de vencer, abre o caminho para os melhores itens do jogo.</p>
       <ol class="itens">
-        <li><div><h4>Derrotar o dragão</h4><p>Siga as etapas 8 e 9 do roteiro: cristais primeiro, depois o dragão.</p></div></li>
-        <li><div><h4>Bafo do dragão</h4><p>Durante a luta, use garrafas de vidro na nuvem roxa do bafo. Ele faz poções persistentes, que deixam uma nuvem de efeito no chão.</p></div></li>
-        <li><div><h4>Ovo do dragão</h4><p>O troféu da vitória. Bater nele faz ele teleportar para perto, então pense antes de mexer.</p></div></li>
-        <li><div><h4>Portal de passagem</h4><p>Depois do dragão, um portal pequeno aparece na borda da ilha. Jogue uma pérola nele para ir às ilhas externas.</p></div></li>
-        <li><div><h4>Cidades do End</h4><p>Baús com equipamento de diamante encantado e shulkers, cujas cascas fazem as caixas de shulker.</p></div></li>
-        <li><div><h4>Navio do End</h4><p>Fica ao lado de algumas cidades e guarda os élitros e a cabeça de dragão.</p></div></li>
-        <li><div><h4>Fruta do coro</h4><p>Comer teleporta você alguns blocos. Cozida, vira fruta do coro estourada, que faz os blocos de purpur.</p></div></li>
-        <li><div><h4>Farm de XP</h4><p>Endermen nascem por toda parte no End. Uma farm de enderman dá XP sem fim (veja em Farms).</p></div></li>
-        <li><div><h4>Reviver o dragão</h4><p>Com 4 cristais do End em volta do portal de saída, o dragão volta para uma revanche.</p></div></li>
-        <li><div><h4>Voltar para casa</h4><p>O portal de saída no centro leva de volta ao seu ponto de renascer no Overworld.</p></div></li>
+        <li><div><h3 class="h4">Derrotar o dragão</h3><p>Siga as etapas 8 e 9 do roteiro: cristais primeiro, depois o dragão.</p></div></li>
+        <li><div><h3 class="h4">Bafo do dragão</h3><p>Durante a luta, use garrafas de vidro na nuvem roxa do bafo. Ele faz poções persistentes, que deixam uma nuvem de efeito no chão.</p></div></li>
+        <li><div><h3 class="h4">Ovo do dragão</h3><p>O troféu da vitória. Bater nele faz ele teleportar para perto, então pense antes de mexer.</p></div></li>
+        <li><div><h3 class="h4">Portal de passagem</h3><p>Depois do dragão, um portal pequeno aparece na borda da ilha. Jogue uma pérola nele para ir às ilhas externas.</p></div></li>
+        <li><div><h3 class="h4">Cidades do End</h3><p>Baús com equipamento de diamante encantado e shulkers, cujas cascas fazem as caixas de shulker.</p></div></li>
+        <li><div><h3 class="h4">Navio do End</h3><p>Fica ao lado de algumas cidades e guarda os élitros e a cabeça de dragão.</p></div></li>
+        <li><div><h3 class="h4">Fruta do coro</h3><p>Comer teleporta você alguns blocos. Cozida, vira fruta do coro estourada, que faz os blocos de purpur.</p></div></li>
+        <li><div><h3 class="h4">Farm de XP</h3><p>Endermen nascem por toda parte no End. Uma farm de enderman dá XP sem fim (veja em Farms).</p></div></li>
+        <li><div><h3 class="h4">Reviver o dragão</h3><p>Com 4 cristais do End em volta do portal de saída, o dragão volta para uma revanche.</p></div></li>
+        <li><div><h3 class="h4">Voltar para casa</h3><p>O portal de saída no centro leva de volta ao seu ponto de renascer no Overworld.</p></div></li>
       </ol>
     </div>
   </div>
@@ -944,7 +975,7 @@ body.em-partida { overflow: hidden; }
     </div>
     <div class="grade-cards" id="lista-mobs">
       <article class="farm mob" data-grupo="chefe">
-        <header><h4>Ender Dragon</h4><span class="nivel nivel-avancada">Chefe</span></header>
+        <header><h3 class="h4">Ender Dragon</h3><span class="nivel nivel-avancada">Chefe</span></header>
         <dl>
           <div><dt>Onde</dt><dd>No End, na ilha central.</dd></div>
           <div><dt>Deixa cair</dt><dd>Muita XP e o ovo do dragão.</dd></div>
@@ -952,7 +983,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="chefe">
-        <header><h4>Wither</h4><span class="nivel nivel-avancada">Chefe</span></header>
+        <header><h3 class="h4">Wither</h3><span class="nivel nivel-avancada">Chefe</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Só aparece se você invocar: 4 areias das almas em T e 3 crânios de esqueleto wither em cima.</dd></div>
           <div><dt>Deixa cair</dt><dd>Estrela do Nether, que faz o sinalizador.</dd></div>
@@ -960,7 +991,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Zumbi</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Zumbi</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Overworld, no escuro e à noite.</dd></div>
           <div><dt>Deixa cair</dt><dd>Carne podre e, às vezes, ferro, cenoura ou batata.</dd></div>
@@ -968,7 +999,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Husk</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Husk</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Desertos.</dd></div>
           <div><dt>Deixa cair</dt><dd>Carne podre.</dd></div>
@@ -976,7 +1007,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Afogado</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Afogado</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Rios e oceanos.</dd></div>
           <div><dt>Deixa cair</dt><dd>Carne podre e, às vezes, tridente, concha de náutilo ou cobre.</dd></div>
@@ -984,7 +1015,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Esqueleto</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Esqueleto</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Overworld, no escuro.</dd></div>
           <div><dt>Deixa cair</dt><dd>Ossos, flechas e, às vezes, o arco.</dd></div>
@@ -992,7 +1023,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Esqueleto errante (Stray)</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Esqueleto errante (Stray)</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Biomas gelados.</dd></div>
           <div><dt>Deixa cair</dt><dd>Ossos e flechas de lentidão.</dd></div>
@@ -1000,7 +1031,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Bogged</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Bogged</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Pântanos e Trial Chambers.</dd></div>
           <div><dt>Deixa cair</dt><dd>Ossos, flechas de veneno e cogumelos.</dd></div>
@@ -1008,7 +1039,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Creeper</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Creeper</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Overworld, no escuro.</dd></div>
           <div><dt>Deixa cair</dt><dd>Pólvora. Morto por esqueleto, deixa um disco.</dd></div>
@@ -1016,7 +1047,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Aranha</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Aranha</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Overworld, no escuro. De dia fica calma.</dd></div>
           <div><dt>Deixa cair</dt><dd>Linha e olho de aranha.</dd></div>
@@ -1024,7 +1055,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Aranha de caverna</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Aranha de caverna</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Geradores das minas abandonadas e, desde a 26.2, nas cavernas de enxofre.</dd></div>
           <div><dt>Deixa cair</dt><dd>Linha e olho de aranha.</dd></div>
@@ -1032,7 +1063,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Enderman</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Enderman</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Overworld à noite, floresta distorcida do Nether e todo o End.</dd></div>
           <div><dt>Deixa cair</dt><dd>Pérola do Ender.</dd></div>
@@ -1040,7 +1071,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Bruxa</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Bruxa</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>No escuro e na cabana do pântano.</dd></div>
           <div><dt>Deixa cair</dt><dd>Redstone, pedra luminosa, açúcar, garrafas e outros.</dd></div>
@@ -1048,7 +1079,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Slime</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Slime</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Pântanos à noite e slime chunks abaixo da camada 40.</dd></div>
           <div><dt>Deixa cair</dt><dd>Bola de slime.</dd></div>
@@ -1056,7 +1087,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Phantom</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Phantom</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Aparece no céu se você passa 3 noites ou mais sem dormir.</dd></div>
           <div><dt>Deixa cair</dt><dd>Membrana de phantom.</dd></div>
@@ -1064,7 +1095,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Traça</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Traça</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Sai de blocos de pedra infestados, comuns nas fortalezas.</dd></div>
           <div><dt>Deixa cair</dt><dd>Nada.</dd></div>
@@ -1072,7 +1103,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Saqueador (Pillager)</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Saqueador (Pillager)</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Postos de saqueadores e ataques às vilas.</dd></div>
           <div><dt>Deixa cair</dt><dd>Flechas e, às vezes, a besta. O capitão deixa a garrafa sinistra.</dd></div>
@@ -1080,7 +1111,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Vingador (Vindicator)</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Vingador (Vindicator)</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Mansões da floresta e ataques às vilas.</dd></div>
           <div><dt>Deixa cair</dt><dd>Esmeralda e, às vezes, o machado.</dd></div>
@@ -1088,7 +1119,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Evocador</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Evocador</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Mansões da floresta e ataques às vilas.</dd></div>
           <div><dt>Deixa cair</dt><dd>Totem da imortalidade e esmeralda.</dd></div>
@@ -1096,7 +1127,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Devastador (Ravager)</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Devastador (Ravager)</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Ataques às vilas.</dd></div>
           <div><dt>Deixa cair</dt><dd>Sela.</dd></div>
@@ -1104,7 +1135,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Guardião</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Guardião</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Monumento oceânico.</dd></div>
           <div><dt>Deixa cair</dt><dd>Prismarinho e peixe.</dd></div>
@@ -1112,7 +1143,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Guardião ancião</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Guardião ancião</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>3 dentro de cada monumento oceânico.</dd></div>
           <div><dt>Deixa cair</dt><dd>Esponja molhada.</dd></div>
@@ -1120,7 +1151,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Warden</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Warden</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Escuro profundo, quando os sensores sculk são ativados várias vezes.</dd></div>
           <div><dt>Deixa cair</dt><dd>Catalisador de sculk.</dd></div>
@@ -1128,7 +1159,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Breeze</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Breeze</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Trial Chambers.</dd></div>
           <div><dt>Deixa cair</dt><dd>Vara de brisa, que faz cargas de vento e a maça.</dd></div>
@@ -1136,7 +1167,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Shulker</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Shulker</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Cidades do End.</dd></div>
           <div><dt>Deixa cair</dt><dd>Casca de shulker, que faz a caixa de shulker.</dd></div>
@@ -1144,7 +1175,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Blaze</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Blaze</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Fortaleza do Nether, perto dos geradores.</dd></div>
           <div><dt>Deixa cair</dt><dd>Vara de blaze.</dd></div>
@@ -1152,7 +1183,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Ghast</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Ghast</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Nether, em áreas abertas.</dd></div>
           <div><dt>Deixa cair</dt><dd>Lágrima de ghast e pólvora.</dd></div>
@@ -1160,7 +1191,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Cubo de magma</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Cubo de magma</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Nether, principalmente nos deltas de basalto.</dd></div>
           <div><dt>Deixa cair</dt><dd>Creme de magma.</dd></div>
@@ -1168,7 +1199,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Esqueleto wither</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Esqueleto wither</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Fortaleza do Nether.</dd></div>
           <div><dt>Deixa cair</dt><dd>Ossos, carvão e, às vezes, o crânio.</dd></div>
@@ -1176,7 +1207,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Piglin bruto</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Piglin bruto</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Bastiões.</dd></div>
           <div><dt>Deixa cair</dt><dd>Machado de ouro.</dd></div>
@@ -1184,7 +1215,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Hoglin</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Hoglin</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Floresta carmesim.</dd></div>
           <div><dt>Deixa cair</dt><dd>Carne de porco crua e couro.</dd></div>
@@ -1192,7 +1223,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Creaking</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Creaking</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Jardim pálido, à noite.</dd></div>
           <div><dt>Deixa cair</dt><dd>Nada.</dd></div>
@@ -1200,7 +1231,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="hostil">
-        <header><h4>Cubo de enxofre</h4><span class="nivel nivel-avancada">Hostil</span></header>
+        <header><h3 class="h4">Cubo de enxofre</h3><span class="nivel nivel-avancada">Hostil</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Cavernas de enxofre, desde a 26.2.</dd></div>
           <div><dt>Deixa cair</dt><dd>—</dd></div>
@@ -1208,7 +1239,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="neutro">
-        <header><h4>Lobo</h4><span class="nivel nivel-media">Neutro</span></header>
+        <header><h3 class="h4">Lobo</h3><span class="nivel nivel-media">Neutro</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Florestas, taigas e outras regiões.</dd></div>
           <div><dt>Deixa cair</dt><dd>Nada.</dd></div>
@@ -1216,7 +1247,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="neutro">
-        <header><h4>Abelha</h4><span class="nivel nivel-media">Neutro</span></header>
+        <header><h3 class="h4">Abelha</h3><span class="nivel nivel-media">Neutro</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Colmeias perto de flores.</dd></div>
           <div><dt>Deixa cair</dt><dd>Nada.</dd></div>
@@ -1224,7 +1255,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="neutro">
-        <header><h4>Golem de ferro</h4><span class="nivel nivel-media">Neutro</span></header>
+        <header><h3 class="h4">Golem de ferro</h3><span class="nivel nivel-media">Neutro</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Vilas, ou feito com 4 blocos de ferro e uma abóbora.</dd></div>
           <div><dt>Deixa cair</dt><dd>Ferro e papoula.</dd></div>
@@ -1232,7 +1263,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="neutro">
-        <header><h4>Lhama</h4><span class="nivel nivel-media">Neutro</span></header>
+        <header><h3 class="h4">Lhama</h3><span class="nivel nivel-media">Neutro</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Savanas e montanhas.</dd></div>
           <div><dt>Deixa cair</dt><dd>Couro.</dd></div>
@@ -1240,7 +1271,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="neutro">
-        <header><h4>Panda</h4><span class="nivel nivel-media">Neutro</span></header>
+        <header><h3 class="h4">Panda</h3><span class="nivel nivel-media">Neutro</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Selvas de bambu.</dd></div>
           <div><dt>Deixa cair</dt><dd>Bambu.</dd></div>
@@ -1248,7 +1279,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="neutro">
-        <header><h4>Urso polar</h4><span class="nivel nivel-media">Neutro</span></header>
+        <header><h3 class="h4">Urso polar</h3><span class="nivel nivel-media">Neutro</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Biomas gelados.</dd></div>
           <div><dt>Deixa cair</dt><dd>Peixe cru.</dd></div>
@@ -1256,7 +1287,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="neutro">
-        <header><h4>Piglin</h4><span class="nivel nivel-media">Neutro</span></header>
+        <header><h3 class="h4">Piglin</h3><span class="nivel nivel-media">Neutro</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Nether, principalmente nos bastiões.</dd></div>
           <div><dt>Deixa cair</dt><dd>Ouro e itens que ele estiver segurando.</dd></div>
@@ -1264,7 +1295,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="neutro">
-        <header><h4>Piglin zumbificado</h4><span class="nivel nivel-media">Neutro</span></header>
+        <header><h3 class="h4">Piglin zumbificado</h3><span class="nivel nivel-media">Neutro</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Nether.</dd></div>
           <div><dt>Deixa cair</dt><dd>Carne podre e pepitas de ouro.</dd></div>
@@ -1272,7 +1303,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="neutro">
-        <header><h4>Golfinho</h4><span class="nivel nivel-media">Neutro</span></header>
+        <header><h3 class="h4">Golfinho</h3><span class="nivel nivel-media">Neutro</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Oceanos.</dd></div>
           <div><dt>Deixa cair</dt><dd>Peixe cru.</dd></div>
@@ -1280,7 +1311,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="neutro">
-        <header><h4>Cabra</h4><span class="nivel nivel-media">Neutro</span></header>
+        <header><h3 class="h4">Cabra</h3><span class="nivel nivel-media">Neutro</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Montanhas.</dd></div>
           <div><dt>Deixa cair</dt><dd>Chifre de cabra, quando bate a cabeça em blocos.</dd></div>
@@ -1288,7 +1319,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="passivo">
-        <header><h4>Vaca</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <header><h3 class="h4">Vaca</h3><span class="nivel nivel-facil">Passivo</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Planícies e florestas.</dd></div>
           <div><dt>Deixa cair</dt><dd>Carne e couro. Com balde, dá leite.</dd></div>
@@ -1296,7 +1327,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="passivo">
-        <header><h4>Porco</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <header><h3 class="h4">Porco</h3><span class="nivel nivel-facil">Passivo</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Planícies e florestas.</dd></div>
           <div><dt>Deixa cair</dt><dd>Carne de porco.</dd></div>
@@ -1304,7 +1335,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="passivo">
-        <header><h4>Ovelha</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <header><h3 class="h4">Ovelha</h3><span class="nivel nivel-facil">Passivo</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Planícies e montanhas.</dd></div>
           <div><dt>Deixa cair</dt><dd>Lã e carne de carneiro.</dd></div>
@@ -1312,7 +1343,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="passivo">
-        <header><h4>Galinha</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <header><h3 class="h4">Galinha</h3><span class="nivel nivel-facil">Passivo</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Planícies e florestas.</dd></div>
           <div><dt>Deixa cair</dt><dd>Pena e frango cru. Bota ovos.</dd></div>
@@ -1320,7 +1351,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="passivo">
-        <header><h4>Cavalo</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <header><h3 class="h4">Cavalo</h3><span class="nivel nivel-facil">Passivo</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Planícies e savanas.</dd></div>
           <div><dt>Deixa cair</dt><dd>Couro.</dd></div>
@@ -1328,7 +1359,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="passivo">
-        <header><h4>Aldeão</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <header><h3 class="h4">Aldeão</h3><span class="nivel nivel-facil">Passivo</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Vilas.</dd></div>
           <div><dt>Deixa cair</dt><dd>Nada.</dd></div>
@@ -1336,7 +1367,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="passivo">
-        <header><h4>Gato</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <header><h3 class="h4">Gato</h3><span class="nivel nivel-facil">Passivo</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Vilas e cabanas de bruxa.</dd></div>
           <div><dt>Deixa cair</dt><dd>Linha.</dd></div>
@@ -1344,7 +1375,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="passivo">
-        <header><h4>Raposa</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <header><h3 class="h4">Raposa</h3><span class="nivel nivel-facil">Passivo</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Taigas.</dd></div>
           <div><dt>Deixa cair</dt><dd>O item que estiver na boca.</dd></div>
@@ -1352,7 +1383,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="passivo">
-        <header><h4>Papagaio</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <header><h3 class="h4">Papagaio</h3><span class="nivel nivel-facil">Passivo</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Selvas.</dd></div>
           <div><dt>Deixa cair</dt><dd>Pena.</dd></div>
@@ -1360,7 +1391,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="passivo">
-        <header><h4>Tartaruga</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <header><h3 class="h4">Tartaruga</h3><span class="nivel nivel-facil">Passivo</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Praias.</dd></div>
           <div><dt>Deixa cair</dt><dd>Grama marinha; o filhote crescido solta escama.</dd></div>
@@ -1368,7 +1399,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="passivo">
-        <header><h4>Axolote</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <header><h3 class="h4">Axolote</h3><span class="nivel nivel-facil">Passivo</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Cavernas exuberantes.</dd></div>
           <div><dt>Deixa cair</dt><dd>Nada.</dd></div>
@@ -1376,7 +1407,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="passivo">
-        <header><h4>Sapo</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <header><h3 class="h4">Sapo</h3><span class="nivel nivel-facil">Passivo</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Pântanos e manguezais.</dd></div>
           <div><dt>Deixa cair</dt><dd>Nada.</dd></div>
@@ -1384,7 +1415,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="passivo">
-        <header><h4>Camelo</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <header><h3 class="h4">Camelo</h3><span class="nivel nivel-facil">Passivo</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Desertos.</dd></div>
           <div><dt>Deixa cair</dt><dd>Nada.</dd></div>
@@ -1392,7 +1423,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="passivo">
-        <header><h4>Tatu</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <header><h3 class="h4">Tatu</h3><span class="nivel nivel-facil">Passivo</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Savanas e badlands.</dd></div>
           <div><dt>Deixa cair</dt><dd>Escamas, com o pincel.</dd></div>
@@ -1400,7 +1431,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="passivo">
-        <header><h4>Farejador</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <header><h3 class="h4">Farejador</h3><span class="nivel nivel-facil">Passivo</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Nasce de ovo achado nas ruínas do oceano quente.</dd></div>
           <div><dt>Deixa cair</dt><dd>Nada.</dd></div>
@@ -1408,7 +1439,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="passivo">
-        <header><h4>Allay</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <header><h3 class="h4">Allay</h3><span class="nivel nivel-facil">Passivo</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Postos de saqueadores e mansões, preso em jaulas.</dd></div>
           <div><dt>Deixa cair</dt><dd>Nada.</dd></div>
@@ -1416,7 +1447,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="passivo">
-        <header><h4>Lavagante (Strider)</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <header><h3 class="h4">Lavagante (Strider)</h3><span class="nivel nivel-facil">Passivo</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Mares de lava do Nether.</dd></div>
           <div><dt>Deixa cair</dt><dd>Linha.</dd></div>
@@ -1424,7 +1455,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="passivo">
-        <header><h4>Ghast feliz</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <header><h3 class="h4">Ghast feliz</h3><span class="nivel nivel-facil">Passivo</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Nasce de um ghast seco colocado na água, desde a 1.21.6.</dd></div>
           <div><dt>Deixa cair</dt><dd>—</dd></div>
@@ -1432,7 +1463,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="passivo">
-        <header><h4>Morcego</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <header><h3 class="h4">Morcego</h3><span class="nivel nivel-facil">Passivo</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Cavernas escuras.</dd></div>
           <div><dt>Deixa cair</dt><dd>Nada.</dd></div>
@@ -1440,7 +1471,7 @@ body.em-partida { overflow: hidden; }
         </dl>
       </article>
       <article class="farm mob" data-grupo="passivo">
-        <header><h4>Lula e lula brilhante</h4><span class="nivel nivel-facil">Passivo</span></header>
+        <header><h3 class="h4">Lula e lula brilhante</h3><span class="nivel nivel-facil">Passivo</span></header>
         <dl>
           <div><dt>Onde</dt><dd>Oceanos e, a brilhante, águas escuras.</dd></div>
           <div><dt>Deixa cair</dt><dd>Bolsa de tinta ou de tinta brilhante.</dd></div>
@@ -1464,7 +1495,7 @@ body.em-partida { overflow: hidden; }
       <li><span class="rot">Poção estranha:</span> garrafas de água embaixo e verruga do Nether em cima.</li>
       <li><span class="rot">Ingrediente:</span> coloque o da tabela em cima da poção estranha.</li>
     </ol>
-    <div class="tabela-wrap">
+    <div class="tabela-wrap" tabindex="0" role="region" aria-label="Tabela de poções">
       <table>
         <thead><tr><th scope="col">Poção</th><th scope="col">Ingrediente</th><th scope="col">Para que serve</th></tr></thead>
         <tbody>
@@ -1587,7 +1618,7 @@ body.em-partida { overflow: hidden; }
       <p class="lede">O bioma decide o que aparece por perto. Escolha pelo que você quer fazer ou percorra a lista. Para achar um bioma sem comando, abra a seed no <a href="https://www.chunkbase.com/apps/biome-finder" target="_blank" rel="noopener">localizador de biomas do Chunkbase</a>.</p>
     </div>
 
-    <div class="tabela-wrap">
+    <div class="tabela-wrap" tabindex="0" role="region" aria-label="Tabela: o que você quer e para onde ir">
       <table>
         <thead><tr><th scope="col">Quero</th><th scope="col">Vá para</th><th scope="col">Por quê</th></tr></thead>
         <tbody>
@@ -1615,7 +1646,7 @@ body.em-partida { overflow: hidden; }
       <h3>Lista completa de biomas (66)</h3>
       <p class="lede">Todos os biomas do jogo na 26.3, nas três dimensões. O nome em português pode variar um pouco no jogo; o nome técnico (ID) é o mesmo em qualquer idioma.</p>
     </div>
-    <div class="tabela-wrap">
+    <div class="tabela-wrap" tabindex="0" role="region" aria-label="Lista completa de biomas (66)">
       <table>
         <thead><tr><th scope="col">Bioma</th><th scope="col">ID</th><th scope="col">Destaque</th></tr></thead>
         <tbody>
@@ -1704,150 +1735,150 @@ body.em-partida { overflow: hidden; }
     <div class="grade-cards" id="lista-biomas">
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
-        <header><h4>Planícies</h4><span class="id">plains</span></header>
+        <header><h3 class="h4">Planícies</h3><span class="id">plains</span></header>
         <p><span class="rot">Bom para:</span> vila, cavalos, ovelhas para as camas, base e farms grandes.</p>
         <p>Plano e aberto, dá para ver vila e lava de longe. Um dos melhores spawns para zerar.</p>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
-        <header><h4>Savana</h4><span class="id">savanna</span></header>
+        <header><h3 class="h4">Savana</h3><span class="id">savanna</span></header>
         <p><span class="rot">Bom para:</span> vila, cavalos e madeira de acácia.</p>
         <p>Árvores baixas e espaçadas deixam a vista livre, ótimo para achar vila e lava logo no começo.</p>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
-        <header><h4>Deserto</h4><span class="id">desert</span></header>
+        <header><h3 class="h4">Deserto</h3><span class="id">desert</span></header>
         <p><span class="rot">Bom para:</span> vila, templo do deserto, cactos e coelhos.</p>
         <p>O templo tem 4 baús e TNT escondida embaixo de uma placa de pressão no meio.</p>
         <p class="cuidado"><span class="rot">Cuidado:</span> quase não tem madeira, e à noite surgem husks, os zumbis do deserto.</p>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
-        <header><h4>Taiga</h4><span class="id">taiga</span></header>
+        <header><h3 class="h4">Taiga</h3><span class="id">taiga</span></header>
         <p><span class="rot">Bom para:</span> vila, lobos, raposas e frutas doces.</p>
         <p>Comida fácil com as frutas doces e madeira de pinheiro em quantidade.</p>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
-        <header><h4>Floresta</h4><span class="id">forest</span></header>
+        <header><h3 class="h4">Floresta</h3><span class="id">forest</span></header>
         <p><span class="rot">Bom para:</span> madeira, lobos e maçãs.</p>
         <p>Na 26.3 aparecem acampamentos abandonados nas áreas de floresta. Vale olhar se um surgir no caminho.</p>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
-        <header><h4>Floresta escura</h4><span class="id">dark_forest</span></header>
+        <header><h3 class="h4">Floresta escura</h3><span class="id">dark_forest</span></header>
         <p><span class="rot">Bom para:</span> mansão da floresta e o totem da imortalidade, que os evocadores derrubam.</p>
         <p>Também tem cogumelos gigantes e madeira de carvalho escuro.</p>
         <p class="cuidado"><span class="rot">Cuidado:</span> é escura até de dia, então surgem monstros.</p>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
-        <header><h4>Selva</h4><span class="id">jungle</span></header>
+        <header><h3 class="h4">Selva</h3><span class="id">jungle</span></header>
         <p><span class="rot">Bom para:</span> templo da selva, bambu, pandas, jaguatiricas, cacau e melancia.</p>
         <p class="cuidado"><span class="rot">Cuidado:</span> mato fechado, difícil de atravessar com pressa.</p>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
-        <header><h4>Pântano</h4><span class="id">swamp</span></header>
+        <header><h3 class="h4">Pântano</h3><span class="id">swamp</span></header>
         <p><span class="rot">Bom para:</span> cabana de bruxa e slimes.</p>
         <p>À noite, os slimes surgem na superfície. Na lua cheia aparecem mais.</p>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
-        <header><h4>Manguezal</h4><span class="id">mangrove_swamp</span></header>
+        <header><h3 class="h4">Manguezal</h3><span class="id">mangrove_swamp</span></header>
         <p><span class="rot">Bom para:</span> lama para tijolos e sapos.</p>
         <p>Um sapo que come um cubo de magma pequeno solta uma luz-sapo, um bloco de iluminação.</p>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
-        <header><h4>Badlands</h4><span class="id">badlands</span></header>
+        <header><h3 class="h4">Badlands</h3><span class="id">badlands</span></header>
         <p><span class="rot">Bom para:</span> ouro e terracota colorida.</p>
         <p>Tem minério de ouro extra entre as camadas 32 e 256, e minas abandonadas à mostra, com trilhos e baús.</p>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
-        <header><h4>Montanhas</h4><span class="id">jagged_peaks e outros</span></header>
+        <header><h3 class="h4">Montanhas</h3><span class="id">jagged_peaks e outros</span></header>
         <p><span class="rot">Bom para:</span> esmeralda, ferro e cabras.</p>
         <p>A esmeralda só aparece em biomas de montanha. O ferro fica exposto nas alturas. Também valem stony_peaks, frozen_peaks, snowy_slopes, grove, meadow e windswept_hills.</p>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
-        <header><h4>Cerejal</h4><span class="id">cherry_grove</span></header>
+        <header><h3 class="h4">Cerejal</h3><span class="id">cherry_grove</span></header>
         <p><span class="rot">Bom para:</span> abelhas, mel, favo e madeira de cerejeira.</p>
         <p>Fica nas montanhas, então também pode ter esmeralda.</p>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
-        <header><h4>Campos de cogumelos</h4><span class="id">mushroom_fields</span></header>
+        <header><h3 class="h4">Campos de cogumelos</h3><span class="id">mushroom_fields</span></header>
         <p><span class="rot">Bom para:</span> base segura, porque monstros não surgem ali naturalmente.</p>
         <p>A vaca-cogumelo dá ensopado de cogumelo sem fim se você usar uma tigela nela.</p>
         <p class="cuidado"><span class="rot">Cuidado:</span> é raro e costuma ficar no meio do oceano.</p>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
-        <header><h4>Oceano profundo</h4><span class="id">deep_ocean</span></header>
+        <header><h3 class="h4">Oceano profundo</h3><span class="id">deep_ocean</span></header>
         <p><span class="rot">Bom para:</span> monumento oceânico, com guardiões, prismarinho, esponjas e XP.</p>
         <p class="cuidado"><span class="rot">Cuidado:</span> os guardiões dão fadiga de mineração. Leve leite.</p>
       </article>
       <article class="bioma" data-grupo="overworld" data-dim="ow">
         <div class="faixa"></div>
-        <header><h4>Praia</h4><span class="id">beach</span></header>
+        <header><h3 class="h4">Praia</h3><span class="id">beach</span></header>
         <p><span class="rot">Bom para:</span> tesouro enterrado, naufrágios e tartarugas.</p>
         <p>O tesouro enterrado sempre traz o coração do mar, que faz o conduíte, e muitas vezes ferro.</p>
       </article>
 
       <article class="bioma" data-grupo="cavernas" data-dim="ow">
         <div class="faixa"></div>
-        <header><h4>Cavernas exuberantes</h4><span class="id">lush_caves</span></header>
+        <header><h3 class="h4">Cavernas exuberantes</h3><span class="id">lush_caves</span></header>
         <p><span class="rot">Bom para:</span> axolotes, azaleia, frutas brilhantes e argila.</p>
       </article>
       <article class="bioma" data-grupo="cavernas" data-dim="ow">
         <div class="faixa"></div>
-        <header><h4>Cavernas de espeleotemas</h4><span class="id">dripstone_caves</span></header>
+        <header><h3 class="h4">Cavernas de espeleotemas</h3><span class="id">dripstone_caves</span></header>
         <p><span class="rot">Bom para:</span> cobre em quantidade e espeleotemas.</p>
         <p>Espeleotema pontudo embaixo de lava enche um caldeirão aos poucos: é lava sem fim.</p>
       </article>
       <article class="bioma" data-grupo="cavernas" data-dim="ow">
         <div class="faixa"></div>
-        <header><h4>Escuro profundo</h4><span class="id">deep_dark</span></header>
+        <header><h3 class="h4">Escuro profundo</h3><span class="id">deep_dark</span></header>
         <p><span class="rot">Bom para:</span> cidade antiga, com o livro de Furtividade Ágil (Swift Sneak), fragmentos de eco e discos.</p>
         <p class="cuidado"><span class="rot">Cuidado:</span> barulho chama o Warden. Ande agachado e não quebre os sensores.</p>
       </article>
 
       <article class="bioma" data-grupo="nether" data-dim="nether">
         <div class="faixa"></div>
-        <header><h4>Desertos do Nether</h4><span class="id">nether_wastes</span></header>
+        <header><h3 class="h4">Desertos do Nether</h3><span class="id">nether_wastes</span></header>
         <p><span class="rot">Bom para:</span> piglins para o escambo, quartzo, fortalezas e bastiões.</p>
         <p class="cuidado"><span class="rot">Cuidado:</span> ghasts atiram de longe e muito chão é lava.</p>
       </article>
       <article class="bioma" data-grupo="nether" data-dim="nether">
         <div class="faixa"></div>
-        <header><h4>Floresta carmesim</h4><span class="id">crimson_forest</span></header>
+        <header><h3 class="h4">Floresta carmesim</h3><span class="id">crimson_forest</span></header>
         <p><span class="rot">Bom para:</span> hoglins, que dão comida e couro, e piglins. Bastiões aparecem aqui.</p>
         <p class="cuidado"><span class="rot">Cuidado:</span> hoglins atacam e jogam você longe.</p>
       </article>
       <article class="bioma" data-grupo="nether" data-dim="nether">
         <div class="faixa"></div>
-        <header><h4>Floresta distorcida</h4><span class="id">warped_forest</span></header>
+        <header><h3 class="h4">Floresta distorcida</h3><span class="id">warped_forest</span></header>
         <p><span class="rot">Bom para:</span> pérolas do Ender e descanso.</p>
         <p>É o bioma mais calmo do Nether. Fora os endermen, quase nada hostil surge ali.</p>
       </article>
       <article class="bioma" data-grupo="nether" data-dim="nether">
         <div class="faixa"></div>
-        <header><h4>Vale das almas</h4><span class="id">soul_sand_valley</span></header>
+        <header><h3 class="h4">Vale das almas</h3><span class="id">soul_sand_valley</span></header>
         <p><span class="rot">Bom para:</span> enxergar fortalezas de longe e pegar areia das almas, que invoca o Wither.</p>
         <p class="cuidado"><span class="rot">Cuidado:</span> esqueletos e ghasts, e a areia das almas deixa você lento.</p>
       </article>
       <article class="bioma" data-grupo="nether" data-dim="nether">
         <div class="faixa"></div>
-        <header><h4>Deltas de basalto</h4><span class="id">basalt_deltas</span></header>
+        <header><h3 class="h4">Deltas de basalto</h3><span class="id">basalt_deltas</span></header>
         <p><span class="rot">Bom para:</span> cubos de magma e o creme de magma das poções de resistência ao fogo.</p>
         <p class="cuidado"><span class="rot">Cuidado:</span> terreno difícil e nenhum bastião. Evite numa run.</p>
       </article>
 
       <article class="bioma" data-grupo="end" data-dim="end">
         <div class="faixa"></div>
-        <header><h4>Ilhas externas do End</h4><span class="id">end_highlands</span></header>
+        <header><h3 class="h4">Ilhas externas do End</h3><span class="id">end_highlands</span></header>
         <p><span class="rot">Bom para:</span> cidades e navios do End, com élitros e cabeça de dragão, e shulkers para as caixas.</p>
         <p>Chegue pelo portal de passagem que aparece depois do dragão: jogue uma pérola nele.</p>
       </article>
@@ -1864,49 +1895,49 @@ body.em-partida { overflow: hidden; }
     </div>
 
     <ol class="itens">
-      <li><div><h4>Élitros</h4>
+      <li><div><h3 class="h4">Élitros</h3>
         <p><span class="rot">Por que vale:</span> você voa pelo mapa inteiro. Com foguetes (papel e pólvora), ganha velocidade no ar.</p>
         <p><span class="rot">Como conseguir:</span> depois do dragão, um portal de passagem aparece na borda da ilha central. Jogue uma pérola nele, vá às ilhas externas e procure uma cidade do End com navio.</p></div></li>
-      <li><div><h4>Caixas de shulker</h4>
+      <li><div><h3 class="h4">Caixas de shulker</h3>
         <p><span class="rot">Por que vale:</span> inventário extra. A caixa guarda os itens mesmo quando você a quebra e carrega.</p>
         <p><span class="rot">Como conseguir:</span> mate os shulkers das cidades do End. 2 cascas e 1 baú fazem uma caixa.</p></div></li>
-      <li><div><h4>Remendo</h4>
+      <li><div><h3 class="h4">Remendo</h3>
         <p><span class="rot">Por que vale:</span> ferramenta e armadura com Remendo se consertam com a XP que você pega e duram para sempre.</p>
         <p><span class="rot">Como conseguir:</span> livro do bibliotecário, da pesca ou de baús. Aplique na bigorna.</p></div></li>
-      <li><div><h4>Os melhores encantamentos</h4>
+      <li><div><h3 class="h4">Os melhores encantamentos</h3>
         <p><span class="rot">Armadura:</span> Proteção IV, Inquebrável III e Remendo. Nas botas, Peso-Pena IV.</p>
         <p><span class="rot">Picareta:</span> Eficiência V, Inquebrável III, Remendo e Fortuna III ou Toque Suave. <span class="rot">Espada:</span> Afiação V e Pilhagem III.</p></div></li>
-      <li><div><h4>Equipamento de netherite</h4>
+      <li><div><h3 class="h4">Equipamento de netherite</h3>
         <p><span class="rot">Por que vale:</span> é o material mais forte do jogo, resiste mais que diamante e o item não queima na lava.</p>
         <p><span class="rot">Como conseguir:</span> detritos antigos perto da camada 15 do Nether. 4 fragmentos e 4 barras de ouro fazem 1 barra. O molde de melhoria vem nos baús do bastião e se copia com 7 diamantes e 1 netherrack.</p></div></li>
-      <li><div><h4>Totem da imortalidade</h4>
+      <li><div><h3 class="h4">Totem da imortalidade</h3>
         <p><span class="rot">Por que vale:</span> segurado na mão, evita uma morte.</p>
         <p><span class="rot">Como conseguir:</span> os evocadores derrubam o totem. Eles ficam na mansão da floresta escura e aparecem nos ataques de saqueadores às vilas.</p></div></li>
-      <li><div><h4>Tridente</h4>
+      <li><div><h3 class="h4">Tridente</h3>
         <p><span class="rot">Por que vale:</span> arma de arremesso. Com Lealdade ele volta, com Correnteza você voa na chuva e com Canalização chama raios.</p>
         <p><span class="rot">Como conseguir:</span> os afogados que surgem com tridente às vezes deixam cair um. Procure em rios e oceanos.</p></div></li>
-      <li><div><h4>Maça</h4>
+      <li><div><h3 class="h4">Maça</h3>
         <p><span class="rot">Por que vale:</span> quanto maior a queda, mais forte o golpe. Combina com élitros e cargas de vento.</p>
         <p><span class="rot">Como conseguir:</span> um núcleo pesado e uma vara de brisa. O núcleo sai dos cofres sinistros (ominous vaults) das Trial Chambers, as câmaras de cobre e tufo debaixo da terra.</p></div></li>
-      <li><div><h4>Sinalizador</h4>
+      <li><div><h3 class="h4">Sinalizador</h3>
         <p><span class="rot">Por que vale:</span> dá Pressa para minerar rápido, Velocidade, Resistência, Força ou Regeneração em volta da base.</p>
         <p><span class="rot">Como conseguir:</span> 3 crânios de esqueleto wither e 4 blocos de areia das almas invocam o Wither. Ele deixa a estrela do Nether, que vai em cima de uma pirâmide de blocos de ferro, ouro, diamante, esmeralda ou netherite.</p></div></li>
-      <li><div><h4>Conduíte</h4>
+      <li><div><h3 class="h4">Conduíte</h3>
         <p><span class="rot">Por que vale:</span> perto dele você respira, enxerga e minera rápido embaixo d’água.</p>
         <p><span class="rot">Como conseguir:</span> o coração do mar do tesouro enterrado e 8 conchas de náutilo, que vêm de afogados, da pesca e do vendedor ambulante.</p></div></li>
-      <li><div><h4>Bússola de recuperação</h4>
+      <li><div><h3 class="h4">Bússola de recuperação</h3>
         <p><span class="rot">Por que vale:</span> aponta para o lugar onde você morreu pela última vez.</p>
         <p><span class="rot">Como conseguir:</span> 8 fragmentos de eco, dos baús da cidade antiga, e 1 bússola.</p></div></li>
-      <li><div><h4>Maçã dourada encantada</h4>
+      <li><div><h3 class="h4">Maçã dourada encantada</h3>
         <p><span class="rot">Por que vale:</span> dá absorção e regeneração fortes de uma vez.</p>
         <p><span class="rot">Como conseguir:</span> não tem receita. Só aparece em baús, como os de bastiões, cidades antigas, minas abandonadas, templos e portais em ruínas.</p></div></li>
     </ol>
 
-    <div class="secao-cab" id="encantamentos" style="margin-top: 12px;">
+    <div class="secao-cab sub-cab" id="encantamentos">
       <h3>Todos os encantamentos</h3>
       <p class="lede">Onde cada um vai e até que nível. Os que vêm marcados como “só de baú, pesca ou troca” não saem na mesa de encantamento.</p>
     </div>
-    <div class="tabela-wrap">
+    <div class="tabela-wrap" tabindex="0" role="region" aria-label="Todos os encantamentos">
       <table>
         <thead><tr><th scope="col">Encantamento</th><th scope="col">Vai em</th><th scope="col">Máximo</th><th scope="col">O que faz</th></tr></thead>
         <tbody>
@@ -1956,7 +1987,7 @@ body.em-partida { overflow: hidden; }
       </table>
     </div>
 
-    <div class="secao-cab" style="margin-top: 12px;" id="farms">
+    <div class="secao-cab sub-cab" id="farms">
       <h3>Farms</h3>
       <p class="lede">Comece pelas fáceis: elas dão o material das maiores. Abra o passo a passo de cada uma. Projetos de redstone mudam de uma versão para outra, então, quando o passo pedir um tutorial, confira se ele é da sua versão e edição.</p>
     </div>
@@ -1970,7 +2001,7 @@ body.em-partida { overflow: hidden; }
 
     <div class="grade-cards" id="lista-farms">
       <article class="farm" data-grupo="facil">
-        <header><h4>Cana-de-açúcar automática</h4><span class="nivel nivel-facil">Fácil</span></header>
+        <header><h3 class="h4">Cana-de-açúcar automática</h3><span class="nivel nivel-facil">Fácil</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>papel para livros, mapas e foguetes.</dd></div>
           <div><dt>Onde</dt><dd>perto da base, em qualquer bioma, com água ao lado da terra.</dd></div>
@@ -1987,7 +2018,7 @@ body.em-partida { overflow: hidden; }
         </ol></details>
       </article>
       <article class="farm" data-grupo="facil">
-        <header><h4>Abóbora e melancia</h4><span class="nivel nivel-facil">Fácil</span></header>
+        <header><h3 class="h4">Abóbora e melancia</h3><span class="nivel nivel-facil">Fácil</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>comida e esmeraldas, porque o aldeão agricultor compra as duas.</dd></div>
           <div><dt>Onde</dt><dd>perto da base, em qualquer bioma.</dd></div>
@@ -2003,7 +2034,7 @@ body.em-partida { overflow: hidden; }
         </ol></details>
       </article>
       <article class="farm" data-grupo="facil">
-        <header><h4>Trigo e cenoura com aldeão</h4><span class="nivel nivel-facil">Fácil</span></header>
+        <header><h3 class="h4">Trigo e cenoura com aldeão</h3><span class="nivel nivel-facil">Fácil</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>comida e itens para trocar.</dd></div>
           <div><dt>Onde</dt><dd>num cercado com terra arada e uma composteira.</dd></div>
@@ -2019,7 +2050,7 @@ body.em-partida { overflow: hidden; }
         </ol></details>
       </article>
       <article class="farm" data-grupo="facil">
-        <header><h4>Frango assado automático</h4><span class="nivel nivel-facil">Fácil</span></header>
+        <header><h3 class="h4">Frango assado automático</h3><span class="nivel nivel-facil">Fácil</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>comida pronta e penas para flechas.</dd></div>
           <div><dt>Onde</dt><dd>qualquer lugar perto da base.</dd></div>
@@ -2035,7 +2066,7 @@ body.em-partida { overflow: hidden; }
         </ol></details>
       </article>
       <article class="farm" data-grupo="media">
-        <header><h4>Ferro</h4><span class="nivel nivel-media">Média</span></header>
+        <header><h3 class="h4">Ferro</h3><span class="nivel nivel-media">Média</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>ferro sem fim para baldes, trilhos, funis e bigornas.</dd></div>
           <div><dt>Onde</dt><dd>longe de outras vilas, para não dividir os golens.</dd></div>
@@ -2052,7 +2083,7 @@ body.em-partida { overflow: hidden; }
         </ol></details>
       </article>
       <article class="farm" data-grupo="media">
-        <header><h4>Mobs (sala escura)</h4><span class="nivel nivel-media">Média</span></header>
+        <header><h3 class="h4">Mobs (sala escura)</h3><span class="nivel nivel-media">Média</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>ossos (farinha de osso), flechas, pólvora, linha e XP.</dd></div>
           <div><dt>Onde</dt><dd>no alto, sobre o oceano. Longe de cavernas, os monstros surgem na farm e não lá embaixo.</dd></div>
@@ -2069,7 +2100,7 @@ body.em-partida { overflow: hidden; }
         </ol></details>
       </article>
       <article class="farm" data-grupo="media">
-        <header><h4>Salão de troca</h4><span class="nivel nivel-media">Média</span></header>
+        <header><h3 class="h4">Salão de troca</h3><span class="nivel nivel-media">Média</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>livros encantados como Remendo, esmeraldas e ferramentas de diamante encantadas.</dd></div>
           <div><dt>Onde</dt><dd>na base, com aldeões trazidos de uma vila.</dd></div>
@@ -2085,7 +2116,7 @@ body.em-partida { overflow: hidden; }
         </ol></details>
       </article>
       <article class="farm" data-grupo="media">
-        <header><h4>Slime</h4><span class="nivel nivel-media">Média</span></header>
+        <header><h3 class="h4">Slime</h3><span class="nivel nivel-media">Média</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>bolas de slime para pistões aderentes, laços e blocos de slime.</dd></div>
           <div><dt>Onde</dt><dd>num slime chunk, abaixo da camada 40. Ache com o <a href="https://www.chunkbase.com/apps/slime-finder" target="_blank" rel="noopener">localizador de slime do Chunkbase</a>, que tem Java e Bedrock.</dd></div>
@@ -2101,7 +2132,7 @@ body.em-partida { overflow: hidden; }
         </ol></details>
       </article>
       <article class="farm" data-grupo="avancada">
-        <header><h4>XP de enderman</h4><span class="nivel nivel-avancada">Avançada</span></header>
+        <header><h3 class="h4">XP de enderman</h3><span class="nivel nivel-avancada">Avançada</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>muita XP para encantar e consertar com Remendo, e pérolas.</dd></div>
           <div><dt>Onde</dt><dd>no End, com o dragão já derrotado.</dd></div>
@@ -2118,7 +2149,7 @@ body.em-partida { overflow: hidden; }
         </ol></details>
       </article>
       <article class="farm" data-grupo="avancada">
-        <header><h4>Ouro</h4><span class="nivel nivel-avancada">Avançada</span></header>
+        <header><h3 class="h4">Ouro</h3><span class="nivel nivel-avancada">Avançada</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>ouro e muita XP.</dd></div>
           <div><dt>Onde</dt><dd>no Nether.</dd></div>
@@ -2134,7 +2165,7 @@ body.em-partida { overflow: hidden; }
         </ol></details>
       </article>
       <article class="farm" data-grupo="avancada">
-        <header><h4>Guardião</h4><span class="nivel nivel-avancada">Avançada</span></header>
+        <header><h3 class="h4">Guardião</h3><span class="nivel nivel-avancada">Avançada</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>XP, prismarinho e peixe.</dd></div>
           <div><dt>Onde</dt><dd>num monumento oceânico, no oceano profundo.</dd></div>
@@ -2150,11 +2181,11 @@ body.em-partida { overflow: hidden; }
         </ol></details>
       </article>
     </div>
-    <div class="secao-cab" id="aldeoes" style="margin-top: 12px;">
+    <div class="secao-cab sub-cab" id="aldeoes">
       <h3>Profissões dos aldeões</h3>
       <p class="lede">Um aldeão sem profissão escolhe uma quando acha o bloco de trabalho livre por perto. Use para montar o salão de troca. O aldeão de roupa verde (o bobo) nunca trabalha.</p>
     </div>
-    <div class="tabela-wrap">
+    <div class="tabela-wrap" tabindex="0" role="region" aria-label="Profissões dos aldeões">
       <table>
         <thead><tr><th scope="col">Profissão</th><th scope="col">Bloco de trabalho</th><th scope="col">Por que vale</th></tr></thead>
         <tbody>
@@ -2186,7 +2217,7 @@ body.em-partida { overflow: hidden; }
     </div>
     <div class="grade-cards">
       <article class="farm">
-        <header><h4>Abrigo da primeira noite</h4><span class="nivel nivel-facil">Fácil</span></header>
+        <header><h3 class="h4">Abrigo da primeira noite</h3><span class="nivel nivel-facil">Fácil</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>passar a primeira noite em segurança, sem gastar tempo.</dd></div>
           <div><dt>Material</dt><dd>o que você tiver: terra, pedra ou madeira, e uma porta ou blocos para tapar a entrada.</dd></div>
@@ -2200,7 +2231,7 @@ body.em-partida { overflow: hidden; }
         </ol></details>
       </article>
       <article class="farm">
-        <header><h4>Casa de madeira</h4><span class="nivel nivel-facil">Fácil</span></header>
+        <header><h3 class="h4">Casa de madeira</h3><span class="nivel nivel-facil">Fácil</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>a primeira base de verdade, bonita e rápida.</dd></div>
           <div><dt>Material</dt><dd>troncos, tábuas, escadas de madeira, lajes, vidro, porta e tochas ou lanternas.</dd></div>
@@ -2216,7 +2247,7 @@ body.em-partida { overflow: hidden; }
         </ol></details>
       </article>
       <article class="farm">
-        <header><h4>Casa de pedra e madeira</h4><span class="nivel nivel-media">Média</span></header>
+        <header><h3 class="h4">Casa de pedra e madeira</h3><span class="nivel nivel-media">Média</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>uma base maior, com mais cara de casa de vila medieval.</dd></div>
           <div><dt>Material</dt><dd>pedregulho ou tijolos de pedra, troncos, tábuas, escadas, lajes, vidro e lanternas.</dd></div>
@@ -2231,7 +2262,7 @@ body.em-partida { overflow: hidden; }
         </ol></details>
       </article>
       <article class="farm">
-        <header><h4>Castelo</h4><span class="nivel nivel-avancada">Avançada</span></header>
+        <header><h3 class="h4">Castelo</h3><span class="nivel nivel-avancada">Avançada</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>um projeto grande para depois de zerar, com muralha, torres e pátio.</dd></div>
           <div><dt>Material</dt><dd>muitos tijolos de pedra (inclusive com musgo e rachados), pedregulho, lajes, escadas, grades de ferro, estandartes e lanternas. Comece juntando uns 20 baús de pedra.</dd></div>
@@ -2249,7 +2280,7 @@ body.em-partida { overflow: hidden; }
         </ol></details>
       </article>
       <article class="farm">
-        <header><h4>Portal do Nether decorado</h4><span class="nivel nivel-facil">Fácil</span></header>
+        <header><h3 class="h4">Portal do Nether decorado</h3><span class="nivel nivel-facil">Fácil</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>deixar a entrada do Nether com cara de ruína antiga.</dd></div>
           <div><dt>Material</dt><dd>10 obsidianas, pedra-negra (lisa, rachada e com ouro), escadas e lajes de pedra-negra, lanternas de alma e netherrack.</dd></div>
@@ -2264,7 +2295,7 @@ body.em-partida { overflow: hidden; }
         </ol></details>
       </article>
       <article class="farm">
-        <header><h4>Torre de vigia</h4><span class="nivel nivel-media">Média</span></header>
+        <header><h3 class="h4">Torre de vigia</h3><span class="nivel nivel-media">Média</span></header>
         <dl>
           <div><dt>Serve para</dt><dd>enxergar longe em volta da base e marcar o lugar de longe.</dd></div>
           <div><dt>Material</dt><dd>troncos, tábuas, pedregulho, escadas de mão, cercas, escadas de madeira e lanternas.</dd></div>
@@ -2279,7 +2310,7 @@ body.em-partida { overflow: hidden; }
         </ol></details>
       </article>
       <article class="farm">
-        <header><h4>Dicas que valem para toda construção</h4><span class="nivel nivel-facil">Para todas</span></header>
+        <header><h3 class="h4">Dicas que valem para toda construção</h3><span class="nivel nivel-facil">Para todas</span></header>
         <ul class="dicas">
           <li><span class="rot">Paleta:</span> escolha 3 ou 4 blocos que combinam (por exemplo pedra, carvalho escuro e abeto) e use só eles.</li>
           <li><span class="rot">Profundidade:</span> nada de parede chapada. Recue janelas, adiante colunas e use escadas e lajes nas bordas.</li>
@@ -2288,6 +2319,76 @@ body.em-partida { overflow: hidden; }
           <li><span class="rot">Luz:</span> lanternas e tochas por dentro e por fora, para monstros não nascerem na sua base.</li>
           <li><span class="rot">Guia de projeção:</span> no Java, o mod Litematica mostra um projeto “fantasma” para você seguir bloco por bloco (veja em Mods).</li>
         </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="secao" id="redstone" aria-labelledby="redstone-t">
+  <div class="wrap">
+    <div class="secao-cab">
+      <p class="eyebrow">Redstone</p>
+      <h2 id="redstone-t">Redstone para começar</h2>
+      <p class="lede">A redstone é a “eletricidade” do Minecraft. Com poucas peças já dá para fazer portas, luzes e as farms automáticas.</p>
+    </div>
+    <div class="secao-cab sub-cab">
+      <h3>O que cada peça faz</h3>
+    </div>
+    <dl class="glossario">
+      <div><dt>Pó de redstone</dt><dd>O fio. Leva o sinal por até 15 blocos; depois disso o sinal acaba.</dd></div>
+      <div><dt>Tocha de redstone</dt><dd>Fonte de sinal sempre ligada. Se o bloco onde ela está recebe sinal, ela desliga: serve para inverter.</dd></div>
+      <div><dt>Alavanca</dt><dd>Liga e desliga, e fica na posição.</dd></div>
+      <div><dt>Botão</dt><dd>Dá um sinal curto: cerca de 1 segundo o de pedra e 1,5 segundo o de madeira.</dd></div>
+      <div><dt>Placa de pressão</dt><dd>Liga quando alguém ou algo pisa nela.</dd></div>
+      <div><dt>Repetidor</dt><dd>Renova o sinal para a força máxima, pode atrasar e só deixa passar num sentido.</dd></div>
+      <div><dt>Comparador</dt><dd>Compara dois sinais e mede quanto um baú ou funil está cheio.</dd></div>
+      <div><dt>Pistão</dt><dd>Empurra até 12 blocos. O pistão aderente puxa o bloco de volta.</dd></div>
+      <div><dt>Observador</dt><dd>Solta um pulso quando o bloco na frente dele muda. A base das farms automáticas.</dd></div>
+      <div><dt>Funil</dt><dd>Move itens para baixo ou para o lado. Com sinal de redstone, ele trava.</dd></div>
+      <div><dt>Ejetor e liberador</dt><dd>O ejetor usa o item (atira flecha, coloca água). O liberador só solta o item.</dd></div>
+      <div><dt>Lâmpada de redstone</dt><dd>Acende quando recebe sinal.</dd></div>
+      <div><dt>Sensor de luz do dia</dt><dd>Liga com a luz do sol. Clicando nele, inverte e liga à noite.</dd></div>
+    </dl>
+    <div class="secao-cab sub-cab">
+      <h3>Primeiros projetos</h3>
+    </div>
+    <div class="grade-cards">
+      <article class="farm">
+        <header><h3 class="h4">Porta de ferro com botão</h3><span class="nivel nivel-facil">Fácil</span></header>
+        <ol class="dicas">
+          <li>A porta de ferro só abre com redstone, então zumbis não passam.</li>
+          <li>Coloque a porta de ferro na entrada da base.</li>
+          <li>Ponha um botão de pedra na parede ao lado da porta, por fora, e outro por dentro.</li>
+          <li>Aperte: a porta abre por alguns segundos e fecha sozinha.</li>
+        </ol>
+      </article>
+      <article class="farm">
+        <header><h3 class="h4">Luz automática à noite</h3><span class="nivel nivel-facil">Fácil</span></header>
+        <ol class="dicas">
+          <li>Coloque um sensor de luz do dia no teto ou no chão, a céu aberto.</li>
+          <li>Clique nele uma vez para inverter: agora ele liga quando escurece.</li>
+          <li>Ligue o sensor às lâmpadas de redstone com pó de redstone, ou coloque as lâmpadas encostadas nele.</li>
+          <li>À noite as luzes acendem sozinhas e de dia apagam.</li>
+        </ol>
+      </article>
+      <article class="farm">
+        <header><h3 class="h4">Elevador de água</h3><span class="nivel nivel-media">Média</span></header>
+        <ol class="dicas">
+          <li>Faça uma coluna fechada de 1 bloco, da altura que quiser.</li>
+          <li>No fundo, coloque areia das almas: ela cria bolhas que empurram para cima.</li>
+          <li>Encha a coluna de água: cada bloco precisa ser uma fonte. Um truque é plantar alga do fundo até o topo; onde a alga cresce, a água vira fonte.</li>
+          <li>Para descer, faça outra coluna com bloco de magma no fundo: as bolhas puxam para baixo.</li>
+          <li>Não precisa de redstone, mas é a base de muitas construções.</li>
+        </ol>
+      </article>
+      <article class="farm">
+        <header><h3 class="h4">Contador de baú cheio</h3><span class="nivel nivel-media">Média</span></header>
+        <ol class="dicas">
+          <li>Coloque um comparador saindo de um baú, apontando para fora dele.</li>
+          <li>Na frente do comparador, faça uma linha de pó de redstone com lâmpadas no caminho.</li>
+          <li>Quanto mais cheio o baú, mais longe o sinal chega e mais lâmpadas acendem.</li>
+          <li>Serve para saber quando o baú de uma farm está quase cheio.</li>
+        </ol>
       </article>
     </div>
   </div>
@@ -2302,7 +2403,7 @@ body.em-partida { overflow: hidden; }
     </div>
     <div class="grade-cards">
       <article class="farm">
-        <header><h4>Como instalar no Java</h4><span class="nivel nivel-facil">Comece aqui</span></header>
+        <header><h3 class="h4">Como instalar no Java</h3><span class="nivel nivel-facil">Comece aqui</span></header>
         <ol class="dicas">
           <li>O jeito mais fácil é o <a href="https://modrinth.com/app" target="_blank" rel="noopener">Modrinth App</a>: ele cria uma instalação separada, baixa o carregador de mods e os mods certos para a sua versão.</li>
           <li>Sem o app: instale o carregador <a href="https://fabricmc.net/use/installer/" target="_blank" rel="noopener">Fabric</a> para a sua versão do jogo e abra o jogo uma vez com o perfil do Fabric.</li>
@@ -2313,7 +2414,7 @@ body.em-partida { overflow: hidden; }
         </ol>
       </article>
       <article class="farm">
-        <header><h4>E no Bedrock?</h4><span class="nivel nivel-facil">Bedrock</span></header>
+        <header><h3 class="h4">E no Bedrock?</h3><span class="nivel nivel-facil">Bedrock</span></header>
         <ol class="dicas">
           <li>Mods de Java não funcionam no Bedrock. No Bedrock existem os complementos (add-ons).</li>
           <li>O caminho mais seguro é o Marketplace, dentro do próprio jogo.</li>
@@ -2322,47 +2423,47 @@ body.em-partida { overflow: hidden; }
         </ol>
       </article>
       <article class="farm mod">
-        <header><h4>Sodium</h4><span class="nivel nivel-media">Desempenho</span></header>
+        <header><h3 class="h4">Sodium</h3><span class="nivel nivel-media">Desempenho</span></header>
         <p>Deixa o jogo bem mais leve e com mais FPS, sem mudar o visual. Um dos primeiros mods para instalar.</p>
         <a class="btn btn-mini" href="https://modrinth.com/mod/sodium" target="_blank" rel="noopener">Ver e baixar no Modrinth</a>
       </article>
       <article class="farm mod">
-        <header><h4>Iris Shaders</h4><span class="nivel nivel-media">Visual</span></header>
+        <header><h3 class="h4">Iris Shaders</h3><span class="nivel nivel-media">Visual</span></header>
         <p>Permite usar shaders (luz, sombra e água mais bonitas). Funciona junto com o Sodium.</p>
         <a class="btn btn-mini" href="https://modrinth.com/mod/iris" target="_blank" rel="noopener">Ver e baixar no Modrinth</a>
       </article>
       <article class="farm mod">
-        <header><h4>Xaero's Minimap</h4><span class="nivel nivel-media">Mapa</span></header>
+        <header><h3 class="h4">Xaero's Minimap</h3><span class="nivel nivel-media">Mapa</span></header>
         <p>Minimapa no canto da tela, com pontos marcados (waypoints) para não se perder.</p>
         <a class="btn btn-mini" href="https://modrinth.com/mod/xaeros-minimap" target="_blank" rel="noopener">Ver e baixar no Modrinth</a>
       </article>
       <article class="farm mod">
-        <header><h4>JourneyMap</h4><span class="nivel nivel-media">Mapa</span></header>
+        <header><h3 class="h4">JourneyMap</h3><span class="nivel nivel-media">Mapa</span></header>
         <p>Mapa completo do mundo que vai sendo desenhado enquanto você anda, com minimapa e waypoints.</p>
         <a class="btn btn-mini" href="https://modrinth.com/mod/journeymap" target="_blank" rel="noopener">Ver e baixar no Modrinth</a>
       </article>
       <article class="farm mod">
-        <header><h4>Just Enough Items (JEI)</h4><span class="nivel nivel-media">Receitas</span></header>
+        <header><h3 class="h4">Just Enough Items (JEI)</h3><span class="nivel nivel-media">Receitas</span></header>
         <p>Mostra a receita de qualquer item do jogo, inclusive dos outros mods.</p>
         <a class="btn btn-mini" href="https://modrinth.com/mod/jei" target="_blank" rel="noopener">Ver e baixar no Modrinth</a>
       </article>
       <article class="farm mod">
-        <header><h4>AppleSkin</h4><span class="nivel nivel-media">Interface</span></header>
+        <header><h3 class="h4">AppleSkin</h3><span class="nivel nivel-media">Interface</span></header>
         <p>Mostra quanto cada comida enche e a saturação na barra de fome.</p>
         <a class="btn btn-mini" href="https://modrinth.com/mod/appleskin" target="_blank" rel="noopener">Ver e baixar no Modrinth</a>
       </article>
       <article class="farm mod">
-        <header><h4>Mod Menu</h4><span class="nivel nivel-media">Interface</span></header>
+        <header><h3 class="h4">Mod Menu</h3><span class="nivel nivel-media">Interface</span></header>
         <p>Lista os mods instalados e abre as configurações de cada um. É para Fabric.</p>
         <a class="btn btn-mini" href="https://modrinth.com/mod/modmenu" target="_blank" rel="noopener">Ver e baixar no Modrinth</a>
       </article>
       <article class="farm mod">
-        <header><h4>Litematica</h4><span class="nivel nivel-media">Construção</span></header>
+        <header><h3 class="h4">Litematica</h3><span class="nivel nivel-media">Construção</span></header>
         <p>Mostra a projeção de uma construção para você seguir bloco por bloco. Ótimo para os tutoriais acima.</p>
         <a class="btn btn-mini" href="https://modrinth.com/mod/litematica" target="_blank" rel="noopener">Ver e baixar no Modrinth</a>
       </article>
       <article class="farm mod">
-        <header><h4>Create</h4><span class="nivel nivel-media">Gameplay</span></header>
+        <header><h3 class="h4">Create</h3><span class="nivel nivel-media">Gameplay</span></header>
         <p>Engrenagens, esteiras e máquinas. Muda bastante o jogo e é um projeto grande para depois de zerar.</p>
         <a class="btn btn-mini" href="https://modrinth.com/mod/create" target="_blank" rel="noopener">Ver e baixar no Modrinth</a>
       </article>
@@ -2586,41 +2687,41 @@ body.em-partida { overflow: hidden; }
       <p><span class="rot">Número novo:</span> desde 2026 a versão diz o ano e o drop. A 26.3 é o 3º drop de 2026. Antes, as versões começavam com 1.</p>
     </div>
     <ol class="linha-tempo">
-      <li><span class="ver-data">2009</span><div><h4>Classic</h4><p>A primeira versão pública, de maio de 2009. Só construção, com poucos blocos, sem monstros nem sobrevivência.</p></div></li>
-      <li><span class="ver-data">2009–2010</span><div><h4>Indev e Infdev</h4><p>Testes da sobrevivência: fabricação, mobs, dia e noite. No Infdev o mundo virou infinito.</p></div></li>
-      <li><span class="ver-data">2010</span><div><h4>Alpha</h4><p>O modo Sobrevivência como conhecemos, redstone e, na atualização de Halloween de outubro, o Nether.</p></div></li>
-      <li><span class="ver-data">2010–2011</span><div><h4>Beta</h4><p>Camas, pistões, chuva e lobos. A Adventure Update trouxe fome, corrida, vilas, fortalezas e endermen.</p></div></li>
-      <li><span class="ver-data">18/11/2011</span><div><h4>1.0</h4><p>O lançamento oficial: o End, o Ender Dragon, encantamentos e poções.</p></div></li>
-      <li><span class="ver-data">2012</span><div><h4>1.2</h4><p>Selvas, jaguatiricas e o golem de ferro. O mundo passou a ter 256 de altura.</p></div></li>
-      <li><span class="ver-data">2012</span><div><h4>1.3</h4><p>Esmeraldas e trocas com aldeões, templos do deserto e da selva.</p></div></li>
-      <li><span class="ver-data">2012</span><div><h4>1.4 Pretty Scary Update</h4><p>O Wither, bruxas, morcegos, a bigorna, cenouras e batatas.</p></div></li>
-      <li><span class="ver-data">2013</span><div><h4>1.5 Redstone Update</h4><p>Funil, comparador, quartzo do Nether e sensor de luz.</p></div></li>
-      <li><span class="ver-data">2013</span><div><h4>1.6 Horse Update</h4><p>Cavalos, burros e mulas, fardo de feno e tapetes.</p></div></li>
-      <li><span class="ver-data">2013</span><div><h4>1.7 The Update that Changed the World</h4><p>Dezenas de biomas novos, como savana, badlands e floresta escura, e pesca melhorada.</p></div></li>
-      <li><span class="ver-data">2014</span><div><h4>1.8 Bountiful Update</h4><p>Monumentos oceânicos e guardiões, coelhos, estandartes, granito, diorito e andesito.</p></div></li>
-      <li><span class="ver-data">2016</span><div><h4>1.9 Combat Update</h4><p>Escudo, segunda mão, élitros, cidades do End e shulkers. O ataque ganhou tempo de recarga.</p></div></li>
-      <li><span class="ver-data">2016</span><div><h4>1.10 Frostburn Update</h4><p>Ursos polares, husks, esqueletos errantes, blocos de magma e fósseis.</p></div></li>
-      <li><span class="ver-data">2016</span><div><h4>1.11 Exploration Update</h4><p>Mansões da floresta, mapas do cartógrafo, totem, lhamas, caixas de shulker e observador.</p></div></li>
-      <li><span class="ver-data">2017</span><div><h4>1.12 World of Color</h4><p>Concreto, terracota esmaltada, papagaios e o livro de receitas.</p></div></li>
-      <li><span class="ver-data">2018</span><div><h4>1.13 Update Aquatic</h4><p>Oceanos novos, golfinhos, tartarugas, tridente, afogados, naufrágios, corais e phantoms.</p></div></li>
-      <li><span class="ver-data">2019</span><div><h4>1.14 Village & Pillage</h4><p>Vilas refeitas, profissões com blocos de trabalho, saqueadores, ataques, raposas, pandas e bambu.</p></div></li>
-      <li><span class="ver-data">2019</span><div><h4>1.15 Buzzy Bees</h4><p>Abelhas, colmeias e mel.</p></div></li>
-      <li><span class="ver-data">2020</span><div><h4>1.16 Nether Update</h4><p>Biomas novos do Nether, netherite, piglins, bastiões, hoglins e lavagantes.</p></div></li>
-      <li><span class="ver-data">2021</span><div><h4>1.17 Caves & Cliffs, parte 1</h4><p>Cobre, ametista, axolotes, cabras, lula brilhante, luneta e para-raios.</p></div></li>
-      <li><span class="ver-data">2021</span><div><h4>1.18 Caves & Cliffs, parte 2</h4><p>Geração nova: cavernas gigantes, montanhas altas e o mundo de −64 a 320.</p></div></li>
-      <li><span class="ver-data">2022</span><div><h4>1.19 The Wild Update</h4><p>Escuro profundo, Warden, cidade antiga, manguezal, sapos e allay.</p></div></li>
-      <li><span class="ver-data">2023</span><div><h4>1.20 Trails & Tales</h4><p>Cerejal, camelos, farejador, arqueologia com pincel e moldes de enfeite de armadura.</p></div></li>
-      <li><span class="ver-data">2024</span><div><h4>1.20.5</h4><p>Tatu e armadura de lobo.</p></div></li>
-      <li><span class="ver-data">06/2024</span><div><h4>1.21 Tricky Trials</h4><p>Trial Chambers, breeze, bogged, a maça e o fabricador automático.</p></div></li>
-      <li><span class="ver-data">10/2024</span><div><h4>1.21.2 Bundles of Bravery</h4><p>A bolsa, que guarda vários itens num espaço só.</p></div></li>
-      <li><span class="ver-data">12/2024</span><div><h4>1.21.4 The Garden Awakens</h4><p>Jardim pálido, creaking e blocos de resina.</p></div></li>
-      <li><span class="ver-data">03/2025</span><div><h4>1.21.5 Spring to Life</h4><p>Variantes de vaca, porco e galinha conforme o clima do bioma e mais detalhes de natureza.</p></div></li>
-      <li><span class="ver-data">06/2025</span><div><h4>1.21.6 Chase the Skies</h4><p>Ghast feliz, que dá para montar, ghast seco, arreio e a barra de localização dos jogadores.</p></div></li>
-      <li><span class="ver-data">30/09/2025</span><div><h4>1.21.9 The Copper Age</h4><p>Ferramentas e armadura de cobre, golem de cobre e prateleiras de cobre.</p></div></li>
-      <li><span class="ver-data">09/12/2025</span><div><h4>1.21.11 Mounts of Mayhem</h4><p>Lança e o encantamento Investida (Lunge), náutilo montável, cavalos zumbis, camelos zumbis (camel husk), o mob parched e armadura de netherite para cavalo.</p></div></li>
-      <li><span class="ver-data">24/03/2026</span><div><h4>26.1 Tiny Takeover</h4><p>Reforma dos filhotes de mobs, com sons novos, e o dente-de-leão dourado. Primeira versão com o número novo: ano, drop e correção.</p></div></li>
-      <li><span class="ver-data">16/06/2026</span><div><h4>26.2 Chaos Cubed</h4><p>Cavernas de enxofre, o cubo de enxofre, blocos de enxofre e cinábrio e aranhas de caverna nascendo nas cavernas.</p></div></li>
-      <li><span class="ver-data">15/09/2026</span><div><h4>26.3 Wilderness Bound</h4><p>Floresta nova com álamos, acampamentos abandonados, camas de palha, almofadas e escadas e lajes de lã e concreto.</p></div></li>
+      <li><span class="ver-data">2009</span><div><h3 class="h4">Classic</h3><p>A primeira versão pública, de maio de 2009. Só construção, com poucos blocos, sem monstros nem sobrevivência.</p></div></li>
+      <li><span class="ver-data">2009–2010</span><div><h3 class="h4">Indev e Infdev</h3><p>Testes da sobrevivência: fabricação, mobs, dia e noite. No Infdev o mundo virou infinito.</p></div></li>
+      <li><span class="ver-data">2010</span><div><h3 class="h4">Alpha</h3><p>O modo Sobrevivência como conhecemos, redstone e, na atualização de Halloween de outubro, o Nether.</p></div></li>
+      <li><span class="ver-data">2010–2011</span><div><h3 class="h4">Beta</h3><p>Camas, pistões, chuva e lobos. A Adventure Update trouxe fome, corrida, vilas, fortalezas e endermen.</p></div></li>
+      <li><span class="ver-data">18/11/2011</span><div><h3 class="h4">1.0</h3><p>O lançamento oficial: o End, o Ender Dragon, encantamentos e poções.</p></div></li>
+      <li><span class="ver-data">2012</span><div><h3 class="h4">1.2</h3><p>Selvas, jaguatiricas e o golem de ferro. O mundo passou a ter 256 de altura.</p></div></li>
+      <li><span class="ver-data">2012</span><div><h3 class="h4">1.3</h3><p>Esmeraldas e trocas com aldeões, templos do deserto e da selva.</p></div></li>
+      <li><span class="ver-data">2012</span><div><h3 class="h4">1.4 Pretty Scary Update</h3><p>O Wither, bruxas, morcegos, a bigorna, cenouras e batatas.</p></div></li>
+      <li><span class="ver-data">2013</span><div><h3 class="h4">1.5 Redstone Update</h3><p>Funil, comparador, quartzo do Nether e sensor de luz.</p></div></li>
+      <li><span class="ver-data">2013</span><div><h3 class="h4">1.6 Horse Update</h3><p>Cavalos, burros e mulas, fardo de feno e tapetes.</p></div></li>
+      <li><span class="ver-data">2013</span><div><h3 class="h4">1.7 The Update that Changed the World</h3><p>Dezenas de biomas novos, como savana, badlands e floresta escura, e pesca melhorada.</p></div></li>
+      <li><span class="ver-data">2014</span><div><h3 class="h4">1.8 Bountiful Update</h3><p>Monumentos oceânicos e guardiões, coelhos, estandartes, granito, diorito e andesito.</p></div></li>
+      <li><span class="ver-data">2016</span><div><h3 class="h4">1.9 Combat Update</h3><p>Escudo, segunda mão, élitros, cidades do End e shulkers. O ataque ganhou tempo de recarga.</p></div></li>
+      <li><span class="ver-data">2016</span><div><h3 class="h4">1.10 Frostburn Update</h3><p>Ursos polares, husks, esqueletos errantes, blocos de magma e fósseis.</p></div></li>
+      <li><span class="ver-data">2016</span><div><h3 class="h4">1.11 Exploration Update</h3><p>Mansões da floresta, mapas do cartógrafo, totem, lhamas, caixas de shulker e observador.</p></div></li>
+      <li><span class="ver-data">2017</span><div><h3 class="h4">1.12 World of Color</h3><p>Concreto, terracota esmaltada, papagaios e o livro de receitas.</p></div></li>
+      <li><span class="ver-data">2018</span><div><h3 class="h4">1.13 Update Aquatic</h3><p>Oceanos novos, golfinhos, tartarugas, tridente, afogados, naufrágios, corais e phantoms.</p></div></li>
+      <li><span class="ver-data">2019</span><div><h3 class="h4">1.14 Village &amp; Pillage</h3><p>Vilas refeitas, profissões com blocos de trabalho, saqueadores, ataques, raposas, pandas e bambu.</p></div></li>
+      <li><span class="ver-data">2019</span><div><h3 class="h4">1.15 Buzzy Bees</h3><p>Abelhas, colmeias e mel.</p></div></li>
+      <li><span class="ver-data">2020</span><div><h3 class="h4">1.16 Nether Update</h3><p>Biomas novos do Nether, netherite, piglins, bastiões, hoglins e lavagantes.</p></div></li>
+      <li><span class="ver-data">2021</span><div><h3 class="h4">1.17 Caves &amp; Cliffs, parte 1</h3><p>Cobre, ametista, axolotes, cabras, lula brilhante, luneta e para-raios.</p></div></li>
+      <li><span class="ver-data">2021</span><div><h3 class="h4">1.18 Caves &amp; Cliffs, parte 2</h3><p>Geração nova: cavernas gigantes, montanhas altas e o mundo de −64 a 320.</p></div></li>
+      <li><span class="ver-data">2022</span><div><h3 class="h4">1.19 The Wild Update</h3><p>Escuro profundo, Warden, cidade antiga, manguezal, sapos e allay.</p></div></li>
+      <li><span class="ver-data">2023</span><div><h3 class="h4">1.20 Trails &amp; Tales</h3><p>Cerejal, camelos, farejador, arqueologia com pincel e moldes de enfeite de armadura.</p></div></li>
+      <li><span class="ver-data">2024</span><div><h3 class="h4">1.20.5</h3><p>Tatu e armadura de lobo.</p></div></li>
+      <li><span class="ver-data">06/2024</span><div><h3 class="h4">1.21 Tricky Trials</h3><p>Trial Chambers, breeze, bogged, a maça e o fabricador automático.</p></div></li>
+      <li><span class="ver-data">10/2024</span><div><h3 class="h4">1.21.2 Bundles of Bravery</h3><p>A bolsa, que guarda vários itens num espaço só.</p></div></li>
+      <li><span class="ver-data">12/2024</span><div><h3 class="h4">1.21.4 The Garden Awakens</h3><p>Jardim pálido, creaking e blocos de resina.</p></div></li>
+      <li><span class="ver-data">03/2025</span><div><h3 class="h4">1.21.5 Spring to Life</h3><p>Variantes de vaca, porco e galinha conforme o clima do bioma e mais detalhes de natureza.</p></div></li>
+      <li><span class="ver-data">06/2025</span><div><h3 class="h4">1.21.6 Chase the Skies</h3><p>Ghast feliz, que dá para montar, ghast seco, arreio e a barra de localização dos jogadores.</p></div></li>
+      <li><span class="ver-data">30/09/2025</span><div><h3 class="h4">1.21.9 The Copper Age</h3><p>Ferramentas e armadura de cobre, golem de cobre e prateleiras de cobre.</p></div></li>
+      <li><span class="ver-data">09/12/2025</span><div><h3 class="h4">1.21.11 Mounts of Mayhem</h3><p>Lança e o encantamento Investida (Lunge), náutilo montável, cavalos zumbis, camelos zumbis (camel husk), o mob parched e armadura de netherite para cavalo.</p></div></li>
+      <li><span class="ver-data">24/03/2026</span><div><h3 class="h4">26.1 Tiny Takeover</h3><p>Reforma dos filhotes de mobs, com sons novos, e o dente-de-leão dourado. Primeira versão com o número novo: ano, drop e correção.</p></div></li>
+      <li><span class="ver-data">16/06/2026</span><div><h3 class="h4">26.2 Chaos Cubed</h3><p>Cavernas de enxofre, o cubo de enxofre, blocos de enxofre e cinábrio e aranhas de caverna nascendo nas cavernas.</p></div></li>
+      <li><span class="ver-data">15/09/2026</span><div><h3 class="h4">26.3 Wilderness Bound</h3><p>Floresta nova com álamos, acampamentos abandonados, camas de palha, almofadas e escadas e lajes de lã e concreto.</p></div></li>
     </ol>
     <p class="criterio">Datas e conteúdo das versões de 2024 a 2026 conferidos em notícias e sites sobre o jogo, listados no rodapé. Antes disso, o resumo traz só as novidades mais conhecidas de cada versão.</p>
   </div>
@@ -2749,6 +2850,9 @@ body.em-partida { overflow: hidden; }
   </div>
 </section>
 
+  <a class="btn subir" id="subir" href="#inicio" aria-label="Voltar ao topo" hidden>↑</a>
+</main>
+
 <footer class="rodape">
   <div class="wrap">
     <div>
@@ -2784,7 +2888,6 @@ body.em-partida { overflow: hidden; }
   </div>
 </div>
 <button type="button" class="btn btn-forte atualizar" id="atualizar" hidden>Versão nova do guia: toque para atualizar</button>
-<a class="btn subir" id="subir" href="#inicio" aria-label="Voltar ao topo" hidden>↑</a>
 <div class="toast" id="toast" role="status" hidden></div>
 
 <script>
@@ -3207,10 +3310,10 @@ body.em-partida { overflow: hidden; }
   function montarIndice() {
     indice = [];
     var n = 0;
-    document.querySelectorAll("body > section[id]").forEach(function (sec) {
+    document.querySelectorAll("main > section[id]").forEach(function (sec) {
       var nomeSec = (sec.querySelector(".eyebrow") || sec.querySelector("h2") || {}).textContent || "";
-      sec.querySelectorAll(".etapa h3, .itens h4, .farm h4, .bioma h4, .lista-rec h4, .card-seed .num, .missao-t, tbody td:first-child, .curio-t, .glossario dt, .linha-tempo h4").forEach(function (h) {
-        var alvo = h.closest("article, li, tr, .missao-card, .glossario div") || h;
+      sec.querySelectorAll(".etapa h3, .itens .h4, .farm .h4, .bioma .h4, .lista-rec .h4, .card-seed .num, .missao-t, tbody td:first-child, .curio-t, .glossario dt, .linha-tempo .h4, .atalhos div").forEach(function (h) {
+        var alvo = h.closest("article, li, tr, .missao-card, .glossario div, .atalhos div") || h;
         if (!alvo.id) alvo.id = "b-" + (++n);
         var texto = h.textContent.trim();
         if (texto.length > 70) texto = texto.slice(0, 67).replace(/\s+\S*$/, "") + "…";
