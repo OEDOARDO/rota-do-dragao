@@ -367,6 +367,23 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .mod p { font-size: var(--fs-small); }
 .mod .btn { justify-self: start; text-decoration: none; }
 
+/* conversor, mochila do End, voltar ao topo e link ativo */
+.conv { display: grid; gap: 8px; padding: 12px; background: var(--bg); border: 1px dashed var(--line); }
+.conv-t { font-size: var(--fs-small); font-weight: 600; }
+.conv-linha { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; }
+.conv-linha label { display: grid; gap: 4px; font-size: var(--fs-cap); font-weight: 600; }
+.conv-linha input { width: 110px; }
+.conv-res { font: 500 var(--fs-small)/1.4 var(--f-mono); }
+.mochila { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 16px; }
+.mochila label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.mochila input { width: 16px; height: 16px; accent-color: var(--accent); }
+.mochila label:has(input:checked) { color: var(--accent-forte); }
+.subir {
+  position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+  z-index: 8; width: 44px; height: 44px; display: grid; place-items: center; padding: 0; font-size: 1.2rem; text-decoration: none;
+}
+.links a.ativo { background: var(--grama); box-shadow: inset 0 -3px 0 var(--accent-forte); }
+
 .toast {
   position: fixed; left: 50%; transform: translateX(-50%);
   bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
@@ -553,6 +570,15 @@ td:first-child { font-weight: 600; white-space: nowrap; }
             <li>Volte pelo portal de entrada ou faça um portal novo no Nether. Cada bloco andado no Nether vale 8 no Overworld.</li>
             <li><span class="tag tag-java">Java</span>Atalho: as 3 fortalezas mais perto do centro ficam entre 1.280 e 2.816 blocos do ponto 0, 0 no Overworld. Ande uns 220 blocos no Nether a partir do 0, 0 e faça um portal ali: você sai perto desse anel.</li>
           </ul>
+          <div class="conv" id="conv">
+            <p class="conv-t">Conversor de coordenadas</p>
+            <div class="conv-linha">
+              <label>De<select class="campo" id="cv-de"><option value="ow">Overworld para Nether</option><option value="ne">Nether para Overworld</option></select></label>
+              <label>X<input class="campo" id="cv-x" type="number" inputmode="numeric" placeholder="800"></label>
+              <label>Z<input class="campo" id="cv-z" type="number" inputmode="numeric" placeholder="-1200"></label>
+            </div>
+            <p class="conv-res" id="cv-res" aria-live="polite">Digite o X e o Z. A altura (Y) não muda.</p>
+          </div>
           <p class="saia"><strong>Saia com:</strong> 14 olhos do Ender.</p>
         </article>
 
@@ -569,7 +595,18 @@ td:first-child { font-weight: 600; white-space: nowrap; }
             <li>Lá dentro, procure a sala do portal. Ela tem uma escada sobre lava e um gerador de traças. Quebre ou tape o gerador.</li>
             <li>Coloque os olhos nas 12 molduras. Algumas já vêm com olho.</li>
           </ul>
-          <p class="saia"><strong>Leve para o End:</strong> arco e 32 flechas ou mais, 64 blocos, balde de água, comida, espada ou machado e, se souber usar, camas.</p>
+          <div class="saia">
+            <p><strong>Leve para o End:</strong> marque o que já está no inventário.</p>
+            <ul class="mochila" id="mochila">
+              <li><label><input type="checkbox" value="arco"> Arco</label></li>
+              <li><label><input type="checkbox" value="flechas"> 32 flechas ou mais</label></li>
+              <li><label><input type="checkbox" value="blocos"> 64 blocos</label></li>
+              <li><label><input type="checkbox" value="balde"> Balde de água</label></li>
+              <li><label><input type="checkbox" value="comida"> Comida</label></li>
+              <li><label><input type="checkbox" value="arma"> Espada ou machado</label></li>
+              <li><label><input type="checkbox" value="camas"> Camas, se souber usar</label></li>
+            </ul>
+          </div>
         </article>
 
         <article class="etapa" data-dim="end" id="e8">
@@ -1521,6 +1558,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
   </div>
 </footer>
 
+<a class="btn subir" id="subir" href="#inicio" aria-label="Voltar ao topo" hidden>↑</a>
 <div class="toast" id="toast" role="status" hidden></div>
 
 <script>
@@ -1843,6 +1881,58 @@ td:first-child { font-weight: 600; white-space: nowrap; }
   document.addEventListener("visibilitychange", function () { if (!document.hidden && mural.carregou) carregarMural(); });
   avaliar();
   carregarMural();
+
+  // ---------- conversor Overworld ↔ Nether (8 blocos no Overworld = 1 no Nether) ----------
+  var cvDe = document.getElementById("cv-de"), cvX = document.getElementById("cv-x"), cvZ = document.getElementById("cv-z"), cvRes = document.getElementById("cv-res");
+  function converter() {
+    var x = cvX.value.trim(), z = cvZ.value.trim();
+    if (x === "" || z === "" || !isFinite(Number(x)) || !isFinite(Number(z))) { cvRes.textContent = "Digite o X e o Z. A altura (Y) não muda."; return; }
+    var paraNether = cvDe.value === "ow", f = paraNether ? 1 / 8 : 8;
+    var nx = paraNether ? Math.floor(Number(x) * f) : Math.round(Number(x) * f), nz = paraNether ? Math.floor(Number(z) * f) : Math.round(Number(z) * f);
+    cvRes.textContent = (paraNether ? "No Nether: " : "No Overworld: ") + "X " + nx.toLocaleString("pt-BR") + ", Z " + nz.toLocaleString("pt-BR");
+  }
+  [cvDe, cvX, cvZ].forEach(function (el) { el.addEventListener("input", converter); el.addEventListener("change", converter); });
+
+  // ---------- mochila do End ----------
+  var mochila = LS.get("rd-mochila", []);
+  if (!Array.isArray(mochila)) mochila = [];
+  var chkMochila = document.querySelectorAll("#mochila input");
+  chkMochila.forEach(function (c) {
+    c.checked = mochila.indexOf(c.value) !== -1;
+    c.addEventListener("change", function () {
+      mochila = Array.prototype.filter.call(chkMochila, function (x) { return x.checked; }).map(function (x) { return x.value; });
+      LS.set("rd-mochila", mochila);
+      if (mochila.length === chkMochila.length) avisar("Mochila pronta para o End");
+    });
+  });
+
+  // ---------- voltar ao topo e link da seção atual ----------
+  var bSubir = document.getElementById("subir");
+  var linksNav = Array.prototype.slice.call(document.querySelectorAll(".links a"));
+  var alvosNav = linksNav.map(function (a) { return document.querySelector(a.getAttribute("href")); });
+  var agendado = false, ultimoAtivo = -1;
+  function aoRolar() {
+    agendado = false;
+    bSubir.hidden = window.scrollY < 800;
+    // a seção atual é a que começou mais perto (acima) de 30% da tela; a ordem da barra não importa
+    var linha = window.innerHeight * 0.3, atual = -1, melhor = -Infinity;
+    alvosNav.forEach(function (el, i) {
+      if (!el) return;
+      var topo = el.getBoundingClientRect().top;
+      if (topo <= linha && topo > melhor) { melhor = topo; atual = i; }
+    });
+    linksNav.forEach(function (a, i) { a.classList.toggle("ativo", i === atual); });
+    // no celular os links rolam de lado: traz o link ativo para a vista sem mexer na rolagem da página
+    if (atual !== ultimoAtivo && atual >= 0) {
+      var caixa = linksNav[atual].parentNode, el = linksNav[atual];
+      if (el.offsetLeft < caixa.scrollLeft || el.offsetLeft + el.offsetWidth > caixa.scrollLeft + caixa.clientWidth) {
+        caixa.scrollLeft = el.offsetLeft - (caixa.clientWidth - el.offsetWidth) / 2;
+      }
+    }
+    ultimoAtivo = atual;
+  }
+  window.addEventListener("scroll", function () { if (!agendado) { agendado = true; requestAnimationFrame(aoRolar); } }, { passive: true });
+  aoRolar();
 
   // ---------- missões ----------
   var cumpridas = LS.get("rd-missoes", []);
