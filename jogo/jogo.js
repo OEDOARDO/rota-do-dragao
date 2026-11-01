@@ -439,7 +439,7 @@ import * as THREE from "./vendor/three.module.min.js";
 
   function acenderPortal(silencioso) {
     for (var i = 0; i < M.mapa.t.length; i++) if (M.mapa.t[i] === T.PORTAL_OFF) M.mapa.t[i] = T.PORTAL;
-    if (R.grupo && !silencioso) construirPortais();
+    if (R.grupo && !silencioso) { construirPortais(); montarMinimapa(); }
     if (!silencioso) { E.f.portal = true; som("portal"); mostrarMsg("O portal acendeu! Entre nele.", 2); salvar(); }
   }
   function abrirSaida() { retangulo(M.mapa, M.centro.x, M.centro.y - 1, 2, 3, T.PORTAL); }
@@ -625,11 +625,24 @@ import * as THREE from "./vendor/three.module.min.js";
   }
 
   // ===================== som (beeps simples) =====================
-  var AC = null, somLigado = LS.get("rdj-som", true);
+  var AC = null, somLigado = LS.get("rdj-som", true), musicaLigada = LS.get("rdj-musica", true), ruidoBuf = null;
+  function audio() { if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)(); if (AC.state === "suspended") AC.resume(); return AC; }
+  // barulho curto filtrado: golpes, pedra quebrando, passos
+  function chiado(freq, dur, vol, tipoFiltro) {
+    var ac = audio();
+    if (!ruidoBuf) { ruidoBuf = ac.createBuffer(1, ac.sampleRate * 0.5, ac.sampleRate); var d = ruidoBuf.getChannelData(0); for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; }
+    var src = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain();
+    src.buffer = ruidoBuf; f.type = tipoFiltro || "bandpass"; f.frequency.value = freq; f.Q.value = 1.2;
+    g.gain.setValueAtTime(vol, ac.currentTime); g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + dur);
+    src.connect(f); f.connect(g); g.connect(ac.destination); src.start(); src.stop(ac.currentTime + dur + 0.02);
+  }
   function som(tipo) {
     if (!somLigado) return;
     try {
-      if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)();
+      audio();
+      if (tipo === "golpe") { chiado(900, 0.12, 0.12); return; }
+      if (tipo === "acerto") { chiado(400, 0.15, 0.2, "lowpass"); }
+      if (tipo === "dor") { chiado(250, 0.25, 0.25, "lowpass"); }
       var f = { golpe: 180, acerto: 320, pega: 660, dor: 120, arco: 520, cura: 760, portal: 240, cristal: 900, clique: 440, conquista: 880, vitoria: 990, compra: 600 }[tipo] || 400;
       var o = AC.createOscillator(), g = AC.createGain();
       o.type = tipo === "dor" || tipo === "golpe" ? "square" : "triangle";
@@ -639,6 +652,47 @@ import * as THREE from "./vendor/three.module.min.js";
       o.connect(g); g.connect(AC.destination); o.start(); o.stop(AC.currentTime + 0.26);
     } catch (e) {}
   }
+
+  // música ambiente feita na hora: notas suaves e um acorde de fundo, diferentes em cada mundo
+  var MUSICA = {
+    campos: { escala: [0, 2, 4, 7, 9], base: 60, acordes: [[0, 4, 7], [-3, 0, 4], [-7, -3, 0], [-5, -1, 2]], tom: "triangle", passo: 0.42, chance: 0.55 },
+    abismo: { escala: [0, 1, 3, 7, 8], base: 48, acordes: [[0, 3, 7], [1, 5, 8], [-2, 1, 5], [0, 3, 7]], tom: "sawtooth", passo: 0.6, chance: 0.35 },
+    fim: { escala: [0, 2, 4, 6, 8, 10], base: 57, acordes: [[0, 4, 8], [2, 6, 10], [-2, 2, 6], [0, 4, 8]], tom: "sine", passo: 0.55, chance: 0.45 }
+  };
+  var mus = { proxima: 0, passo: 0, mestre: null, mundo: null };
+  function hz(n) { return 440 * Math.pow(2, (n - 69) / 12); }
+  function tocarNota(nota, quando, dur, vol, tom, alvo) {
+    var o = AC.createOscillator(), g = AC.createGain();
+    o.type = tom; o.frequency.value = hz(nota);
+    g.gain.setValueAtTime(0.0001, quando); g.gain.linearRampToValueAtTime(vol, quando + Math.min(0.08, dur / 3)); g.gain.exponentialRampToValueAtTime(0.0001, quando + dur);
+    o.connect(g); g.connect(alvo); o.start(quando); o.stop(quando + dur + 0.05);
+  }
+  function atualizarMusica() {
+    var tocar = musicaLigada && jogando && !document.hidden && M;
+    if (!tocar) { if (mus.mestre) { mus.mestre.gain.setTargetAtTime(0, AC.currentTime, 0.3); } return; }
+    try {
+      audio();
+      if (!mus.mestre) {
+        mus.mestre = AC.createGain(); mus.mestre.gain.value = 0;
+        var filtro = AC.createBiquadFilter(); filtro.type = "lowpass"; filtro.frequency.value = 2200;
+        mus.mestre.connect(filtro); filtro.connect(AC.destination);
+      }
+      mus.mestre.gain.setTargetAtTime(M.nome === "abismo" ? 0.05 : 0.07, AC.currentTime, 0.5);
+      var cfg = MUSICA[M.nome];
+      if (mus.mundo !== M.nome) { mus.mundo = M.nome; mus.proxima = AC.currentTime + 0.3; mus.passo = 0; }
+      // agenda as próximas notas com uma pequena folga, para não engasgar
+      while (mus.proxima < AC.currentTime + 0.6) {
+        var t = mus.proxima, compasso = Math.floor(mus.passo / 8) % cfg.acordes.length;
+        if (mus.passo % 8 === 0) cfg.acordes[compasso].forEach(function (n) { tocarNota(cfg.base - 12 + n, t, cfg.passo * 8.2, 0.16, "sine", mus.mestre); });
+        if (Math.random() < cfg.chance) {
+          var grau = cfg.escala[Math.floor(Math.random() * cfg.escala.length)], oit = Math.random() < 0.3 ? 12 : 0;
+          tocarNota(cfg.base + grau + oit, t, cfg.passo * (Math.random() < 0.3 ? 3 : 1.6), 0.22, cfg.tom === "sawtooth" ? "triangle" : cfg.tom, mus.mestre);
+        }
+        mus.passo++; mus.proxima += cfg.passo;
+      }
+    } catch (e) {}
+  }
+  setInterval(function () { if (AC || (musicaLigada && jogando)) atualizarMusica(); }, 250);
 
   // ===================== entrada =====================
   // PC: WASD anda, o mouse mira, clique esquerdo quebra/corta/ataca, clique direito usa o item, E fala e usa portais.
@@ -661,6 +715,19 @@ import * as THREE from "./vendor/three.module.min.js";
   window.addEventListener("keyup", function (e) { teclas[e.key.toLowerCase()] = false; });
   window.addEventListener("blur", function () { teclas = {}; segurandoA = false; });
   canvas.addEventListener("contextmenu", function (e) { e.preventDefault(); });
+  // zoom: rodinha do mouse no computador, pinça com dois dedos no celular
+  var zoom = LS.get("rdj-zoom", 1);
+  function mudarZoom(z) { zoom = Math.max(0.65, Math.min(1.6, z)); LS.set("rdj-zoom", Math.round(zoom * 100) / 100); }
+  canvas.addEventListener("wheel", function (e) { if (!jogando || pausado) return; e.preventDefault(); mudarZoom(zoom * (e.deltaY > 0 ? 1.08 : 1 / 1.08)); }, { passive: false });
+  var pinca = null;
+  function distToques(t) { var dx = t[0].clientX - t[1].clientX, dy = t[0].clientY - t[1].clientY; return Math.sqrt(dx * dx + dy * dy); }
+  window.addEventListener("touchstart", function (e) {
+    if (e.touches.length === 2 && jogando && !pausado && !(e.target.closest && e.target.closest(".bt"))) {
+      pinca = { d: distToques(e.touches), z: zoom }; joy.id = null; joy.x = joy.y = 0; elBola.style.transform = "";
+    }
+  }, { passive: true });
+  window.addEventListener("touchmove", function (e) { if (pinca && e.touches.length === 2) mudarZoom(pinca.z * pinca.d / Math.max(20, distToques(e.touches))); }, { passive: true });
+  window.addEventListener("touchend", function (e) { if (e.touches.length < 2) pinca = null; });
   canvas.addEventListener("pointermove", function (e) { if (e.pointerType === "mouse") { usouMouse = true; mira = { cx: e.clientX, cy: e.clientY }; } });
   canvas.addEventListener("pointerdown", function (e) {
     if (e.pointerType !== "mouse" || !jogando || pausado) return;
@@ -702,7 +769,7 @@ import * as THREE from "./vendor/three.module.min.js";
   function laco(agora) {
     var dt = Math.min(0.05, (agora - ultimo) / 1000 || 0); ultimo = agora;
     if (jogando && !pausado) atualizar(dt);
-    if (M && R.pronto) desenhar(dt);
+    if (M && R.pronto) { desenhar(dt); medirVelocidade(); }
     requestAnimationFrame(laco);
   }
   function atualizar(dt) {
@@ -752,16 +819,53 @@ import * as THREE from "./vendor/three.module.min.js";
   function cor(h) { return new THREE.Color(h); }
   function mat(nome, opc) { if (!MAT[nome]) MAT[nome] = new THREE.MeshStandardMaterial(Object.assign({ flatShading: true, roughness: 0.85, metalness: 0 }, opc)); return MAT[nome]; }
 
+  // qualidade gráfica: alta no computador, média no celular; cai sozinha se o jogo ficar lento
+  var QUAL = {
+    alta: { nome: "Alta", pr: function () { return Math.min(window.devicePixelRatio || 1, 2); }, sombra: 2048, capim: 1, ar: 1 },
+    media: { nome: "Média", pr: function () { return Math.min(window.devicePixelRatio || 1, 1.25); }, sombra: 1024, capim: 0.5, ar: 0.6 },
+    baixa: { nome: "Baixa", pr: function () { return Math.min(window.devicePixelRatio || 1, 0.85); }, sombra: 0, capim: 0, ar: 0.3 }
+  };
+  var ORDEM_QUAL = ["alta", "media", "baixa"];
+  var qualEscolhida = LS.get("rdj-qual", null), qualidade = QUAL[qualEscolhida] ? qualEscolhida : (ehToque ? "media" : "alta");
+  function aplicarQualidade() {
+    if (!R.pronto) return;
+    var q = QUAL[qualidade];
+    R.ren.setPixelRatio(q.pr()); ajustarTela();
+    R.ren.shadowMap.enabled = !!q.sombra;
+    if (q.sombra) { R.sol.shadow.mapSize.set(q.sombra, q.sombra); if (R.sol.shadow.map) { R.sol.shadow.map.dispose(); R.sol.shadow.map = null; } }
+    R.cena.traverse(function (o) { if (o.material) (Array.isArray(o.material) ? o.material : [o.material]).forEach(function (m) { m.needsUpdate = true; }); });
+    if (M) construirMundo();
+  }
+  // mede a velocidade nos primeiros segundos de jogo; se ficar abaixo de 24 quadros por segundo, baixa um nível
+  var medida = { ini: 0, n: 0, feita: false };
+  function medirVelocidade() {
+    if (medida.feita || qualEscolhida || !jogando || pausado) { medida.ini = 0; return; }
+    var agora = performance.now();
+    if (!medida.ini) { medida.ini = agora; medida.n = 0; return; }
+    var seg = (agora - medida.ini) / 1000;
+    if (seg < 1.5) return; // começo de mundo sempre engasga
+    if (medida.n0 == null) { medida.n0 = medida.n; medida.t0 = agora; }
+    medida.n++;
+    if (seg > 6.5) {
+      medida.feita = true;
+      var fps = (medida.n - medida.n0) / ((agora - medida.t0) / 1000);
+      if (fps < 24 && qualidade !== "baixa") {
+        qualidade = ORDEM_QUAL[ORDEM_QUAL.indexOf(qualidade) + 1]; aplicarQualidade();
+        if (qualidade !== "baixa") { medida = { ini: 0, n: 0, feita: false }; } // mede de novo no nível novo
+        mostrarMsg("Gráficos ajustados para " + QUAL[qualidade].nome.toLowerCase() + " para o jogo ficar mais leve. Dá para mudar em Opções.", 3);
+      }
+    }
+  }
   function iniciar3d() {
     R.ren = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, powerPreference: "high-performance" });
-    R.ren.setPixelRatio(Math.min(window.devicePixelRatio || 1, ehToque ? 1.5 : 2));
+    R.ren.setPixelRatio(QUAL[qualidade].pr());
     R.ren.shadowMap.enabled = true; R.ren.shadowMap.type = THREE.PCFSoftShadowMap;
     R.ren.outputColorSpace = THREE.SRGBColorSpace; R.ren.toneMapping = THREE.ACESFilmicToneMapping; R.ren.toneMappingExposure = 1.12;
     R.cena = new THREE.Scene();
     R.cam = new THREE.PerspectiveCamera(40, 1, 0.1, 220);
     R.hemi = new THREE.HemisphereLight(0xcfe8ff, 0x3a2a1a, 0.9); R.cena.add(R.hemi);
     R.sol = new THREE.DirectionalLight(0xfff1d6, 1.7); R.sol.castShadow = true;
-    var ms = ehToque ? 1024 : 2048; R.sol.shadow.mapSize.set(ms, ms);
+    var ms = QUAL[qualidade].sombra || 1024; R.sol.shadow.mapSize.set(ms, ms); R.ren.shadowMap.enabled = !!QUAL[qualidade].sombra;
     var sc = R.sol.shadow.camera; sc.left = -20; sc.right = 20; sc.top = 20; sc.bottom = -20; sc.near = 1; sc.far = 60;
     R.sol.shadow.bias = -0.0006; R.sol.shadow.normalBias = 0.02;
     R.cena.add(R.sol); R.cena.add(R.sol.target);
@@ -868,6 +972,7 @@ import * as THREE from "./vendor/three.module.min.js";
   function construirMundo() {
     if (R.grupo) { R.cena.remove(R.grupo); R.grupo.traverse(function (o) { if (o.geometry && !o.geometry.compartilhada) o.geometry.dispose(); }); }
     R.modelos.forEach(function (o) { if (o.parent) o.parent.remove(o); }); R.modelos = [];
+    M.ents.forEach(function (e) { e.obj = null; }); M.proj.forEach(function (q) { q.obj = null; });
     R.grupo = new THREE.Group(); R.cena.add(R.grupo); R.porTile = {};
     var m = M.mapa, rnd = gerador(E.seed + (M.nome === "abismo" ? 5 : M.nome === "fim" ? 9 : 1));
     // clima de cada mundo
@@ -959,7 +1064,7 @@ import * as THREE from "./vendor/three.module.min.js";
       else if (t === T.FLOR) pega("flor").push(item);
       else if (t === T.GRAMA2) pega("tufo").push(item);
       // capim espalhado pela grama e pela cinza
-      if ((t === T.GRAMA || t === T.GRAMA2 || t === T.FLOR) && rnd() < 0.55) { var nq = 1 + Math.floor(rnd() * 3); for (var q = 0; q < nq; q++) pega("capim").push({ x: x + rnd(), z: y + rnd(), s: 0.7 + rnd() * 0.7, r: rnd() * 6.3, tx: x, ty: y }); }
+      if ((t === T.GRAMA || t === T.GRAMA2 || t === T.FLOR) && rnd() < 0.55 * QUAL[qualidade].capim) { var nq = 1 + Math.floor(rnd() * 3); for (var q = 0; q < nq; q++) pega("capim").push({ x: x + rnd(), z: y + rnd(), s: 0.7 + rnd() * 0.7, r: rnd() * 6.3, tx: x, ty: y }); }
       if (t === T.CINZA && rnd() < 0.08) pega("seixo").push({ x: x + rnd(), z: y + rnd(), s: 0.25 + rnd() * 0.25, r: rnd() * 6.3, tx: x, ty: y, v: Math.floor(rnd() * 3) });
     }
     var cores = { verde: ["#3E8E2E", "#4C9A30", "#5AA83A", "#367F2A", "#6BAF3C"], pinho: ["#24603A", "#2B6E40", "#1F5534"], capim: ["#6CB844", "#7CC650", "#5EA83C", "#8ACF58"], ferro: "#E3B48F", ouro: "#F5D442", flor: ["#E04A4A", "#F5D442", "#F2F2F2", "#B57BEA"] };
@@ -1039,7 +1144,7 @@ import * as THREE from "./vendor/three.module.min.js";
     R.alvoTile = new THREE.Mesh(new THREE.BoxGeometry(1.04, 1.04, 1.04), new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true, opacity: 0.5 }));
     R.alvoTile.visible = false; R.grupo.add(R.alvoTile);
     R.particulas = []; R.textoCam = null;
-    criarAr();
+    criarAr(); montarMinimapa();
   }
   // partículas do ar: pólen nos Campos, brasas subindo no Abismo, brilhos no Fim
   var texBrilho = null;
@@ -1049,7 +1154,7 @@ import * as THREE from "./vendor/three.module.min.js";
       gr.addColorStop(0, "rgba(255,255,255,1)"); gr.addColorStop(0.4, "rgba(255,255,255,0.6)"); gr.addColorStop(1, "rgba(255,255,255,0)");
       c2.fillStyle = gr; c2.fillRect(0, 0, 32, 32); texBrilho = new THREE.CanvasTexture(cv);
     }
-    var cfg = { campos: [140, 0xfff4b0, 0.18], abismo: [260, 0xff8a30, 0.2], fim: [180, 0xd9a6ff, 0.22] }[M.nome], n = cfg[0], arr = new Float32Array(n * 3), vel = [];
+    var cfg = { campos: [140, 0xfff4b0, 0.18], abismo: [260, 0xff8a30, 0.2], fim: [180, 0xd9a6ff, 0.22] }[M.nome], n = Math.max(20, Math.round(cfg[0] * QUAL[qualidade].ar)), arr = new Float32Array(n * 3), vel = [];
     for (var i = 0; i < n; i++) { arr[i * 3] = (Math.random() - 0.5) * 34; arr[i * 3 + 1] = Math.random() * 6; arr[i * 3 + 2] = (Math.random() - 0.5) * 30; vel.push(Math.random() * 6.3); }
     var g = new THREE.BufferGeometry(); g.setAttribute("position", new THREE.BufferAttribute(arr, 3));
     R.ar = new THREE.Points(g, new THREE.PointsMaterial({ color: cfg[1], size: cfg[2], map: texBrilho, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
@@ -1084,7 +1189,51 @@ import * as THREE from "./vendor/three.module.min.js";
       });
     }
   }
+  // minimapa: 1 pixel por tile, desenhado uma vez por mundo e atualizado quando um tile muda
+  var COR_MAPA = {};
+  function corMapa(t) {
+    if (COR_MAPA[t] == null) {
+      var c = { }; c[T.ARVORE] = "#2E6B2A"; c[T.AGUA] = "#2F68B8"; c[T.PONTE] = "#9C7448"; c[T.PEDRA] = "#8A8A8A"; c[T.FERRO] = "#C9A07A"; c[T.OURO] = "#E3C15A";
+      c[T.LAVA] = "#E8661E"; c[T.BASALTO] = "#3A3A40"; c[T.PAREDE] = "#9C7448"; c[T.TORRE] = "#B0B0B0"; c[T.PORTA] = "#4A2E18"; c[T.TIJOLO] = "#6A2A30";
+      c[T.PILAR] = "#3A2A55"; c[T.PORTAL] = "#B57BEA"; c[T.PORTAL_OFF] = "#3A2A55"; c[T.VAZIO] = "rgba(0,0,0,0)"; c[T.CAMINHO] = "#C49A6C"; c[T.CHAO] = "#C49A6C"; c[T.MESA] = "#C49A6C";
+      COR_MAPA[t] = c[t] || corChao(t);
+    }
+    return COR_MAPA[t];
+  }
+  function montarMinimapa() {
+    var m = M.mapa; R.mini = document.createElement("canvas"); R.mini.width = m.w; R.mini.height = m.h;
+    var c = R.mini.getContext("2d"); COR_MAPA = {};
+    for (var y = 0; y < m.h; y++) for (var x = 0; x < m.w; x++) { c.fillStyle = corMapa(tile(m, x, y)); c.fillRect(x, y, 1, 1); }
+  }
+  function desenharMinimapa() {
+    if (!R.mini) return;
+    var tam = VW < 260 ? 56 : 70, mx = VW - tam - 4, my = 38;
+    var ob = elObj.getBoundingClientRect(), esc = window.innerWidth / VW;
+    if (!elObj.hidden && ob.right / esc > mx && ob.top / esc < my + tam) my = Math.max(my, Math.ceil(ob.bottom / esc) + 4);
+    var raio = 18, px = J.x / TILE, pz = J.y / TILE, k = tam / (raio * 2);
+    hctx.save();
+    hctx.fillStyle = "rgba(10,7,5,0.75)"; hctx.fillRect(mx - 2, my - 2, tam + 4, tam + 4);
+    hctx.beginPath(); hctx.rect(mx, my, tam, tam); hctx.clip();
+    hctx.imageSmoothingEnabled = false;
+    hctx.drawImage(R.mini, px - raio, pz - raio, raio * 2, raio * 2, mx, my, tam, tam);
+    function ponto(x, z, cor, r) { var sx = mx + (x - px + raio) * k, sy = my + (z - pz + raio) * k; hctx.fillStyle = cor; hctx.fillRect(Math.round(sx - r), Math.round(sy - r), r * 2, r * 2); }
+    M.npcs.forEach(function (n) { ponto(n.x / TILE, n.y / TILE, "#FFF2A0", 1.5); });
+    M.ents.forEach(function (e) { ponto(e.x / TILE, e.y / TILE, "#E0303A", 1); });
+    if (M.dragao) ponto(M.dragao.x / TILE, M.dragao.y / TILE, "#E07AFF", 2.5);
+    var alvo = objetivoAtual && objetivoAtual[1];
+    if (alvo) {
+      var ax = Math.max(px - raio + 1, Math.min(px + raio - 1, alvo.x + 0.5)), az = Math.max(pz - raio + 1, Math.min(pz + raio - 1, alvo.y + 0.5));
+      ponto(ax, az, Math.floor(tAnim * 3) % 2 ? "#FFF2A0" : "#E3C15A", 2.5);
+    }
+    // o jogador: seta branca apontando para onde ele olha
+    var cx = mx + tam / 2, cy = my + tam / 2, an = Math.atan2(J.dy, J.dx);
+    hctx.translate(cx, cy); hctx.rotate(an); hctx.fillStyle = "#FFFFFF"; hctx.strokeStyle = "#000";
+    hctx.beginPath(); hctx.moveTo(4, 0); hctx.lineTo(-3, -3); hctx.lineTo(-1.5, 0); hctx.lineTo(-3, 3); hctx.closePath(); hctx.fill(); hctx.stroke();
+    hctx.restore();
+    hctx.strokeStyle = "#6E5441"; hctx.strokeRect(mx - 1.5, my - 1.5, tam + 3, tam + 3);
+  }
   function tileMudou(x, y) {
+    if (R.mini) { var c = R.mini.getContext("2d"); c.clearRect(x, y, 1, 1); c.fillStyle = corMapa(tile(M.mapa, x, y)); c.fillRect(x, y, 1, 1); }
     var lista = R.porTile[x + "," + y]; if (!lista) return;
     var z = new THREE.Matrix4().makeScale(0, 0, 0);
     lista.forEach(function (l) { l.im.setMatrixAt(l.i, z); l.im.instanceMatrix.needsUpdate = true; });
@@ -1233,7 +1382,7 @@ import * as THREE from "./vendor/three.module.min.js";
     R.camY = R.camY == null ? hj : R.camY + (hj - R.camY) * Math.min(1, dt * 4);
     R.chao.constant = -hj;
     // câmera: de cima e um pouco de lado, seguindo o jogador
-    var longe = VH > VW ? 1.55 : 1, alt = (M.nome === "fim" ? 12.5 : 9.5) * longe, rec = (M.nome === "fim" ? 9 : 7) * longe;
+    var longe = (VH > VW ? 1.55 : 1) * zoom, alt = (M.nome === "fim" ? 12.5 : 9.5) * longe, rec = (M.nome === "fim" ? 9 : 7) * longe;
     var alvoCam = vTmp.set(px, alt + R.camY, pz + rec);
     if (!R.camIni) { R.cam.position.copy(alvoCam); R.camIni = true; } else R.cam.position.lerp(alvoCam, Math.min(1, dt * 6));
     R.cam.lookAt(R.cam.position.x, R.cam.position.y - alt + 0.3, R.cam.position.z - rec);
@@ -1349,6 +1498,7 @@ import * as THREE from "./vendor/three.module.min.js";
         hctx.beginPath(); hctx.moveTo(8, 0); hctx.lineTo(-5, -6); hctx.lineTo(-2, 0); hctx.lineTo(-5, 6); hctx.closePath(); hctx.fill(); hctx.stroke(); hctx.restore();
       }
     }
+    desenharMinimapa();
     if (usouMouse && mira && jogando && !pausado) { // mira
       var mx = mira.cx / window.innerWidth * VW, my = mira.cy / window.innerHeight * VH;
       hctx.strokeStyle = "rgba(255,255,255,0.8)"; hctx.beginPath(); hctx.arc(mx, my, 4, 0, Math.PI * 2); hctx.moveTo(mx - 7, my); hctx.lineTo(mx - 5, my); hctx.moveTo(mx + 5, my); hctx.lineTo(mx + 7, my); hctx.stroke();
@@ -1417,6 +1567,11 @@ import * as THREE from "./vendor/three.module.min.js";
       CONQ.forEach(function (c) { el.appendChild(linha(E.conq[c[0]] ? "i_olho" : "i_moeda", (E.conq[c[0]] ? "✓ " : "") + c[1], c[2], null, false, null, E.conq[c[0]] ? "ok" : "")); });
     } else {
       el.appendChild(linha("i_isqueiro", "Som", somLigado ? "Ligado" : "Desligado", somLigado ? "Desligar" : "Ligar", true, function () { somLigado = !somLigado; LS.set("rdj-som", somLigado); renderMenu(); }));
+      el.appendChild(linha("i_perola", "Música", musicaLigada ? "Ligada" : "Desligada", musicaLigada ? "Desligar" : "Ligar", true, function () { musicaLigada = !musicaLigada; LS.set("rdj-musica", musicaLigada); atualizarMusica(); renderMenu(); }));
+      el.appendChild(linha("i_olho", "Gráficos: " + QUAL[qualidade].nome, qualidade === "alta" ? "Sombras e capim completos." : qualidade === "media" ? "Menos capim e sombras mais simples." : "Sem sombras e sem capim. Para celular mais fraco.", "Mudar", true, function () {
+        qualidade = ORDEM_QUAL[(ORDEM_QUAL.indexOf(qualidade) + 1) % 3]; qualEscolhida = qualidade; LS.set("rdj-qual", qualidade); aplicarQualidade(); renderMenu();
+      }));
+      el.appendChild(linha("i_arco", "Zoom da câmera", Math.round(100 / zoom) + "%. Rodinha do mouse ou pinça com dois dedos.", "Padrão", zoom !== 1, function () { mudarZoom(1); renderMenu(); }));
       el.appendChild(linha("i_moeda", "Tempo de jogo", fmt(E.tempo) + " · " + E.mortes + " queda" + (E.mortes === 1 ? "" : "s"), null));
       el.appendChild(linha("i_pao", "Salvar e sair", "Volta para a tela inicial. Dá para continuar depois.", "Sair", true, function () { salvar(); jogando = false; irTitulo(); }));
     }
