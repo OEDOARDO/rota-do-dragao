@@ -117,9 +117,10 @@ code, .mono { font-family: var(--f-mono); font-size: 0.92em; }
 }
 /* tablet deitado e telas médias: os links vão para uma segunda linha, todos à vista */
 @media (min-width: 1240px) and (max-width: 1919px) {
-  .links { flex-wrap: wrap; overflow: visible; justify-content: space-between; gap: 2px; }
-  .links a { padding: 6px 5px; font-size: 0.84rem; }
+  .links { flex-wrap: wrap; overflow: visible; justify-content: space-between; gap: 0; }
+  .links a { padding: 6px 3px; font-size: 0.8rem; }
 }
+@media (min-width: 1920px) { .links a { padding: 6px 5px; } .topo .wrap { gap: 8px 14px; } }
 /* quando os links rolam de lado (celular), a borda direita esmaece para mostrar que tem mais */
 .links.tem-mais { -webkit-mask-image: linear-gradient(to right, #000 82%, transparent); mask-image: linear-gradient(to right, #000 82%, transparent); }
 .edicao { display: inline-flex; border: 2px solid var(--outline); margin-left: 0; }
@@ -568,6 +569,47 @@ details > summary::-webkit-details-marker { display: none; }
   background: var(--fg); color: var(--bg); padding: 10px 16px; font-size: var(--fs-small); font-weight: 600;
   z-index: 20; max-width: calc(100% - 32px);
 }
+
+/* ---------- cena 3D do jogo ---------- */
+.cena-sec { border-top: 0; }
+.cena { position: relative; min-height: 380px; overflow: hidden; background:
+  radial-gradient(ellipse at 70% 40%, #2c4a1e 0, #16210f 70%); border-bottom: 1px solid var(--line); }
+.cena canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.cena::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, rgba(14,10,7,0.88) 0, rgba(14,10,7,0.55) 38%, rgba(14,10,7,0) 70%); }
+.cena-txt { position: relative; z-index: 1; padding-block: 64px; display: grid; gap: 14px; max-width: 1240px; }
+.cena-txt > * { max-width: 30rem; }
+.cena-txt h2 { font-family: var(--f-display); font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1; }
+.cena-txt .acoes { display: flex; flex-wrap: wrap; gap: 10px; }
+.cena-txt .btn { text-decoration: none; }
+.cena-txt .criterio { color: #C4B4A0; }
+@media (max-width: 700px) {
+  .cena { min-height: 460px; display: flex; align-items: flex-end; }
+  .cena::after { background: linear-gradient(0deg, rgba(14,10,7,0.92) 0, rgba(14,10,7,0.6) 45%, rgba(14,10,7,0) 75%); }
+  .cena-txt { padding-block: 28px; }
+}
+
+/* ---------- seed do roteiro ---------- */
+.seed-roteiro { display: grid; gap: 10px; border-left: 6px solid var(--accent); }
+@media (min-width: 760px) { .seed-roteiro { grid-template-columns: minmax(0, 1fr) auto; align-items: center; } }
+.seed-roteiro .num { font-size: 1.05rem; }
+.na-seed { background: color-mix(in srgb, var(--accent) 14%, var(--surface)); border-left: 4px solid var(--accent); padding: 8px 12px; font-size: var(--fs-small); }
+.na-seed .rot { color: var(--accent); }
+
+/* ---------- calculadoras ---------- */
+.calc-grade { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); }
+.calc { display: grid; gap: 12px; align-content: start; }
+.calc .painel-titulo { display: flex; align-items: center; gap: 8px; margin-bottom: 0; }
+.calc .px-mini { width: 22px; height: 22px; }
+.calc-campos { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 8px; }
+.calc-campos label { display: grid; gap: 4px; font-size: var(--fs-cap); font-weight: 600; letter-spacing: 0.04em; }
+.calc-campos .campo { width: 100%; font-variant-numeric: tabular-nums; }
+.calc-campos .largo { grid-column: 1 / -1; }
+.calc-sub { font-size: var(--fs-cap); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.calc-res { background: rgba(0,0,0,0.25); border: 1px solid var(--line); padding: 10px 12px; font-size: var(--fs-small); min-height: 3em; }
+.calc-res b { font-family: var(--f-mono); font-weight: 500; color: var(--fg); }
+.calc .criterio { font-size: var(--fs-cap); }
+
 </style>
 </head>
 <body>
@@ -583,6 +625,7 @@ details > summary::-webkit-details-marker { display: none; }
       <a href="#estruturas"><span class="px nav-ic" data-px="bau" aria-hidden="true"></span><span class="nav-t">Estruturas</span></a>
       <a href="#mobs"><span class="px nav-ic" data-px="creeper" aria-hidden="true"></span><span class="nav-t">Mobs</span></a>
       <a href="#pocoes"><span class="px nav-ic" data-px="pocao" aria-hidden="true"></span><span class="nav-t">Poções</span></a>
+      <a href="#aventuras"><span class="px nav-ic" data-px="chave" aria-hidden="true"></span><span class="nav-t">Aventuras</span></a>
       <a href="#seeds"><span class="px nav-ic" data-px="semente" aria-hidden="true"></span><span class="nav-t">Seeds</span></a>
       <a href="#biomas"><span class="px nav-ic" data-px="arvore" aria-hidden="true"></span><span class="nav-t">Biomas</span></a>
       <a href="#depois"><span class="px nav-ic" data-px="espada" aria-hidden="true"></span><span class="nav-t">Itens</span></a>
@@ -592,6 +635,7 @@ details > summary::-webkit-details-marker { display: none; }
       <a href="#mods"><span class="px nav-ic" data-px="mesa" aria-hidden="true"></span><span class="nav-t">Mods</span></a>
       <a href="#missoes"><span class="px nav-ic" data-px="trofeu" aria-hidden="true"></span><span class="nav-t">Missões</span></a>
       <a href="#versoes"><span class="px nav-ic" data-px="relogio" aria-hidden="true"></span><span class="nav-t">Versões</span></a>
+      <a href="#calculadoras"><span class="px nav-ic" data-px="calc" aria-hidden="true"></span><span class="nav-t">Calculadoras</span></a>
       <a href="#quiz"><span class="px nav-ic" data-px="quiz" aria-hidden="true"></span><span class="nav-t">Quiz</span></a>
       <a href="#curiosidades"><span class="px nav-ic" data-px="livro" aria-hidden="true"></span><span class="nav-t">Curiosidades</span></a>
     </div>
@@ -655,6 +699,22 @@ details > summary::-webkit-details-marker { display: none; }
 </header>
 
 <main id="conteudo">
+
+<section class="secao cena-sec" id="jogar" aria-labelledby="jogar-t">
+  <div class="cena" id="cena3d">
+    <canvas id="cena-tela" aria-hidden="true"></canvas>
+    <div class="wrap cena-txt">
+      <p class="eyebrow"><span class="px eb-ic" data-px="espada" aria-hidden="true"></span>O jogo</p>
+      <h2 id="jogar-t">A Rota do Dragão em 3D</h2>
+      <p>Atravesse os Campos, o Abismo de Fogo e o Fim, junte 6 Olhos do Dragão e derrote o dragão. Roda no navegador e no celular, sem instalar nada.</p>
+      <div class="acoes">
+        <a class="btn btn-forte" href="jogo/">Jogar agora</a>
+        <a class="btn" href="#roteiro">Prefiro o guia</a>
+      </div>
+      <p class="criterio">No computador: WASD anda, o mouse mira, clique quebra e ataca. No celular: joystick e botões.</p>
+    </div>
+  </div>
+</section>
 
 <section class="secao" id="versao" aria-labelledby="versao-t">
   <div class="wrap">
@@ -796,6 +856,18 @@ details > summary::-webkit-details-marker { display: none; }
       <h2 id="roteiro-t">Do spawn aos créditos em 9 etapas</h2>
       <p class="lede">As etapas estão na ordem em que acontecem. Marque o que já sabe fazer. Para treinar, use o cronômetro: ele marca quanto tempo você leva em cada etapa e guarda o seu recorde.</p>
     </div>
+    <article class="card-seed seed-roteiro" id="seed-roteiro">
+      <div>
+        <p class="eyebrow">Seed de início do roteiro</p>
+        <p class="num">7311929229522424735</p>
+        <div class="meta"><span class="tag tag-java">Java</span><span>Testada pela fonte na 1.21. Não conferida na 26.3: veja no <a href="https://www.chunkbase.com/apps/seed-map#seed=7311929229522424735" target="_blank" rel="noopener">mapa do Chunkbase</a> antes.</span></div>
+        <p>Crie um mundo com esta seed e siga as etapas. Ligando as dicas, cada etapa mostra o que fazer <b>nesta seed</b>.</p>
+      </div>
+      <div class="acoes">
+        <button type="button" class="btn btn-mini" data-copiar="7311929229522424735">Copiar seed</button>
+        <button type="button" class="btn btn-mini btn-forte" id="seed-dicas" aria-pressed="false">Mostrar dicas da seed</button>
+      </div>
+    </article>
     <div class="roteiro-grade">
       <div class="etapas">
 
@@ -811,6 +883,7 @@ details > summary::-webkit-details-marker { display: none; }
             <li>Se tiver cascalho perto, quebre até sair sílex. Ele faz o isqueiro.</li>
             <li>Antes de sair andando, olhe em volta. Vila, naufrágio, portal em ruínas ou lago de lava decidem o resto da rota.</li>
           </ul>
+          <p class="na-seed" hidden><span class="rot">Nesta seed:</span> Você nasce numa taiga, cheia de pinheiros: a madeira está logo ali. Faça as ferramentas sem sair do lugar.</p>
           <p class="saia"><strong>Saia com:</strong> ferramentas de pedra e madeira sobrando.</p>
         </article>
 
@@ -826,6 +899,7 @@ details > summary::-webkit-details-marker { display: none; }
             <li>Na vila, pegue camas, fardos de feno e comida. Um fardo vira 9 trigos, e 3 trigos fazem 1 pão.</li>
             <li>Encha o balde de água antes de seguir.</li>
           </ul>
+          <p class="na-seed" hidden><span class="rot">Nesta seed:</span> Segundo a fonte, uma vila fica a uns 58 blocos do spawn. Suba no ponto mais alto perto de você e olhe em volta, ou ande em espiral até ver os telhados. Pegue camas, feno e veja o baú do ferreiro, se a vila tiver um.</p>
           <p class="saia"><strong>Saia com:</strong> balde de água, isqueiro (ou carga de fogo), comida e 1 ou 2 camas.</p>
         </article>
 
@@ -841,6 +915,7 @@ details > summary::-webkit-details-marker { display: none; }
             <li>Acenda com o isqueiro ou com uma carga de fogo.</li>
             <li>Antes de entrar, anote as coordenadas do portal. <span class="tag tag-java">Java</span>Aperte F3. <span class="tag tag-bedrock">Bedrock</span>Ligue “Mostrar coordenadas” nas opções do mundo.</li>
           </ul>
+          <p class="na-seed" hidden><span class="rot">Nesta seed:</span> Faça o portal perto do spawn: as distâncias do Nether abaixo foram medidas pela fonte a partir de um portal construído ali. Anote as coordenadas (F3).</p>
           <p class="saia"><strong>Saia com:</strong> as coordenadas do portal anotadas.</p>
         </article>
 
@@ -857,6 +932,7 @@ details > summary::-webkit-details-marker { display: none; }
             <li>Abrir baú ou quebrar minério e bloco de ouro deixa bravos os piglins que estiverem vendo.</li>
             <li>A troca também pode dar poção de resistência ao fogo. Guarde para a fortaleza.</li>
           </ul>
+          <p class="na-seed" hidden><span class="rot">Nesta seed:</span> Saindo do portal no Nether, a fonte mediu um bastião a uns 163 blocos. Ela não diz para que lado: procure as paredes escuras de pedra-negra ou veja a direção no mapa do Chunkbase (aba Nether).</p>
           <p class="saia"><strong>Saia com:</strong> 14 pérolas do Ender, ou o máximo que conseguir.</p>
         </article>
 
@@ -872,6 +948,7 @@ details > summary::-webkit-details-marker { display: none; }
             <li>Cada blaze derruba 0 ou 1 vara. Cada vara vira 2 pós de blaze.</li>
             <li>Cuidado com os esqueletos wither, porque o efeito wither drena vida, e com as quedas na lava.</li>
           </ul>
+          <p class="na-seed" hidden><span class="rot">Nesta seed:</span> A fortaleza do Nether fica a uns 132 blocos do portal, segundo a fonte. Procure as pontes e torres de tijolo do Nether escuro.</p>
           <p class="saia"><strong>Saia com:</strong> 7 varas de blaze.</p>
         </article>
 
@@ -895,6 +972,7 @@ details > summary::-webkit-details-marker { display: none; }
             </div>
             <p class="conv-res" id="cv-res" aria-live="polite">Digite o X e o Z. A altura (Y) não muda.</p>
           </div>
+          <p class="na-seed" hidden><span class="rot">Nesta seed:</span> Volte pelo mesmo portal: ele sai perto do spawn e da vila, onde você pode dormir e reabastecer.</p>
           <p class="saia"><strong>Saia com:</strong> 14 olhos do Ender.</p>
         </article>
 
@@ -911,6 +989,7 @@ details > summary::-webkit-details-marker { display: none; }
             <li>Lá dentro, procure a sala do portal. Ela tem uma escada sobre lava e um gerador de traças. Quebre ou tape o gerador.</li>
             <li>Coloque os olhos nas 12 molduras. Algumas já vêm com olho.</li>
           </ul>
+          <p class="na-seed" hidden><span class="rot">Nesta seed:</span> A fonte não informa onde fica a fortaleza do End (stronghold) desta seed. Jogue um olho, ande uns 200 blocos para o lado, jogue outro e use a calculadora <a href="#calc-fortaleza">Achar a fortaleza</a>.</p>
           <p class="saia"><strong>Leve para o End:</strong> arco, 32 flechas ou mais, 64 blocos, balde de água, comida, espada ou machado e, se souber usar, camas. <a href="#mochila-end">Marque na mochila do End, no topo da página.</a></p>
         </article>
 
@@ -1896,6 +1975,104 @@ details > summary::-webkit-details-marker { display: none; }
           <tr><td><span class="px px-mini" data-px="minerio:s=7A2E2E,S=5C1F1F,o=EDE6DA,O=C9BFAE" aria-hidden="true"></span>Quartzo do Nether</td><td>Em todo o Nether</td><td>Madeira</td><td>XP ao minerar, observador, comparador e blocos de quartzo.</td></tr>
           <tr><td><span class="px px-mini" data-px="minerio:s=7A2E2E,S=5C1F1F,o=F5D442,O=C9A227" aria-hidden="true"></span>Ouro do Nether</td><td>Em todo o Nether</td><td>Madeira</td><td>Pepitas de ouro. Minerar perto de piglins deixa eles bravos.</td></tr>
           <tr><td><span class="px px-mini" data-px="minerio:s=4A3A30,S=3A2C24,o=8C6E5A,O=6B5242" aria-hidden="true"></span>Detritos antigos</td><td>Nether, entre as camadas 8 e 22</td><td>Diamante</td><td>Fragmentos de netherite.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="secao" id="aventuras" aria-labelledby="aventuras-t">
+  <div class="wrap">
+    <div class="secao-cab">
+      <p class="eyebrow"><span class="px eb-ic" data-px="chave" aria-hidden="true"></span>Aventuras</p>
+      <h2 id="aventuras-t">Trial Chambers, arqueologia, pesca e comida</h2>
+      <p class="lede">Quatro coisas que não estão no caminho do dragão, mas rendem muito: a maça, os vasos decorados, livros encantados de graça e uma barra de fome sempre cheia.</p>
+    </div>
+
+    <div class="secao-cab sub-cab" id="trial">
+      <h3><span class="px px-mini" data-px="chave" aria-hidden="true"></span> Trial Chambers passo a passo</h3>
+      <p class="criterio">Câmaras de cobre e tufo debaixo da terra, cheias de geradores de desafio. É onde sai a maça.</p>
+    </div>
+    <ol class="itens">
+      <li><div><h3 class="h4">Ache a câmara</h3><p>Ficam no subsolo, em geral entre as camadas −40 e −20. Corredores de cobre e tufo aparecendo numa caverna ou mina são o sinal. Não precisa de comando: explore cavernas fundas.</p></div></li>
+      <li><div><h3 class="h4">Vá preparado</h3><p>Armadura de ferro ou melhor, escudo, espada ou machado, comida, blocos e tochas. Um balde de água salva de quedas.</p></div></li>
+      <li><div><h3 class="h4">Vença os geradores de desafio</h3><p>Chegando perto, o gerador solta ondas de monstros. Mais jogadores, mais monstros. Vencidas as ondas, ele solta itens e uma chave de desafio, e depois de um tempo recarrega.</p></div></li>
+      <li><div><h3 class="h4">Abra os cofres</h3><p>Use a chave no cofre. Cada jogador abre cada cofre uma vez. Saem esmeraldas, flechas com efeito, equipamento encantado, maçãs douradas e livros encantados.</p></div></li>
+      <li><div><h3 class="h4">Breeze: chegue perto</h3><p>O breeze pula e joga cargas de vento, e desvia flechas. Brigue corpo a corpo. Ele solta varas de brisa, que viram cargas de vento.</p></div></li>
+      <li><div><h3 class="h4">Modo sinistro</h3><p>Beba uma garrafa sinistra (cai do capitão dos saqueadores) e entre na câmara. Os geradores ficam mais fortes e soltam chaves sinistras, que abrem os cofres sinistros: é deles que sai o núcleo pesado.</p></div></li>
+      <li><div><h3 class="h4">Faça a maça</h3><p>Núcleo pesado e vara de brisa na mesa de trabalho. Quanto maior a queda antes do golpe, maior o dano. Com Rajada de vento, você volta para o alto depois de acertar.</p></div></li>
+    </ol>
+
+    <div class="secao-cab sub-cab" id="arqueologia">
+      <h3><span class="px px-mini" data-px="pincel" aria-hidden="true"></span> Arqueologia</h3>
+      <p class="criterio">Pincel: 1 pena, 1 barra de cobre e 1 graveto, em pé na mesa de trabalho. Segure o botão de usar sobre areia ou cascalho suspeito até o item sair.</p>
+    </div>
+    <div class="tabela-wrap" tabindex="0" role="region" aria-label="Onde fazer arqueologia">
+      <table>
+        <thead><tr><th scope="col">Lugar</th><th scope="col">Bloco</th><th scope="col">O que pode sair</th></tr></thead>
+        <tbody>
+          <tr><td><span class="px px-mini" data-px="pincel" aria-hidden="true"></span>Templo do deserto</td><td>Areia suspeita</td><td>Fragmentos de cerâmica, esmeraldas, pólvora, diamante.</td></tr>
+          <tr><td><span class="px px-mini" data-px="pincel" aria-hidden="true"></span>Poço do deserto</td><td>Areia suspeita</td><td>Fragmentos de cerâmica, esmeralda, garrafa.</td></tr>
+          <tr><td><span class="px px-mini" data-px="pincel" aria-hidden="true"></span>Ruína oceânica quente</td><td>Areia suspeita</td><td>Ovo de farejador, fragmentos de cerâmica, esmeraldas.</td></tr>
+          <tr><td><span class="px px-mini" data-px="pincel" aria-hidden="true"></span>Ruína oceânica fria</td><td>Cascalho suspeito</td><td>Fragmentos de cerâmica, esmeraldas, carvão.</td></tr>
+          <tr><td><span class="px px-mini" data-px="pincel" aria-hidden="true"></span>Ruínas de trilha</td><td>Cascalho suspeito</td><td>Muitos fragmentos, moldes de enfeite de armadura, vidro colorido e um disco raro.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grade-mod">
+      <p><span class="rot">Não quebre:</span> bloco suspeito quebrado perde o item. Use só o pincel.</p>
+      <p><span class="rot">Vaso decorado:</span> 4 fragmentos de cerâmica ou tijolos em losango na mesa de trabalho. Cada fragmento vira um desenho.</p>
+      <p><span class="rot">Farejador:</span> choque o ovo (no musgo ele nasce mais rápido). O farejador desenterra sementes de flor-tocha e de planta-jarro, que não existem em outro lugar.</p>
+    </div>
+
+    <div class="secao-cab sub-cab" id="pesca">
+      <h3><span class="px px-mini" data-px="vara" aria-hidden="true"></span> Pesca</h3>
+      <p class="criterio">Vara de pesca: 3 gravetos e 2 linhas. Jogue na água, espere a boia afundar e puxe.</p>
+    </div>
+    <div class="tabela-wrap" tabindex="0" role="region" aria-label="O que sai da pesca">
+      <table>
+        <thead><tr><th scope="col">Tipo</th><th scope="col">O que vem</th><th scope="col">Como melhorar</th></tr></thead>
+        <tbody>
+          <tr><td><span class="px px-mini" data-px="peixe" aria-hidden="true"></span>Peixe (a maioria)</td><td>Bacalhau, salmão, peixe tropical e baiacu.</td><td>Cozinhe bacalhau e salmão. O baiacu envenena, mas faz poção de respiração aquática.</td></tr>
+          <tr><td><span class="px px-mini" data-px="botas" aria-hidden="true"></span>Lixo</td><td>Botas de couro, osso, graveto, linha, garrafa, couro, tigela, nenúfar, gancho.</td><td>Sorte do mar diminui o lixo.</td></tr>
+          <tr><td><span class="px px-mini" data-px="encantado" aria-hidden="true"></span>Tesouro</td><td>Livro encantado, arco e vara encantados, etiqueta, sela, concha de náutilo.</td><td>Sorte do mar aumenta o tesouro. <span class="tag tag-java">Java</span>Só sai tesouro em água aberta, sem blocos em volta da boia.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grade-mod">
+      <p><span class="rot">Isca:</span> o peixe morde mais rápido. Chuva também ajuda.</p>
+      <p><span class="rot">Remendo na vara:</span> a XP da pesca conserta a vara, e ela dura para sempre.</p>
+      <p><span class="rot">Vara puxa coisas:</span> fisgue um mob e puxe. Serve até para levar ghast ao portal.</p>
+    </div>
+
+    <div class="secao-cab sub-cab" id="comida">
+      <h3><span class="px px-mini" data-px="pao" aria-hidden="true"></span> Comida: quanto cada uma enche</h3>
+      <p class="criterio">Fome é quanto enche da barra (20 pontos, cada coxinha vale 2). Saturação é quanto tempo a barra demora para voltar a cair: quanto maior, melhor.</p>
+    </div>
+    <div class="tabela-wrap" tabindex="0" role="region" aria-label="Fome e saturação das comidas">
+      <table>
+        <thead><tr><th scope="col">Comida</th><th scope="col">Fome</th><th scope="col">Saturação</th><th scope="col">Observação</th></tr></thead>
+        <tbody>
+          <tr><td><span class="px px-mini" data-px="cenoura:o=D9A52E,O=F5C542" aria-hidden="true"></span>Cenoura dourada</td><td class="mono">6</td><td class="mono">14,4</td><td>A melhor saturação do jogo.</td></tr>
+          <tr><td><span class="px px-mini" data-px="carne" aria-hidden="true"></span>Bife ou costeleta de porco</td><td class="mono">8</td><td class="mono">12,8</td><td>A melhor comida comum.</td></tr>
+          <tr><td><span class="px px-mini" data-px="tigela" aria-hidden="true"></span>Ensopado de coelho</td><td class="mono">10</td><td class="mono">12</td><td>Enche muito, mas não empilha.</td></tr>
+          <tr><td><span class="px px-mini" data-px="carne" aria-hidden="true"></span>Carneiro cozido</td><td class="mono">6</td><td class="mono">9,6</td><td>Ovelhas aparecem em todo lugar.</td></tr>
+          <tr><td><span class="px px-mini" data-px="peixe:f=D96A4A,F=F08A6A" aria-hidden="true"></span>Salmão cozido</td><td class="mono">6</td><td class="mono">9,6</td><td>Bom para quem pesca.</td></tr>
+          <tr><td><span class="px px-mini" data-px="maca:r=D9A52E,R=F5C542" aria-hidden="true"></span>Maçã dourada</td><td class="mono">4</td><td class="mono">9,6</td><td>Regeneração e absorção. Para emergência.</td></tr>
+          <tr><td><span class="px px-mini" data-px="carne" aria-hidden="true"></span>Frango cozido</td><td class="mono">6</td><td class="mono">7,2</td><td>Cru pode dar fome.</td></tr>
+          <tr><td><span class="px px-mini" data-px="tigela" aria-hidden="true"></span>Sopa de cogumelo ou de beterraba</td><td class="mono">6</td><td class="mono">7,2</td><td>Não empilha.</td></tr>
+          <tr><td><span class="px px-mini" data-px="pao" aria-hidden="true"></span>Pão</td><td class="mono">5</td><td class="mono">6</td><td>3 trigos. O mais fácil no começo.</td></tr>
+          <tr><td><span class="px px-mini" data-px="batata" aria-hidden="true"></span>Batata assada</td><td class="mono">5</td><td class="mono">6</td><td>Farm de batata rende muito.</td></tr>
+          <tr><td><span class="px px-mini" data-px="peixe" aria-hidden="true"></span>Bacalhau cozido</td><td class="mono">5</td><td class="mono">6</td><td>Pesca ou oceano.</td></tr>
+          <tr><td><span class="px px-mini" data-px="carne" aria-hidden="true"></span>Coelho cozido</td><td class="mono">5</td><td class="mono">6</td><td>Desertos e neve.</td></tr>
+          <tr><td><span class="px px-mini" data-px="bolo" aria-hidden="true"></span>Torta de abóbora</td><td class="mono">8</td><td class="mono">4,8</td><td>Abóbora, açúcar e ovo.</td></tr>
+          <tr><td><span class="px px-mini" data-px="maca" aria-hidden="true"></span>Maçã</td><td class="mono">4</td><td class="mono">2,4</td><td>Cai das folhas de carvalho.</td></tr>
+          <tr><td><span class="px px-mini" data-px="fruta:r=9C6BC0,R=C9A0E8,g=6E4A8A" aria-hidden="true"></span>Fruta do coro</td><td class="mono">4</td><td class="mono">2,4</td><td>Teleporta você para perto.</td></tr>
+          <tr><td><span class="px px-mini" data-px="cenoura" aria-hidden="true"></span>Cenoura</td><td class="mono">3</td><td class="mono">3,6</td><td>Come crua.</td></tr>
+          <tr><td><span class="px px-mini" data-px="bolo" aria-hidden="true"></span>Bolo (por fatia)</td><td class="mono">2</td><td class="mono">0,4</td><td>7 fatias, comido do bloco.</td></tr>
+          <tr><td><span class="px px-mini" data-px="melancia" aria-hidden="true"></span>Fatia de melancia</td><td class="mono">2</td><td class="mono">1,2</td><td>Farm de melancia é fácil.</td></tr>
+          <tr><td><span class="px px-mini" data-px="fruta" aria-hidden="true"></span>Frutas doces</td><td class="mono">2</td><td class="mono">0,4</td><td>Arbusto da taiga. Espeta.</td></tr>
+          <tr><td><span class="px px-mini" data-px="carne:a=5E7A3A,A=7E9A4A" aria-hidden="true"></span>Carne podre</td><td class="mono">4</td><td class="mono">0,8</td><td>Grande chance de dar fome.</td></tr>
         </tbody>
       </table>
     </div>
@@ -3130,6 +3307,82 @@ details > summary::-webkit-details-marker { display: none; }
   </div>
 </section>
 
+<section class="secao" id="calculadoras" aria-labelledby="calculadoras-t">
+  <div class="wrap">
+    <div class="secao-cab">
+      <p class="eyebrow"><span class="px eb-ic" data-px="calc" aria-hidden="true"></span>Calculadoras</p>
+      <h2 id="calculadoras-t">Contas que o jogo não faz para você</h2>
+      <p class="lede">Digite os números que aparecem no jogo e a resposta sai na hora. No Java, as coordenadas aparecem com F3. No Bedrock, ligue “Mostrar coordenadas” nas opções do mundo.</p>
+    </div>
+    <div class="calc-grade">
+      <section class="painel calc" id="calc-nether" aria-labelledby="calc-nether-t">
+        <p class="painel-titulo" id="calc-nether-t"><span class="px px-mini" data-px="portal" aria-hidden="true"></span>Nether e Overworld</p>
+        <p class="criterio">Cada bloco no Nether vale 8 no Overworld. Use para ligar dois portais.</p>
+        <div class="calc-campos">
+          <label class="largo">De onde<select class="campo" name="lado"><option value="ow">Overworld para Nether</option><option value="ne">Nether para Overworld</option></select></label>
+          <label>X<input class="campo" name="x" type="number" inputmode="numeric" value="0"></label>
+          <label>Z<input class="campo" name="z" type="number" inputmode="numeric" value="0"></label>
+        </div>
+        <p class="calc-res" aria-live="polite"></p>
+      </section>
+
+      <section class="painel calc" id="calc-fortaleza" aria-labelledby="calc-fortaleza-t">
+        <p class="painel-titulo" id="calc-fortaleza-t"><span class="px px-mini" data-px="eye" aria-hidden="true"></span>Achar a fortaleza com 2 olhos</p>
+        <p class="criterio"><span class="tag tag-java">Java</span>Jogue um olho, mire nele com a cruz no centro e anote X, Z e o primeiro número de “Facing” no F3. Ande uns 200 blocos para o lado e repita.</p>
+        <p class="calc-sub">1º olho</p>
+        <div class="calc-campos">
+          <label>X<input class="campo" name="x1" type="number" inputmode="decimal" step="any"></label>
+          <label>Z<input class="campo" name="z1" type="number" inputmode="decimal" step="any"></label>
+          <label>Ângulo<input class="campo" name="a1" type="number" inputmode="decimal" step="any"></label>
+        </div>
+        <p class="calc-sub">2º olho</p>
+        <div class="calc-campos">
+          <label>X<input class="campo" name="x2" type="number" inputmode="decimal" step="any"></label>
+          <label>Z<input class="campo" name="z2" type="number" inputmode="decimal" step="any"></label>
+          <label>Ângulo<input class="campo" name="a2" type="number" inputmode="decimal" step="any"></label>
+        </div>
+        <p class="calc-res" aria-live="polite"></p>
+      </section>
+
+      <section class="painel calc" id="calc-viagem" aria-labelledby="calc-viagem-t">
+        <p class="painel-titulo" id="calc-viagem-t"><span class="px px-mini" data-px="mapa" aria-hidden="true"></span>Distância e tempo de viagem</p>
+        <p class="criterio">De onde você está até o destino, e quanto tempo leva de cada jeito.</p>
+        <p class="calc-sub">Você</p>
+        <div class="calc-campos">
+          <label>X<input class="campo" name="vx1" type="number" inputmode="numeric" value="0"></label>
+          <label>Z<input class="campo" name="vz1" type="number" inputmode="numeric" value="0"></label>
+        </div>
+        <p class="calc-sub">Destino</p>
+        <div class="calc-campos">
+          <label>X<input class="campo" name="vx2" type="number" inputmode="numeric" value="1000"></label>
+          <label>Z<input class="campo" name="vz2" type="number" inputmode="numeric" value="-500"></label>
+        </div>
+        <p class="calc-res" aria-live="polite"></p>
+      </section>
+
+      <section class="painel calc" id="calc-bau" aria-labelledby="calc-bau-t">
+        <p class="painel-titulo" id="calc-bau-t"><span class="px px-mini" data-px="bau" aria-hidden="true"></span>Pilhas e baús</p>
+        <p class="criterio">Quantos espaços, baús e caixas de shulker uma quantidade de itens ocupa.</p>
+        <div class="calc-campos">
+          <label>Quantidade<input class="campo" name="q" type="number" inputmode="numeric" min="0" value="1000"></label>
+          <label class="largo">Pilha de<select class="campo" name="p"><option value="64">64 (blocos)</option><option value="16">16 (pérolas, ovos, placas)</option><option value="1">1 (ferramentas)</option></select></label>
+        </div>
+        <p class="calc-res" aria-live="polite"></p>
+      </section>
+
+      <section class="painel calc" id="calc-xp" aria-labelledby="calc-xp-t">
+        <p class="painel-titulo" id="calc-xp-t"><span class="px px-mini" data-px="encantado" aria-hidden="true"></span>XP de um nível a outro</p>
+        <p class="criterio">Quantos pontos de experiência faltam. Na mesa de encantamento, o encantamento de nível 30 só gasta 3 níveis.</p>
+        <div class="calc-campos">
+          <label>Nível atual<input class="campo" name="de" type="number" inputmode="numeric" min="0" value="0"></label>
+          <label>Quero chegar a<input class="campo" name="ate" type="number" inputmode="numeric" min="0" value="30"></label>
+        </div>
+        <p class="calc-res" aria-live="polite"></p>
+      </section>
+    </div>
+  </div>
+</section>
+
 <section class="secao" id="quiz" aria-labelledby="quiz-t">
   <div class="wrap">
     <div class="secao-cab">
@@ -3375,6 +3628,11 @@ details > summary::-webkit-details-marker { display: none; }
   ICONES.placa = { p: {"p": "#A07A50", "P": "#C49A6C"}, g: ["........", "........", "pppppppp", "pPPPPPPp", "pppppppp", "...pp...", "...pp...", "...pp..."] };
   ICONES.ouro = { p: {"k": "#B8922E", "N": "#E3C15A", "n": "#FFF2A0"}, g: ["........", "..kkkkk.", ".kNNNNNk", "kNnNNNNk", "kNNNNnk.", "kkkkkk..", "........", "........"] };
   ICONES.botas = { p: {"k": "#5E5E5E", "s": "#C9C9C9", "S": "#A8A8A8", "b": "#5DEBE0"}, g: ["........", ".kk..kk.", ".sk..ks.", ".sk..ks.", ".sSk.kSs", "ssbk.kbs", "kkkk.kkk", "........"] };
+
+  ICONES.calc = { p: {"k": "#3A3A3A", "g": "#9FD39A", "G": "#3E6B27", "w": "#F2EBDD", "b": "#E3C15A"}, g: ["kkkkkkkk", "kggggggk", "kgGgGGgk", "kkkkkkkk", "kwkwkbbk", "kkkkkkkk", "kwkwkbbk", "kkkkkkkk"] };
+  ICONES.chave = { p: {"t": "#3FB28A", "T": "#2A7A5E", "o": "#E07A4A", "O": "#B5523B"}, g: ["....tttt", "....tTTt", "....tTTt", "...otttt", "..oO....", ".oO.....", "oOo.....", ".o......"] };
+  ICONES.vara = { p: {"w": "#7B5230", "l": "#EDEDED", "r": "#E0303A"}, g: [".......w", "......wl", ".....w.l", "....w..l", "...w...l", "..w....l", ".w.....r", "w......."] };
+  ICONES.pincel = { p: {"f": "#F5F5F5", "F": "#C9C9C9", "c": "#E07A4A", "w": "#7B5230"}, g: [".....fff", "....fFff", "....cfFf", "...cc...", "..ww....", ".ww.....", "ww......", "w......."] };
   // moldes de pixel art: "molde:chave=RRGGBB,..." troca as cores do molde para cada coisa
   var MOLDES = {
     encantado: { p: {"C": "#5E2614", "c": "#8E3B28", "g": "#C77DFF", "p": "#F2EBDD"}, g: ["CCCCCCC.", "CcgcccCp", "CccgccCp", "CgccgcCp", "CccccgCp", "CcgcccCp", "CcccccCp", "CCCCCCC."] },
@@ -4063,5 +4321,94 @@ details > summary::-webkit-details-marker { display: none; }
   });
 })();
 </script>
+
+<script>
+/* calculadoras e dicas da seed do roteiro */
+(function () {
+  "use strict";
+  function lsGet(k, d) { try { var v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  function campo(f, n) { return f.querySelector('[name="' + n + '"]'); }
+  function num(f, n) { var v = campo(f, n).value.trim().replace(",", "."); return v === "" ? NaN : Number(v); }
+  function fmt(n) { return Math.round(n).toLocaleString("pt-BR"); }
+  function tempo(seg) {
+    seg = Math.round(seg);
+    if (seg < 60) return seg + " s";
+    var m = Math.floor(seg / 60), s = seg % 60;
+    if (m < 60) return m + " min" + (s ? " " + s + " s" : "");
+    return Math.floor(m / 60) + " h " + (m % 60) + " min";
+  }
+  function calc(id, fn) {
+    var f = document.getElementById(id); if (!f) return;
+    var out = f.querySelector(".calc-res");
+    function rodar() { out.innerHTML = fn(f); }
+    f.addEventListener("input", rodar); f.addEventListener("change", rodar); rodar();
+  }
+
+  calc("calc-nether", function (f) {
+    var x = num(f, "x"), z = num(f, "z"), ow = campo(f, "lado").value === "ow";
+    if (isNaN(x) || isNaN(z)) return "Digite X e Z.";
+    var k = ow ? 1 / 8 : 8, nx = Math.floor(x * k), nz = Math.floor(z * k);
+    return (ow ? "No Nether: " : "No Overworld: ") + "X <b>" + nx + "</b>, Z <b>" + nz + "</b>. A altura (Y) não muda na conta. Construa o portal desse lado nessas coordenadas para os dois se ligarem.";
+  });
+
+  calc("calc-fortaleza", function (f) {
+    var x1 = num(f, "x1"), z1 = num(f, "z1"), a1 = num(f, "a1"), x2 = num(f, "x2"), z2 = num(f, "z2"), a2 = num(f, "a2");
+    if ([x1, z1, a1, x2, z2, a2].some(isNaN)) return "Preencha os dois olhos: X, Z e ângulo de cada um.";
+    // no Minecraft, ângulo 0 aponta para o sul (+Z) e 90 para o oeste (−X)
+    var r1 = a1 * Math.PI / 180, r2 = a2 * Math.PI / 180;
+    var d1x = -Math.sin(r1), d1z = Math.cos(r1), d2x = -Math.sin(r2), d2z = Math.cos(r2);
+    var cruz = d1x * d2z - d1z * d2x;
+    if (Math.abs(cruz) < 0.03) return "As duas linhas estão quase paralelas. Ande mais para o lado (uns 200 a 400 blocos) e jogue o 2º olho de novo.";
+    var t = ((x2 - x1) * d2z - (z2 - z1) * d2x) / cruz, s = ((x2 - x1) * d1z - (z2 - z1) * d1x) / cruz;
+    if (t < 0 || s < 0) return "As linhas não se cruzam na frente dos olhos. Confira os ângulos (o primeiro número de “Facing”).";
+    var fx = x1 + d1x * t, fz = z1 + d1z * t, dist = Math.sqrt((fx - x2) * (fx - x2) + (fz - z2) * (fz - z2));
+    return "Fortaleza perto de X <b>" + Math.round(fx) + "</b>, Z <b>" + Math.round(fz) + "</b>, a uns <b>" + fmt(dist) + "</b> blocos do 2º olho. " +
+      "Pelo Nether: X <b>" + Math.round(fx / 8) + "</b>, Z <b>" + Math.round(fz / 8) + "</b>. Chegando perto, jogue mais um olho: quando ele descer, a escada está embaixo.";
+  });
+
+  calc("calc-viagem", function (f) {
+    var x1 = num(f, "vx1"), z1 = num(f, "vz1"), x2 = num(f, "vx2"), z2 = num(f, "vz2");
+    if ([x1, z1, x2, z2].some(isNaN)) return "Digite as coordenadas.";
+    var d = Math.sqrt((x2 - x1) * (x2 - x1) + (z2 - z1) * (z2 - z1));
+    return "Distância: <b>" + fmt(d) + "</b> blocos.<br>Andando: " + tempo(d / 4.317) + " · correndo: " + tempo(d / 5.612) + " · barco na água: " + tempo(d / 8) +
+      " · barco no gelo azul: " + tempo(d / 72.7) + "<br>Pelo Nether são só <b>" + fmt(d / 8) + "</b> blocos: " + tempo(d / 8 / 5.612) + " correndo.";
+  });
+
+  calc("calc-bau", function (f) {
+    var q = Math.max(0, Math.floor(num(f, "q") || 0)), p = Number(campo(f, "p").value);
+    var esp = Math.ceil(q / p), resto = q % p, pilhas = Math.floor(q / p);
+    return "<b>" + fmt(pilhas) + "</b> pilha" + (pilhas === 1 ? "" : "s") + (resto ? " e mais <b>" + resto + "</b>" : "") + " = <b>" + fmt(esp) + "</b> espaço" + (esp === 1 ? "" : "s") + ".<br>" +
+      "Baús: <b>" + fmt(Math.ceil(esp / 27)) + "</b> · baús duplos: <b>" + fmt(Math.ceil(esp / 54)) + "</b> · caixas de shulker: <b>" + fmt(Math.ceil(esp / 27)) + "</b>" +
+      (esp > 27 * 54 ? "<br>Um baú duplo cheio de shulkers guarda " + fmt(54 * 27 * p) + " itens." : "");
+  });
+
+  function xpTotal(l) {
+    if (l <= 16) return l * l + 6 * l;
+    if (l <= 31) return 2.5 * l * l - 40.5 * l + 360;
+    return 4.5 * l * l - 162.5 * l + 2220;
+  }
+  calc("calc-xp", function (f) {
+    var de = Math.max(0, Math.floor(num(f, "de") || 0)), ate = Math.max(0, Math.floor(num(f, "ate") || 0));
+    if (ate <= de) return "Escolha um nível maior que o atual.";
+    var falta = xpTotal(ate) - xpTotal(de);
+    return "Faltam <b>" + fmt(falta) + "</b> pontos de XP para ir do nível " + de + " ao " + ate + ". <span class=\"tag tag-java\">Java</span>Conta da edição Java.";
+  });
+
+  // dicas da seed do roteiro
+  var bDicas = document.getElementById("seed-dicas");
+  if (bDicas) {
+    var ligado = lsGet("rd-seed-dicas", false);
+    function aplicar() {
+      bDicas.setAttribute("aria-pressed", String(ligado));
+      bDicas.textContent = ligado ? "Esconder dicas da seed" : "Mostrar dicas da seed";
+      document.querySelectorAll(".na-seed").forEach(function (p) { p.hidden = !ligado; });
+    }
+    bDicas.addEventListener("click", function () { ligado = !ligado; lsSet("rd-seed-dicas", ligado); aplicar(); if (ligado) document.getElementById("e1").scrollIntoView({ block: "start", behavior: "smooth" }); });
+    aplicar();
+  }
+})();
+</script>
+<script type="module" src="cena.js"></script>
 </body>
 </html>

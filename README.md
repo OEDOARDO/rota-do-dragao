@@ -1,7 +1,9 @@
 # Rota do Dragão
 
-Guia de fã para zerar o Minecraft rápido, em português. Tem roteiro em 9 etapas com cronômetro e
-modo partida, mochila do End, dicas para iniciantes, glossário, atalhos, comidas, dimensões,
+Guia de fã para zerar o Minecraft rápido, em português. Tem roteiro em 9 etapas com cronômetro,
+modo partida e uma seed de início com dicas em cada etapa, mochila do End, calculadoras (Nether e
+Overworld, achar a fortaleza com 2 olhos, viagem, baús, XP), guias de Trial Chambers, arqueologia,
+pesca e comida, dicas para iniciantes, glossário, atalhos, comidas, dimensões,
 poções, mobs, seeds e mural da comunidade, biomas (lista completa), itens e encantamentos, farms,
 aldeões, construções, redstone, mods, missões, histórico de versões e 100 curiosidades. Cobre
 Java e Bedrock, e pode ser instalado no celular como app (funciona sem internet).
@@ -17,6 +19,8 @@ WASD anda, o mouse mira, clique esquerdo quebra e ataca, clique direito usa o it
 ## Como funciona
 
 - O site inteiro é o `index.html`, sem etapa de build. O GitHub Pages publica a branch `main`.
+- `cena.js` desenha a ilha 3D do topo. Ele só baixa o Three.js (de `jogo/vendor/`) quando a faixa
+  aparece na tela e para de desenhar quando ela sai.
 - `sw.js`, `manifest.webmanifest` e os ícones `icone-*.png` deixam o site instalável e usável sem
   internet. A página sempre confere com o GitHub se há versão nova e avisa o visitante.
 - O que cada visitante marca (etapas, missões, mochila, recorde) fica no navegador dele.
