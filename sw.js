@@ -1,6 +1,6 @@
 // Deixa o Rota do Dragão abrir sem internet e ser instalado no celular.
 // A página vem sempre da rede quando dá (para pegar as atualizações) e do cache quando não dá.
-var CACHE = "rota-do-dragao-v4";
+var CACHE = "rota-do-dragao-v5";
 var ARQUIVOS = ["./", "./index.html", "./icone.svg", "./icone-192.png", "./icone-512.png", "./og.png", "./manifest.webmanifest",
   "./jogo/", "./jogo/jogo.js", "./jogo/jogo.css", "./jogo/manifest.webmanifest", "./jogo/vendor/three.module.min.js"];
 
