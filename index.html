@@ -4133,7 +4133,7 @@ details > summary::-webkit-details-marker { display: none; }
   });
 
   // ---------- compartilhar ----------
-  var URL_SITE = "https://oedoardo.github.io/rota-do-dragao/";
+  var URL_SITE = location.protocol === "https:" ? location.origin + location.pathname.replace(/index\.html$/, "") : "https://oedoardo.github.io/rota-do-dragao/";
   document.getElementById("compartilhar").addEventListener("click", function () {
     var dados = { title: "Rota do Dragão", text: "Guia para zerar o Minecraft rápido, com roteiro, seeds, farms e mais.", url: URL_SITE };
     if (navigator.share) { navigator.share(dados).catch(function () {}); return; }
