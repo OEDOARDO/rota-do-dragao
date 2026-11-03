@@ -65,6 +65,7 @@ h3 { margin: 14px 0 4px; font-size: 18px; color: var(--verde-forte); }
 .bt-grande[disabled] { opacity: 0.45; cursor: not-allowed; }
 .bt-grande:focus-visible, .abas button:focus-visible, .item-linha button:focus-visible { outline: 3px solid var(--ouro); outline-offset: 2px; }
 .rec { margin: 14px 0 0; color: var(--muted); font-size: 15px; }
+.rec.versao { margin-top: 6px; font-size: 13px; opacity: 0.8; }
 
 .painel { width: min(640px, 100%); }
 .abas { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px; }

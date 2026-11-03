@@ -1572,6 +1572,7 @@ import * as THREE from "./vendor/three.module.min.js";
         qualidade = ORDEM_QUAL[(ORDEM_QUAL.indexOf(qualidade) + 1) % 3]; qualEscolhida = qualidade; LS.set("rdj-qual", qualidade); aplicarQualidade(); renderMenu();
       }));
       el.appendChild(linha("i_arco", "Zoom da câmera", Math.round(100 / zoom) + "%. Rodinha do mouse ou pinça com dois dedos.", "Padrão", zoom !== 1, function () { mudarZoom(1); renderMenu(); }));
+      el.appendChild(linha("i_linha", "Versão do jogo", VERSAO, null));
       el.appendChild(linha("i_moeda", "Tempo de jogo", fmt(E.tempo) + " · " + E.mortes + " queda" + (E.mortes === 1 ? "" : "s"), null));
       el.appendChild(linha("i_pao", "Salvar e sair", "Volta para a tela inicial. Dá para continuar depois.", "Sair", true, function () { salvar(); jogando = false; irTitulo(); }));
     }
@@ -1620,12 +1621,14 @@ import * as THREE from "./vendor/three.module.min.js";
   document.getElementById("loja-fechar").addEventListener("click", fecharTelas);
 
   // ===================== início, salvar, vitória =====================
+  var VERSAO = "8 (03/11/2026)";
   function salvar() { if (E && jogando) LS.set("rdj-save", E); }
   function irTitulo() {
     var s = LS.get("rdj-save", null);
     document.getElementById("t-continuar").hidden = !(s && s.v === 1 && !s.f.dragao);
     var rec = LS.get("rdj-recorde", null);
     document.getElementById("t-recorde").textContent = rec ? "Seu recorde: " + fmt(rec) : "";
+    document.getElementById("t-versao").textContent = "Versão " + VERSAO;
     if (!R.pronto) document.getElementById("t-recorde").textContent = "Este navegador não conseguiu abrir o 3D (WebGL). Tente o Chrome ou atualize o navegador.";
     mostrarTela("titulo");
   }
@@ -1678,8 +1681,13 @@ import * as THREE from "./vendor/three.module.min.js";
   window.__rd = { estado: function () { return E; }, mundo: function () { return M; }, jogador: J, entrar: entrar, add: add, objetivo: function () { return objetivo(); }, usar: usar, atacar: atacar, r: function () { return R; } };
 
   // usa o mesmo service worker do guia: o jogo abre sem internet e pode ser instalado
+  // quando chega versão nova do jogo, o service worker novo assume e a página recarrega uma vez sozinha
   if ("serviceWorker" in navigator && location.protocol === "https:") {
-    window.addEventListener("load", function () { navigator.serviceWorker.register("../sw.js").catch(function () {}); });
+    var tinhaSW = !!navigator.serviceWorker.controller, recarregou = false;
+    window.addEventListener("load", function () { navigator.serviceWorker.register("../sw.js").then(function (r) { r.update(); }).catch(function () {}); });
+    navigator.serviceWorker.addEventListener("controllerchange", function () {
+      if (tinhaSW && !recarregou && !jogando) { recarregou = true; location.reload(); }
+    });
   }
 
   try { iniciar3d(); } catch (e) { R.pronto = false; }
